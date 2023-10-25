@@ -1,13 +1,8 @@
-server:
-  port: 9095
-
 spring:
-  datasource:
-    username: postgres
-    password: yigitcanA96.
-    url: jdbc:postgresql://localhost:5432/HREmail
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL}
+  config:
+    import: "configserver:"
+  application:
+    name: mail-application
