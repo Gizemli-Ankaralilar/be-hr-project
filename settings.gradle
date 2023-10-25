@@ -1,0 +1,6 @@
+rootProject.name = 'HR-Project'
+include 'auth-service'
+include 'auth-service'
+include 'company-service'
+include 'employee-service'
+
