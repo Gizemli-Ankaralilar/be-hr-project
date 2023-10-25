@@ -1,4 +1,5 @@
-dependencies{
+dependencies {
     implementation libs.springBootMailSender
-    implementation libs.postgresql
+    implementation libs.springBootRabbitMq
+    implementation libs.springCloudConfigClient
 }
