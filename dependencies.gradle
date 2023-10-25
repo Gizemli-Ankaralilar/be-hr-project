@@ -35,6 +35,8 @@ ext {
             springCloudCircuitBreakerReactor: "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:$versions.circuitBreaker",
             //springCloudZipkin: "org.springframework.cloud:spring-cloud-sleuth-zipkin:$versions.springCloud",
             springCloudSleuth: "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
+            springBootMailSender: "org.springframework.boot:spring-boot-starter-mail:$versions.springBoot",
 
+            javaJwt: "com.auth0:java-jwt:$versions.jwt",
     ]
 }
