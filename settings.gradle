@@ -3,4 +3,5 @@ include 'auth-service'
 include 'auth-service'
 include 'company-service'
 include 'employee-service'
+include 'email-service'
 
