@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailSenderService {
 
-    // private final JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     public void sendMail(Email model){
         SimpleMailMessage mailMessage=new SimpleMailMessage();
