@@ -42,7 +42,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
         save(auth);
-        companyManager.register(IAuthMapper.INSTANCE.toCompanyRegisterDto(auth));
+        //companyManager.register(IAuthMapper.INSTANCE.toCompanyRegisterDto(auth));
 
 
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
