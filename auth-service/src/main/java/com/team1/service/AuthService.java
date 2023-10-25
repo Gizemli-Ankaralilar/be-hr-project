@@ -7,7 +7,6 @@ import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
-import com.team1.manager.ICompanyManager;
 import com.team1.mapper.IAuthMapper;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
@@ -25,13 +24,12 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
-    private final ICompanyManager companyManager;
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, ICompanyManager companyManager) {
+
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
-        this.companyManager = companyManager;
     }
 
     @Transactional
@@ -42,7 +40,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
         save(auth);
-        //companyManager.register(IAuthMapper.INSTANCE.toCompanyRegisterDto(auth));
 
 
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
