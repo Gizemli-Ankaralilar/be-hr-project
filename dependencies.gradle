@@ -5,6 +5,7 @@ ext {
             lombok    : "1.18.28",
             mapstruct : "1.5.5.Final",
             openapi   : "1.7.0",
+            swaggerApi : "1.6.15",
             jwt: "4.4.0",
             springCloud: "3.1.8",
             circuitBreaker: "2.1.7",
@@ -25,6 +26,7 @@ ext {
             mapstruct         : "org.mapstruct:mapstruct:$versions.mapstruct",
             mapstructProcessor: "org.mapstruct:mapstruct-processor:$versions.mapstruct",
             openapi           : "org.springdoc:springdoc-openapi-ui:$versions.openapi",
+            swaggerApi        : "org.springdoc:springdoc-openapi-ui:$versions.swaggerApi",
             javaJwt: "com.auth0:java-jwt:$versions.jwt",
             springCloudOpenFeign: "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
             springCloudConfigStarter: "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
@@ -37,6 +39,5 @@ ext {
             springCloudSleuth: "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
             springBootMailSender: "org.springframework.boot:spring-boot-starter-mail:$versions.springBoot",
 
-            javaJwt: "com.auth0:java-jwt:$versions.jwt",
     ]
 }
