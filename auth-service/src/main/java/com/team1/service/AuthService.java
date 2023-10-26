@@ -3,9 +3,11 @@ package com.team1.service;
 import com.team1.dto.request.ActivateRequestDto;
 import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.SaveUserRequestDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
+import com.team1.manager.IAuthUserManager;
 import com.team1.mapper.IAuthMapper;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
@@ -24,15 +26,19 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
 
+    private final IAuthUserManager authUserManager;
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager) {
+
+
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IAuthUserManager authUserManager) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
+        this.authUserManager = authUserManager;
     }
 
     @Transactional
-    public Boolean register(RegisterRequestVisitorDto dto) {
+    public RegisterResponseVisitorDto register(RegisterRequestVisitorDto dto) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
         auth.setActivationCode(CodeGenerator.generateCode());
         if (authRepository.existsByUsername(dto.getUsername())) {
@@ -40,11 +46,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
         save(auth);
 
+        authUserManager.save(SaveUserRequestDto.builder().authId(auth.getId()).username(auth.getUsername()).email(auth.getEmail()).build());
+        //authUserManager.save(IAuthMapper.INSTANCE.toSaveUserRequestDto(auth));
+
 
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token = jwtTokenManager.createToken(auth.getId()).orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
         responseVisitorDto.setToken(token);
-        return true;
+        return responseVisitorDto;
     }
 
     @Transactional
@@ -85,18 +94,4 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
     }
 
-//    @Transactional
-//    public String companyRegister(RegisterSaveCompanyDto dto) {
-//        if (!dto.getTaxNumber().isEmpty()){
-//            //company servise yönlendir
-//        }
-//        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
-//        auth.setActivationCode(CodeGenerator.generateCode());
-//        if (authRepository.existsByUsername(dto.getUsername())) {
-//            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
-//        }
-//        save(auth);
-//        return "Your company registration could not be made because the tax identification number " +
-//                "was not entered. Please check your mail to activate your visitor registration.";
-//    }
 }
