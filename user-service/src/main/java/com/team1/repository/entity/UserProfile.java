@@ -2,16 +2,14 @@ package com.team1.repository.entity;
 
 
 
+import com.team1.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -26,4 +24,12 @@ public class UserProfile extends BaseEntity{
     private Long authId;
     private String username;
     private String email;
+    private String phone;
+    private String address;
+    private String avatar;
+    private String about;
+    private LocalDate birthDate;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private EStatus status = EStatus.PENDING;
 }

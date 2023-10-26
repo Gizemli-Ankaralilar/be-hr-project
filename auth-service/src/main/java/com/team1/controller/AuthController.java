@@ -3,6 +3,7 @@ package com.team1.controller;
 import com.team1.dto.request.ActivateRequestDto;
 import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.service.AuthService;
 import com.team1.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,8 @@ public class AuthController {
     private final JwtTokenManager jwtTokenManager;
 
     @PostMapping(REGISTER)
-    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
+    public ResponseEntity<RegisterResponseVisitorDto> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
         return ResponseEntity.ok(authService.register(dto));
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Company Service";
     }
 
     @PostMapping(LOGIN)
@@ -51,4 +47,5 @@ public class AuthController {
     public  ResponseEntity<Long> getIdFromToken(String token){
         return ResponseEntity.ok(jwtTokenManager.getIdFromToken(token).get());
     }
+
 }
