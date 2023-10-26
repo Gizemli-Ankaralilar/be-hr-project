@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>( createError(ErrorType.UNEXPECTED_ERROR,ex, ex.getMessage()),HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EmployeeManagerException.class)
-    public ResponseEntity<ErrorMessage> handleManagerException(EmployeeManagerException exception){
+    @ExceptionHandler(CompanyManagerException.class)
+    public ResponseEntity<ErrorMessage> handleManagerException(CompanyManagerException exception){
         ErrorType errorType = exception.getErrorType();
         HttpStatus httpStatus = errorType.getHttpStatus();
         ErrorMessage errorMessage=createError(errorType,exception);

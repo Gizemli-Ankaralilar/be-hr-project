@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class RegisterRequestEmployeeDto {
-    private Long companyId;
-    private String fieldOfWork;
-    private String role;
+public class ActivateRequestDto {
+
+    private String token;
+    private String activationCode;
 }

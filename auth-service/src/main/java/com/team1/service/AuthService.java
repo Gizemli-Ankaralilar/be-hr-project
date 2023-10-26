@@ -2,7 +2,6 @@ package com.team1.service;
 
 import com.team1.dto.request.ActivateRequestDto;
 import com.team1.dto.request.LoginRequestDto;
-import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
@@ -48,6 +47,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return true;
     }
 
+    @Transactional
     public String login(LoginRequestDto dto) {
         Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
         if (optionalAuth.isEmpty()) {
@@ -85,18 +85,18 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
     }
 
-    @Transactional
-    public String companyRegister(RegisterRequestCompanyDto dto) {
-        if (!dto.getTaxNumber().isEmpty()){
-            //company servise yönlendir
-        }
-        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
-        auth.setActivationCode(CodeGenerator.generateCode());
-        if (authRepository.existsByUsername(dto.getUsername())) {
-            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
-        }
-        save(auth);
-        return "Your company registration could not be made because the tax identification number " +
-                "was not entered. Please check your mail to activate your visitor registration.";
-    }
+//    @Transactional
+//    public String companyRegister(RegisterSaveCompanyDto dto) {
+//        if (!dto.getTaxNumber().isEmpty()){
+//            //company servise yönlendir
+//        }
+//        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
+//        auth.setActivationCode(CodeGenerator.generateCode());
+//        if (authRepository.existsByUsername(dto.getUsername())) {
+//            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
+//        }
+//        save(auth);
+//        return "Your company registration could not be made because the tax identification number " +
+//                "was not entered. Please check your mail to activate your visitor registration.";
+//    }
 }

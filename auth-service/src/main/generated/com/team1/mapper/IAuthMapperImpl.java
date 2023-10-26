@@ -1,6 +1,5 @@
 package com.team1.mapper;
 
-import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.repository.entity.Auth;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-25T17:37:06+0300",
+    date = "2023-10-26T01:07:37+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
@@ -43,19 +42,5 @@ public class IAuthMapperImpl implements IAuthMapper {
         registerResponseVisitorDto.username( auth.getUsername() );
 
         return registerResponseVisitorDto.build();
-    }
-
-    @Override
-    public Auth toAuth(RegisterRequestCompanyDto dto) {
-        if ( dto == null ) {
-            return null;
-        }
-
-        Auth.AuthBuilder<?, ?> auth = Auth.builder();
-
-        auth.username( dto.getUsername() );
-        auth.password( dto.getPassword() );
-
-        return auth.build();
     }
 }
