@@ -1,0 +1,17 @@
+server:
+  port: 9091
+
+spring:
+  datasource:
+    username: postgres
+    password: yigitcanA96.
+    url: jdbc:postgresql://localhost:5432/HRUser
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  secretKey: ${secretKey}
+  issuer: ${issuer}
