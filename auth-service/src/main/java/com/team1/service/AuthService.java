@@ -9,6 +9,8 @@ import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
 import com.team1.manager.IAuthUserManager;
 import com.team1.mapper.IAuthMapper;
+import com.team1.rabbitmq.model.MailModel;
+import com.team1.rabbitmq.producer.MailProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
 import com.team1.repository.enums.EStatus;
@@ -27,14 +29,16 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final JwtTokenManager jwtTokenManager;
 
     private final IAuthUserManager authUserManager;
+    private final MailProducer mailProducer;
 
 
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IAuthUserManager authUserManager) {
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IAuthUserManager authUserManager, MailProducer mailProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.authUserManager = authUserManager;
+        this.mailProducer = mailProducer;
     }
 
     @Transactional
@@ -53,8 +57,19 @@ public class AuthService extends ServiceManager<Auth, Long> {
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token = jwtTokenManager.createToken(auth.getId()).orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
         responseVisitorDto.setToken(token);
+
+        MailModel mailModel = IAuthMapper.INSTANCE.toMailModel(auth);
+        mailModel.setToken(token);
+//        mailProducer.sendMail(MailModel
+//                .builder().username(auth.getUsername()).email(auth.getEmail())
+//                .activationCode(auth.getActivationCode())
+//                .token(token)
+//                .build());
+        mailProducer.sendMail(mailModel);
         return responseVisitorDto;
     }
+
+
 
     @Transactional
     public String login(LoginRequestDto dto) {

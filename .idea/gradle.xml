@@ -13,9 +13,9 @@
             <option value="$PROJECT_DIR$/auth-service" />
             <option value="$PROJECT_DIR$/company-service" />
             <option value="$PROJECT_DIR$/config-server" />
-            <option value="$PROJECT_DIR$/email-service" />
             <option value="$PROJECT_DIR$/employee-service" />
             <option value="$PROJECT_DIR$/git-config-server" />
+            <option value="$PROJECT_DIR$/mail-service" />
             <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>
