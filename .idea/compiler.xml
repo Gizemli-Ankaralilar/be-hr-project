@@ -10,11 +10,11 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.5.5.Final/897f6f115930b936287bef552bf5fe28cc64717d/mapstruct-processor-1.5.5.Final.jar" />
         </processorPath>
         <module name="HR-Project.auth-service.main" />
-        <module name="HR-Project.email-service.main" />
         <module name="HR-Project.git-config-server.main" />
         <module name="HR-Project.config-server.main" />
         <module name="HR-Project.user-service.main" />
         <module name="HR-Project.employee-service.main" />
+        <module name="HR-Project.mail-service.main" />
         <module name="HR-Project.company-service.main" />
         <module name="HR-Project.main" />
       </profile>
