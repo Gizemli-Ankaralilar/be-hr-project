@@ -1,7 +1,6 @@
 package com.team1.constant;
 
 public class EndPoints {
-
     public static final String VERSION="api/v1";
     public static final String USER=VERSION+"/user";
 
@@ -11,5 +10,10 @@ public class EndPoints {
     public  static  final String FIND_BY_ID="/find_by_id";
     public  static  final String DELETE_BY_ID="/delete_by_id";
     public  static  final String SAVE="/save";
+
+    ///User
+    public  static  final String ACTIVATE_STATUS="/activate_status";
+
+
 
 }
