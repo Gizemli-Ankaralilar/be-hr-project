@@ -1,18 +1,10 @@
 package com.team1.service;
 
-import com.team1.exception.UserManagerException;
-import com.team1.exception.ErrorType;
-import com.team1.mapper.IAuthMapper;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.User;
-import com.team1.repository.enums.EStatus;
-import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class UserService extends ServiceManager<User, Long> {
