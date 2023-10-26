@@ -6,4 +6,5 @@ include 'employee-service'
 include 'email-service'
 include 'user-service'
 include 'config-server'
+include 'git-config-server'
 
