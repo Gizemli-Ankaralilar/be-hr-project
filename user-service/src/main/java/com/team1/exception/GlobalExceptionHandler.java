@@ -1,6 +1,8 @@
 package com.team1.exception;
 
+
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,15 @@ import java.util.List;
 //Aop
 @ControllerAdvice
 //@RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
+
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessage> handleRunTimeException(RuntimeException ex){
-        return new ResponseEntity<>( createError(ErrorType.UNEXPECTED_ERROR,ex, ex.getMessage()),HttpStatus.BAD_REQUEST);
+        ex.printStackTrace();
+        log.error(ex.toString());
+        return new ResponseEntity<>(createError(ErrorType.UNEXPECTED_ERROR,ex,ex.getMessage()),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserManagerException.class)
@@ -49,7 +55,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentConstraintViolationException(DataIntegrityViolationException ex){
-        ErrorType errorType=ErrorType.DATA_INTEGRITY;
+        ErrorType errorType=ErrorType.BAD_REQUEST;
         return  new ResponseEntity<>(createError(errorType,ex),errorType.getHttpStatus());
     }
 
@@ -96,10 +102,10 @@ public class GlobalExceptionHandler {
 
     private ErrorMessage createError(ErrorType errorType, Exception exception) {
         System.out.println("Hata olustu: "+exception.getMessage());
-        return ErrorMessage.builder()
-                .code(errorType.getCode())
-                .message(errorType.getMessage())
-                .build();
+       return ErrorMessage.builder()
+               .code(errorType.getCode())
+               .message(errorType.getMessage())
+               .build();
     }
     private ErrorMessage createError(ErrorType errorType, Exception exception,String message) {
         System.out.println("Hata olustu: "+exception.getMessage());
