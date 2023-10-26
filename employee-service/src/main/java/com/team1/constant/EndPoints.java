@@ -3,7 +3,7 @@ package com.team1.constant;
 public class EndPoints {
 
     public static final String VERSION="api/v1";
-    public static final String EMPLOYEE=VERSION+"/employee";
+    public static final String COMPANY=VERSION+"/company";
 
     //Genel
     public  static  final String FIND_ALL="/find_all";

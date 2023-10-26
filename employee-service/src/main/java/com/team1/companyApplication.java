@@ -2,10 +2,12 @@ package com.team1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-public class employeeApplication {
+@EnableFeignClients
+public class companyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(employeeApplication.class);
+        SpringApplication.run(companyApplication.class);
     }
 }

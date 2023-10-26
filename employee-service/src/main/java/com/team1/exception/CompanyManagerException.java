@@ -3,16 +3,16 @@ package com.team1.exception;
 import lombok.Getter;
 
 @Getter
-public class EmployeeManagerException extends RuntimeException {
+public class CompanyManagerException extends RuntimeException {
 
     private final ErrorType errorType;
 
-    public EmployeeManagerException(ErrorType errorType) {
+    public CompanyManagerException(ErrorType errorType) {
         super(errorType.getMessage());
         this.errorType = errorType;
     }
 
-    public EmployeeManagerException(ErrorType errorType, String customMessage){
+    public CompanyManagerException(ErrorType errorType, String customMessage){
         super(customMessage);
         this.errorType=errorType;
     }
