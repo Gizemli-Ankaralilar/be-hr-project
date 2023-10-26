@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class SaveUserRequestDto {
+public class SaveCompanyUserRequestDto {
+
     private Long authId;
     private String username;
     private String email;

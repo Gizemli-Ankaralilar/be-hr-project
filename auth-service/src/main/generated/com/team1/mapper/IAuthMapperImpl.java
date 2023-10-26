@@ -1,7 +1,6 @@
 package com.team1.mapper;
 
 import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.SaveUserRequestDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.rabbitmq.model.MailModel;
 import com.team1.repository.entity.Auth;
@@ -10,8 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2023-10-26T16:16:50+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8.1 (Amazon.com Inc.)"
+=======
+    date = "2023-10-26T16:37:10+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
+>>>>>>> master
 )
 @Component
 public class IAuthMapperImpl implements IAuthMapper {
@@ -45,6 +49,7 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         return registerResponseVisitorDto.build();
     }
+<<<<<<< HEAD
 
     @Override
     public SaveUserRequestDto toSaveUserRequestDto(Auth auth) {
@@ -75,4 +80,6 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         return mailModel.build();
     }
+=======
+>>>>>>> master
 }

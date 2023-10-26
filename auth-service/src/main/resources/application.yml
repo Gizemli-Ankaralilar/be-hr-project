@@ -10,6 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
+<<<<<<< HEAD
       ddl-auto: update
   rabbitmq:
     host: localhost
@@ -17,6 +18,9 @@ spring:
     username: hr-project
     password: 123
 
+=======
+      ddl-auto: create
+>>>>>>> master
 
 jwt:
   secretKey: ${secretKey}
