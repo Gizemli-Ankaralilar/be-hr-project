@@ -11,9 +11,10 @@
         </processorPath>
         <module name="HR-Project.auth-service.main" />
         <module name="HR-Project.email-service.main" />
+        <module name="HR-Project.config-server.main" />
         <module name="HR-Project.user-service.main" />
-        <module name="HR-Project.company-service.main" />
         <module name="HR-Project.employee-service.main" />
+        <module name="HR-Project.company-service.main" />
         <module name="HR-Project.main" />
       </profile>
     </annotationProcessing>
