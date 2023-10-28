@@ -1,6 +1,7 @@
 package com.team1.mapper;
 
 import com.team1.dto.request.RegisterRequestCompanyDto;
+import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseCompanyDto;
 import com.team1.repository.entity.Company;
 import javax.annotation.processing.Generated;
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-25T12:52:51+0300",
-    comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.2.jar, environment: Java 17.0.8 (Oracle Corporation)"
+    date = "2023-10-28T22:41:23+0300",
+    comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.2.jar, environment: Java 17.0.8.1 (Amazon.com Inc.)"
 )
 @Component
 public class ICompanyMapperImpl implements ICompanyMapper {
@@ -42,5 +43,19 @@ public class ICompanyMapperImpl implements ICompanyMapper {
         RegisterResponseCompanyDto registerResponseCompanyDto = new RegisterResponseCompanyDto();
 
         return registerResponseCompanyDto;
+    }
+
+    @Override
+    public RegisterRequestVisitorDto toRequestVisitorDto(Company company) {
+        if ( company == null ) {
+            return null;
+        }
+
+        RegisterRequestVisitorDto.RegisterRequestVisitorDtoBuilder registerRequestVisitorDto = RegisterRequestVisitorDto.builder();
+
+        registerRequestVisitorDto.username( company.getUsername() );
+        registerRequestVisitorDto.password( company.getPassword() );
+
+        return registerRequestVisitorDto.build();
     }
 }

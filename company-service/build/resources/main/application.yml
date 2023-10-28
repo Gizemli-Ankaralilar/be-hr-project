@@ -3,8 +3,8 @@ server:
 
 spring:
   datasource:
-    username: postgres
-    password: yigitcanA96.
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://localhost:5432/HRCompany
     driver-class-name: org.postgresql.Driver
   jpa:
