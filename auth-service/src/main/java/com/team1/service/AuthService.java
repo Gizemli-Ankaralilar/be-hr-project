@@ -26,9 +26,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
     private final MailRegisterProducer mailProducer;
-
     private final MailActivateProducer activateProducer;
-
     private final IUserProfileManager iUserProfileManager;
 
 
@@ -42,15 +40,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
     @Transactional
-    public Boolean register(RegisterRequestVisitorDto dto) {
+    public RegisterResponseVisitorDto register(RegisterRequestVisitorDto dto) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
         auth.setActivationCode(CodeGenerator.generateCode());
+
         if (authRepository.existsByUsername(dto.getUsername())) {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
-        save(auth);
-        String token = jwtTokenManager.createToken(auth.getId(), auth.getRole())
-                .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+            save(auth);
 
         //TODO  User mapper kullan
 /*        iUserProfileManager.save(RegisterRequestUserDto.builder()
@@ -61,14 +58,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
         iUserProfileManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
 
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
-        //String token = jwtTokenManager.createToken(auth.getId()).orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
-        //responseVisitorDto.setToken(token);
+        String token = jwtTokenManager.createToken(auth.getId())
+                .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+        responseVisitorDto.setToken(token);
 
         MailRegisterModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
         mailModel.setToken(token);
         mailProducer.sendActivationCode(mailModel);
 
-        return true;
+        return responseVisitorDto;
     }
 
     public String login(LoginRequestDto dto) {

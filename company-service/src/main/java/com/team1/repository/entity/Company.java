@@ -34,7 +34,7 @@ public class Company extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EFieldOfWork fieldOfWork = EFieldOfWork.BOS;//ENUM DEĞERLERİ GİRİLECEK
-    private String role = "COMPANY_OWNER";
+    //private String role = "COMPANY_OWNER";
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status = EStatus.INACTIVE;

@@ -25,7 +25,7 @@ public class AuthController {
     private final JwtTokenManager jwtTokenManager;
 
     @PostMapping(REGISTER)
-    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
+    public ResponseEntity<RegisterResponseVisitorDto> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
 

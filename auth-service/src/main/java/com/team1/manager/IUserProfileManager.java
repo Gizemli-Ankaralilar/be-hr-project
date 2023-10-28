@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.team1.constant.EndPoints.*;
 
-@FeignClient(name = "user-profile-manager", url = "http://localhost:9094/user",
+@FeignClient(name = "user-profile-manager", url = "http://localhost:9094/api/v1/user",
 decode404 = true)
 public interface IUserProfileManager {
 
