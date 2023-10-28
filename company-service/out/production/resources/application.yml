@@ -4,10 +4,10 @@ server:
 spring:
   datasource:
     username: postgres
-    password: yigitcanA96.
+    password: 123456789
     url: jdbc:postgresql://localhost:5432/HRCompany
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update

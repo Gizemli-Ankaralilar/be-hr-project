@@ -23,13 +23,29 @@ public class RabbitMqConfig {
         return new DirectExchange(exchange);
     }
 
+    private String mailRegisterQueue = "mail-register-queue";
+    private String mailRegisterBinding = "mail-register-binding";
+
     @Bean
-    public Queue mailQueue(){
-        return new Queue(mailQueueName);
+    Queue mailRegisterQueue(){
+        return new Queue(mailRegisterQueue);
+    }
+    @Bean
+    public Binding mailRegisterBinding(final Queue mailRegisterQueue, final DirectExchange authExchange){
+        return BindingBuilder.bind(mailRegisterQueue).to(authExchange).with(mailRegisterBinding);
+    }
+
+    //Mail activate sender producer
+    private String mailActivateQueue = "mail-activate-queue";
+    private String mailActivateBinding = "mail-activate-binding";
+
+    @Bean
+    Queue mailActivateQueue(){
+        return new Queue(mailActivateQueue);
     }
 
     @Bean
-    public Binding bindingMail(final Queue mailQueue, final DirectExchange exchange) {
-        return BindingBuilder.bind(mailQueue).to(exchange).with(mailBindingKey);
+    public Binding mailActivateBinding(final Queue mailActivateQueue, final DirectExchange authExchange){
+        return BindingBuilder.bind(mailActivateQueue).to(authExchange).with(mailActivateBinding);
     }
 }

@@ -1,13 +1,14 @@
 package com.team1.service;
 
-import com.team1.dto.request.ActivateRequestDto;
-import com.team1.dto.request.LoginRequestDto;
-import com.team1.dto.request.RegisterRequestCompanyDto;
-import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.*;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
+import com.team1.manager.IUserProfileManager;
 import com.team1.mapper.IAuthMapper;
+import com.team1.rabbitmq.model.MailRegisterModel;
+import com.team1.rabbitmq.producer.MailActivateProducer;
+import com.team1.rabbitmq.producer.MailRegisterProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
 import com.team1.repository.enums.EStatus;
@@ -24,12 +25,20 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
+    private final MailRegisterProducer mailProducer;
+
+    private final MailActivateProducer activateProducer;
+
+    private final IUserProfileManager iUserProfileManager;
 
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager) {
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, MailRegisterProducer mailProducer, MailActivateProducer activateProducer, IUserProfileManager iUserProfileManager) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
+        this.mailProducer = mailProducer;
+        this.activateProducer = activateProducer;
+        this.iUserProfileManager = iUserProfileManager;
     }
 
     @Transactional
@@ -40,11 +49,25 @@ public class AuthService extends ServiceManager<Auth, Long> {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
         save(auth);
+        String token = jwtTokenManager.createToken(auth.getId(), auth.getRole())
+                .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
 
+        //TODO  User mapper kullan
+/*        iUserProfileManager.save(RegisterRequestUserDto.builder()
+                .authId(auth.getId())
+                .username(auth.getUsername())
+                .email(auth.getEmail()).build());*/
+
+        iUserProfileManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
 
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
-        String token = jwtTokenManager.createToken(auth.getId()).orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
-        responseVisitorDto.setToken(token);
+        //String token = jwtTokenManager.createToken(auth.getId()).orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+        //responseVisitorDto.setToken(token);
+
+        MailRegisterModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
+        mailModel.setToken(token);
+        mailProducer.sendActivationCode(mailModel);
+
         return true;
     }
 

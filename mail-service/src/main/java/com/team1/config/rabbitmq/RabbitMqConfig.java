@@ -8,10 +8,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
-    @Value("${rabbitmq.mail-queue}")
-    private String  mailQueueName;
+    //Auth register consumer
+    private String mailRegisterQueue = "mail-register-queue";
     @Bean
-    public Queue mailQueue(){
-        return new Queue(mailQueueName);
+    Queue mailRegisterQueue(){
+        return new Queue(mailRegisterQueue);
+    }
+
+    //Auth activateManager consumer
+    private String mailActivateQueue = "mail-activate-queue";
+
+    Queue mailActivateQueue(){
+        return new Queue(mailActivateQueue);
+    }
+
+
+    //Auth forgotPass consumer
+    private String forgotPassMailQueue = "forgot-pass-mail-queue";
+    @Bean
+    Queue forgotPassMailQueue(){
+        return new Queue(forgotPassMailQueue);
     }
 }

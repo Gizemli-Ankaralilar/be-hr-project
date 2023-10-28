@@ -32,9 +32,9 @@ public class UserService extends ServiceManager<UserProfile, Long> {
 
     public Boolean saveUser(SaveUserRequestDto dto) {
         try {
-//            UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(dto);
-//            return save(userProfile);
-            return null;
+            UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(dto);
+            save(userProfile);
+            return true;
         }catch (Exception e) {
             throw new UserManagerException(ErrorType.BAD_REQUEST);
         }
