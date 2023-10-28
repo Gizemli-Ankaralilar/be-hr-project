@@ -3,8 +3,8 @@ server:
 
 spring:
   datasource:
-    username: postgres
-    password: yigitcanA96.
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://localhost:5432/HRAuth
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -12,14 +12,11 @@ spring:
     hibernate:
       ddl-auto: update
 
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: hr-project
-#    password: 123
-#
-#    ddl-auto: create
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 123456789
 
 jwt:
   secretKey: ${secretKey}

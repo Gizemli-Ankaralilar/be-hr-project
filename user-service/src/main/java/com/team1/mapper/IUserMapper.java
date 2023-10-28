@@ -11,5 +11,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IUserMapper {
     IUserMapper INSTANCE = Mappers.getMapper(IUserMapper.class);
+    UserProfile toUserProfile(SaveUserRequestDto dto);
 
 }
