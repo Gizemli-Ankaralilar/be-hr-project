@@ -14,4 +14,5 @@ public class EndPoints {
 
     ///Company
     public  static  final String REGISTER="/register";
+    public static final String SAVE_COMPANY=VERSION+"/save_company";
 }

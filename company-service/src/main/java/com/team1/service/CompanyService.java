@@ -1,11 +1,11 @@
 package com.team1.service;
 
 import com.team1.dto.request.ActivateRequestDto;
-import com.team1.dto.request.RegisterRequestCompanyDto;
-import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.RegisterSaveCompanyDto;
+import com.team1.dto.request.SaveCompanyDto;
 import com.team1.exception.CompanyManagerException;
 import com.team1.exception.ErrorType;
-import com.team1.manager.IAuthmanager;
+import com.team1.manager.ICompanyAuthManager;
 import com.team1.mapper.ICompanyMapper;
 import com.team1.repository.entity.Company;
 import com.team1.repository.entity.ICompanyRepository;
@@ -25,28 +25,31 @@ public class CompanyService  extends ServiceManager<Company, Long> {
     private final ICompanyRepository companyRepository;
     private final JwtTokenManager jwtTokenManager;
 
-    private final IAuthmanager authmanager;
+    private final ICompanyAuthManager companyAuthManager;
 
 
-    public CompanyService(ICompanyRepository companyRepository, JwtTokenManager jwtTokenManager, IAuthmanager authmanager) {
+    public CompanyService(ICompanyRepository companyRepository, JwtTokenManager jwtTokenManager, ICompanyAuthManager companyAuthManager) {
         super(companyRepository);
         this.companyRepository = companyRepository;
         this.jwtTokenManager = jwtTokenManager;
-        this.authmanager = authmanager;
+        this.companyAuthManager = companyAuthManager;
     }
 
 
     @Transactional
-    public Boolean register(@Valid RegisterRequestCompanyDto dto) {
+    public Boolean register(@Valid SaveCompanyDto dto) {
         Company company = ICompanyMapper.INSTANCE.toCompany(dto);
         company.setActivationCode(CodeGenerator.generateCode());
         if(!dto.getTaxNumber().isEmpty()) {
-            authmanager.register(ICompanyMapper.INSTANCE.toRequestVisitorDto(company));
             save(company);
-
+            //companyAuthManager.companyRegister(ICompanyMapper.INSTANCE.toSaveCompany(company));
+            companyAuthManager.companyRegister(RegisterSaveCompanyDto.builder().companyId(company.getId()).//comanyId geliyor ancak tabloya eklenmiyor
+                    username(company.getUsername()).email(company.getEmail()).password(company.getPassword()).build());
         }else {
 
-            authmanager.register(ICompanyMapper.INSTANCE.toRequestVisitorDto(company));
+            //companyAuthManager.companyRegister(ICompanyMapper.INSTANCE.toSaveCompany(company));
+            companyAuthManager.companyRegister(RegisterSaveCompanyDto.builder().
+                    username(company.getUsername()).email(company.getEmail()).password(company.getPassword()).build());
 
         }
         //Burada kullanıcıya bilgilendirme yapılması gerekli.

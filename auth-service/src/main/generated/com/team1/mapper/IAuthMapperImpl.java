@@ -1,8 +1,8 @@
 package com.team1.mapper;
 
-import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestUserDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.rabbitmq.model.MailActivateModel;
 import com.team1.rabbitmq.model.MailRegisterModel;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-28T22:54:57+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8.1 (Amazon.com Inc.)"
+    date = "2023-10-29T23:18:25+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
 public class IAuthMapperImpl implements IAuthMapper {
@@ -64,7 +64,7 @@ public class IAuthMapperImpl implements IAuthMapper {
     }
 
     @Override
-    public Auth toAuth(RegisterRequestCompanyDto dto) {
+    public Auth toAuthCompany(RegisterSaveCompanyDto dto) {
         if ( dto == null ) {
             return null;
         }
@@ -73,6 +73,7 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         auth.username( dto.getUsername() );
         auth.password( dto.getPassword() );
+        auth.email( dto.getEmail() );
 
         return auth.build();
     }

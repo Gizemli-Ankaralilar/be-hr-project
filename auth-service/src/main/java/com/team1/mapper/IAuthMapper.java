@@ -1,6 +1,6 @@
 package com.team1.mapper;
 
-import com.team1.dto.request.RegisterRequestCompanyDto;
+import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.request.RegisterRequestUserDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
@@ -22,12 +22,11 @@ public interface IAuthMapper {
     @Mapping(source = "id",target = "authId")
     RegisterRequestUserDto toUserSaveRequestDto(Auth auth);
 
+    Auth toAuthCompany(RegisterSaveCompanyDto dto);
 
-    Auth toAuth(RegisterRequestCompanyDto dto);
-//    @Mapping(source = "id", target = "authId")
-//    RegisterRequestCompanyDto toCompanyRegisterDto(Auth auth);
 
     MailRegisterModel toMailModel(Auth auth);
     MailActivateModel fromAuthToMailActivateModel(final Auth auth);
+
 
 }

@@ -9,14 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class RegisterRequestCompanyDto {
+public class RegisterSaveCompanyDto {
+    private Long companyId;
     private String username;
-    private String password;
     private String email;
-    private String companyName;
-    private String taxNumber;
-    private String companyEmail;
-    private String companyAddress;
-    private String companyPhoneNumber;
+    private String password;
 
 }
