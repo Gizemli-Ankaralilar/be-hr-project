@@ -26,6 +26,7 @@ public class Company extends BaseEntity{
     private String username;
     private String password;
     private String companyName;
+    private String email;
     private String taxNumber;
     private String companyEmail;
     private String companyAddress;

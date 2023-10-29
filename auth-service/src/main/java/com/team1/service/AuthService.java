@@ -40,7 +40,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
     @Transactional
-    public RegisterResponseVisitorDto register(RegisterRequestVisitorDto dto) {
+    public Boolean register(RegisterRequestVisitorDto dto) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
         auth.setActivationCode(CodeGenerator.generateCode());
 
@@ -57,16 +57,27 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
         iUserProfileManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
 
-        RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+        //RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token = jwtTokenManager.createToken(auth.getId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
-        responseVisitorDto.setToken(token);
+        //responseVisitorDto.setToken(token);
 
         MailRegisterModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
         mailModel.setToken(token);
         mailProducer.sendActivationCode(mailModel);
 
-        return responseVisitorDto;
+        return true;
+    }
+
+    public Boolean companySave(RegisterSaveCompanyDto dto) {
+        try {
+            Auth auth = IAuthMapper.INSTANCE.toAuthCompany(dto);
+            save(auth);
+            iUserProfileManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
+            return true;
+        } catch (Exception e) {
+            throw new AuthManagerException(ErrorType.BAD_REQUEST);
+        }
     }
 
     public String login(LoginRequestDto dto) {
@@ -106,18 +117,5 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
     }
 
-    @Transactional
-    public String companyRegister(RegisterRequestCompanyDto dto) {
-        if (!dto.getTaxNumber().isEmpty()){
-            //company servise yönlendir
-        }
-        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
-        auth.setActivationCode(CodeGenerator.generateCode());
-        if (authRepository.existsByUsername(dto.getUsername())) {
-            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
-        }
-        save(auth);
-        return "Your company registration could not be made because the tax identification number " +
-                "was not entered. Please check your mail to activate your visitor registration.";
-    }
+
 }

@@ -1,6 +1,6 @@
 package com.team1.controller;
-import com.team1.dto.request.RegisterRequestCompanyDto;
-import com.team1.dto.response.RegisterResponseCompanyDto;
+import com.team1.dto.request.RegisterSaveCompanyDto;
+import com.team1.dto.request.SaveCompanyDto;
 import com.team1.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class CompanyController {
     }
 
     @PostMapping(REGISTER)
-    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestCompanyDto dto){
+    public ResponseEntity<Boolean> register(@RequestBody @Valid SaveCompanyDto dto){
         return ResponseEntity.ok(companyService.register(dto));
     }
 }

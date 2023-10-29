@@ -16,5 +16,5 @@ public class EndPoints {
     public  static  final String REGISTER="/register";
     public  static  final String LOGIN="/login";
     public  static  final String ACTIVATE_STATUS="/activate_status";
-    public static final String COMPANY_REGISTER=VERSION+"/company_register";
+    public static final String SAVE_COMPANY=VERSION+"/save_company";
 }

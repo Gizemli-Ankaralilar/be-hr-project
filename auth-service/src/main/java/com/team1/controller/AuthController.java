@@ -2,8 +2,8 @@ package com.team1.controller;
 
 import com.team1.dto.request.ActivateRequestDto;
 import com.team1.dto.request.LoginRequestDto;
-import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.service.AuthService;
 import com.team1.utility.JwtTokenManager;
@@ -25,13 +25,13 @@ public class AuthController {
     private final JwtTokenManager jwtTokenManager;
 
     @PostMapping(REGISTER)
-    public ResponseEntity<RegisterResponseVisitorDto> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
+    public ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
 
-    @PostMapping(COMPANY_REGISTER)
-    public ResponseEntity<String> companyRegister(@RequestBody @Valid RegisterRequestCompanyDto dto){
-        return ResponseEntity.ok(authService.companyRegister(dto));
+    @PostMapping(SAVE_COMPANY)
+    public ResponseEntity<Boolean> companyRegister(@RequestBody @Valid RegisterSaveCompanyDto dto){
+        return ResponseEntity.ok(authService.companySave(dto));
     }
 
     @PostMapping(LOGIN)
