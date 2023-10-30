@@ -7,8 +7,6 @@ x
 Hauth-service/src/main/java/com/team1/dto/request/ActivateRequestDto.java,8\6\8660d7794324c8dbac4d91e68a5f58ee51ffcb26
 u
 Eauth-service/src/main/java/com/team1/dto/request/LoginRequestDto.java,7\9\795e2ae2ed0f3aa221a0b4360cbcc81d5dd4a1bd
-
-Oauth-service/src/main/java/com/team1/dto/request/RegisterRequestCompanyDto.java,2\f\2fe2edf00f79aa9f942ba969b7b2ceb3bd70fca2
 |
 Lauth-service/src/main/java/com/team1/dto/request/RegisterRequestUserDto.java,1\9\1997fcda0f7980e1f0fe61f74852d78c0c758f7c
 
@@ -59,7 +57,5 @@ z
 Jmail-service/src/main/java/com/team1/rabbitmq/model/MailActivateModel.java,0\3\035756dfecf4964f88beca30ebdcc14cd0060a9d
 z
 Jmail-service/src/main/java/com/team1/rabbitmq/model/MailRegisterModel.java,a\d\adc4221c11a6c6ce16b6d1b735717b18862ca9ae
-m
-=mail-service/src/main/java/com/team1/service/MailService.java,b\0\b082f26e13bd270eac46d3bc2eb69c8a6bd15636
 j
 :mail-service/src/main/java/com/team1/utility/IService.java,1\8\18f067ee5ffa405b6afca2757a400f1cfe1d0e58

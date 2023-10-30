@@ -21,7 +21,7 @@ public class MailService{
         mailMessage.setSubject("AKTIVASYON KODU");
         mailMessage.setText(
                 mailRegisterModel.getName() + " " + mailRegisterModel.getSurname() + " başarıyla kayıt oldunuz.\n" +
-                        "Aktivasyon Link: " + "http://34.155.188.71/auth/activate-status?token="+mailRegisterModel.getToken()
+                        "Aktivasyon Link: " + "http://localhost:9090/api/v1/auth/activate_status?token="+mailRegisterModel.getToken()
 
         );
         javaMailSender.send(mailMessage);
