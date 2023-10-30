@@ -36,22 +36,22 @@ public class CompanyController {
     // APOOO
 
 
-    @GetMapping(FINDALL)
-    public ResponseEntity<List<Company>> findAll(){
-        return ResponseEntity.ok(companyService.findAllCompanies());
-    }
+//    @GetMapping(FINDALL)
+//    public ResponseEntity<List<Company>> findAll(){
+//        return ResponseEntity.ok(companyService.findAllCompanies());
+//    }
 
-    @PutMapping(UPDATE)
-    @CrossOrigin("*")
-    public ResponseEntity<Company> updateCompany(@PathVariable String taxNumber, @RequestBody UpdateCompanyRequestDto dto){
-        Company company = companyService.updateCompany(taxNumber, dto);
-        return new ResponseEntity<>(company, HttpStatus.OK);
-    }
+//    @PutMapping(UPDATE)
+//    @CrossOrigin("*")
+//    public ResponseEntity<Company> updateCompany(@PathVariable String taxNumber, @RequestBody UpdateCompanyRequestDto dto){
+//        Company company = companyService.updateCompany(taxNumber, dto);
+//        return new ResponseEntity<>(company, HttpStatus.OK);
+//    }
 
-    @DeleteMapping(DELETE)
-    public ResponseEntity<Boolean> deleteCompany(@RequestBody @PathVariable String taxNumber){
-        return ResponseEntity.ok(companyService.deleteCompany(taxNumber));
-    }
+//    @DeleteMapping(DELETE)
+//    public ResponseEntity<Boolean> deleteCompany(@RequestBody @PathVariable String taxNumber){
+//        return ResponseEntity.ok(companyService.deleteCompany(taxNumber));
+//    }
 
 
 }

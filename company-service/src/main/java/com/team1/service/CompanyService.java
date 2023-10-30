@@ -48,13 +48,13 @@ public class CompanyService  extends ServiceManager<Company, String> {
         if(!dto.getTaxNumber().isEmpty()) {
             save(company);
             //companyAuthManager.companyRegister(ICompanyMapper.INSTANCE.toSaveCompany(company));
-            companyAuthManager.companyRegister(RegisterSaveCompanyDto.builder().companyId(company.getId()).//comanyId geliyor ancak tabloya eklenmiyor
-                    username(company.getUsername()).email(company.getEmail()).password(company.getPassword()).build());
+//            companyAuthManager.companyRegister(RegisterSaveCompanyDto.builder().companyId(company.getId()).//comanyId geliyor ancak tabloya eklenmiyor
+//                    username(company.getUsername()).email(company.getEmail()).password(company.getPassword()).build());
         }else {
 
             //companyAuthManager.companyRegister(ICompanyMapper.INSTANCE.toSaveCompany(company));
-            companyAuthManager.companyRegister(RegisterSaveCompanyDto.builder().
-                    username(company.getUsername()).email(company.getEmail()).password(company.getPassword()).build());
+//            companyAuthManager.companyRegister(RegisterSaveCompanyDto.builder().
+//                    username(company.getUsername()).email(company.getEmail()).password(company.getPassword()).build());
 
         }
         //Burada kullanıcıya bilgilendirme yapılması gerekli.
@@ -97,28 +97,28 @@ public class CompanyService  extends ServiceManager<Company, String> {
 
 
 
-    @Transactional(readOnly = true)
-    public List<Company> findAllCompanies() {
-        return companyRepository.findAll();
-    }
-
-    public Company updateCompany(String taxNumber, UpdateCompanyRequestDto dto){
-        Company company = companyRepository.findByTaxNumber(taxNumber)
-                .orElseThrow(() -> new CompanyException(ErrorType.COMPANY_NOT_FOUND));
-        company.setCompanyName(dto.getCompanyName());
-        company.setTaxNumber(dto.getTaxNumber());
-        company.setEmail(dto.getEmail());
-        company.setUpdateDate(company.getUpdateDate());
-        return companyRepository.save(company);
-    }
-
-    @Transactional
-    public Boolean deleteCompany(String taxNumber){
-        Optional<Company> company = companyRepository.findByTaxNumber(taxNumber);
-        if (company.isEmpty()){
-            throw new CompanyException(ErrorType.COMPANY_NOT_FOUND);
-        }
-        companyRepository.delete(company.get());
-        return true;
-    }
+//    @Transactional(readOnly = true)
+//    public List<Company> findAllCompanies() {
+//        return companyRepository.findAll();
+//    }
+//
+////    public Company updateCompany(String taxNumber, UpdateCompanyRequestDto dto){
+////        Company company = companyRepository.findByTaxNumber(taxNumber)
+////                .orElseThrow(() -> new CompanyException(ErrorType.COMPANY_NOT_FOUND));
+////        company.setCompanyName(dto.getCompanyName());
+////        company.setTaxNumber(dto.getTaxNumber());
+////        company.setEmail(dto.getEmail());
+////        company.setUpdateDate(company.getUpdateDate());
+////        return companyRepository.save(company);
+////    }
+//
+//    @Transactional
+//    public Boolean deleteCompany(String taxNumber){
+//        Optional<Company> company = companyRepository.findByTaxNumber(taxNumber);
+//        if (company.isEmpty()){
+//            throw new CompanyException(ErrorType.COMPANY_NOT_FOUND);
+//        }
+//        companyRepository.delete(company.get());
+//        return true;
+//    }
 }

@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface ICompanyRepository extends MongoRepository<Company, String> {
 
-    Optional<Company> findByTaxNumber(String taxNumber);
-
-    boolean existsByTaxNumberOrName(String taxNumber,String name);
-
-    Optional<Company> findByTaxNumberAndName(String taxNumber,String name);
+//    Optional<Company> findByTaxNumber(String taxNumber);
+//
+//    boolean existsByTaxNumberOrName(String taxNumber,String name);
+//
+//    Optional<Company> findByTaxNumberAndName(String taxNumber,String name);
 }

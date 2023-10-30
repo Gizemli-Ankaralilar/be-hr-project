@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-29T23:18:25+0300",
+    date = "2023-10-30T17:51:39+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
@@ -59,6 +59,7 @@ public class IAuthMapperImpl implements IAuthMapper {
         registerRequestUserDto.authId( auth.getId() );
         registerRequestUserDto.username( auth.getUsername() );
         registerRequestUserDto.email( auth.getEmail() );
+        registerRequestUserDto.password( auth.getPassword() );
 
         return registerRequestUserDto.build();
     }
@@ -74,6 +75,7 @@ public class IAuthMapperImpl implements IAuthMapper {
         auth.username( dto.getUsername() );
         auth.password( dto.getPassword() );
         auth.email( dto.getEmail() );
+        auth.companyId( dto.getCompanyId() );
 
         return auth.build();
     }
