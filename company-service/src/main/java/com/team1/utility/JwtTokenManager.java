@@ -4,10 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.team1.exception.CompanyManagerException;
+import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.repository.enums.ERole;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -58,13 +57,13 @@ public class JwtTokenManager {
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).build();
             DecodedJWT decodedJWT=verifier.verify(token);
             if (decodedJWT==null){
-                throw new CompanyManagerException(ErrorType.INVALID_TOKEN);
+                throw new CompanyException(ErrorType.INVALID_TOKEN);
             }
             Long id=decodedJWT.getClaim("myId").asLong();
             return Optional.of(id);
         }catch (Exception e){
             System.out.println(e.toString());
-            throw  new CompanyManagerException(ErrorType.INVALID_TOKEN);
+            throw  new CompanyException(ErrorType.INVALID_TOKEN);
         }
     }
 
@@ -75,13 +74,13 @@ public class JwtTokenManager {
             JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).build();
             DecodedJWT decodedJWT=verifier.verify(token);
             if (decodedJWT==null){
-                throw new CompanyManagerException(ErrorType.INVALID_TOKEN);
+                throw new CompanyException(ErrorType.INVALID_TOKEN);
             }
             String role=decodedJWT.getClaim("role").asString();
             return Optional.of(role);
         }catch (Exception e){
             System.out.println(e.toString());
-            throw  new CompanyManagerException(ErrorType.INVALID_TOKEN);
+            throw  new CompanyException(ErrorType.INVALID_TOKEN);
         }
     }
 }
