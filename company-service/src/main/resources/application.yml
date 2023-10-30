@@ -2,12 +2,10 @@ server:
   port: 9091
 
 spring:
-  datasource:
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
-    url: jdbc:postgresql://localhost:5432/HRCompany
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create
+  data:
+    mongodb:
+      host: localhost
+      port: 27010
+      username: root
+      password: 123456789
+      database: HRCompany

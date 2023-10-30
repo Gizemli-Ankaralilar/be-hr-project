@@ -48,4 +48,5 @@ public class RabbitMqConfig {
     public Binding mailActivateBinding(final Queue mailActivateQueue, final DirectExchange authExchange){
         return BindingBuilder.bind(mailActivateQueue).to(authExchange).with(mailActivateBinding);
     }
+    //
 }

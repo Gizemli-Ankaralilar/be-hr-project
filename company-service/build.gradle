@@ -2,5 +2,5 @@ dependencies{
 //    implementation libs.postgresql
 //    implementation libs.springBootJpa
     implementation libs.springBootDataMongo
-    implementation libs.springCloudConfigClient
+    //implementation libs.springCloudConfigClient
 }
