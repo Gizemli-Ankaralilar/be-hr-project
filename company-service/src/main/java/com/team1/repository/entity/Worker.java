@@ -18,14 +18,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Worker extends BaseEntity{
     @Id
     private String id;
-    private String authId;
+    private String authId; // eş zamamanlı haberleşme ile oluşan auth id ye eklenicek
     //private String userId;
     private String companyId;//BİR TANE COMPANYID ÜZERİNDEN HEM USER HEM AUTH OLUŞUYOR
     private String password;
     @Builder.Default
     private ERole role = ERole.WORKER;
+    private String firstName;
     private String lastName;
-    private String surName;
     private String phone;
     private String address;
     private String userAvatar;
