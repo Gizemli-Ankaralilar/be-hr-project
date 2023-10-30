@@ -4,7 +4,7 @@ import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.request.SaveCompanyDto;
 import com.team1.dto.response.RegisterResponseCompanyDto;
-import com.team1.repository.entity.Company;
+
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 

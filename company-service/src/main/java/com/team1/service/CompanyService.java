@@ -7,20 +7,20 @@ import com.team1.exception.CompanyManagerException;
 import com.team1.exception.ErrorType;
 import com.team1.manager.ICompanyAuthManager;
 import com.team1.mapper.ICompanyMapper;
+import com.team1.repository.ICompanyRepository;
 import com.team1.repository.entity.Company;
-import com.team1.repository.entity.ICompanyRepository;
 import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
 import javax.validation.Valid;
 import java.util.Optional;
 
 @Service
-public class CompanyService  extends ServiceManager<Company, Long> {
+public class CompanyService  extends ServiceManager<Company, String> {
 
     private final ICompanyRepository companyRepository;
     private final JwtTokenManager jwtTokenManager;
@@ -36,7 +36,7 @@ public class CompanyService  extends ServiceManager<Company, Long> {
     }
 
 
-    @Transactional
+
     public Boolean register(@Valid SaveCompanyDto dto) {
         Company company = ICompanyMapper.INSTANCE.toCompany(dto);
         company.setActivationCode(CodeGenerator.generateCode());
@@ -58,13 +58,13 @@ public class CompanyService  extends ServiceManager<Company, Long> {
 
     }
 
-    @Transactional
+
     public String activateStatus(ActivateRequestDto dto) {
         Optional<Long> id = jwtTokenManager.getIdFromToken(dto.getToken());
         if (id.isEmpty()) {
             throw new CompanyManagerException(ErrorType.INVALID_TOKEN);
         }
-        Optional<Company> optionalCompany = findById(id.get());
+        Optional<Company> optionalCompany = findById((id.get()).toString());
         if (optionalCompany.isEmpty()) {
             throw new CompanyManagerException(ErrorType.USER_NOT_FOUND);
         }
