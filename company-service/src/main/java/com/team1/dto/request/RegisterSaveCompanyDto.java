@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RegisterSaveCompanyDto {
-    private Long companyId;
+    private String companyId;
     private String username;
     private String email;
     private String password;
