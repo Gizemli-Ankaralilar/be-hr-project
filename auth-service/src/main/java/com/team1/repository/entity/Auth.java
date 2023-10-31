@@ -32,4 +32,5 @@ public class Auth extends BaseEntity{
     @Builder.Default
     private EStatus status = EStatus.PENDING;
     private String companyId;
+    private String workerId;
 }

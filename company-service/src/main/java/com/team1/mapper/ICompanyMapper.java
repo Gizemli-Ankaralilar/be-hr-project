@@ -3,8 +3,12 @@ package com.team1.mapper;
 import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.request.SaveCompanyDto;
+import com.team1.dto.request.SaveWorkerDto;
 import com.team1.dto.response.RegisterResponseCompanyDto;
+import com.team1.rabbitmq.model.CreateWorkerAuthModel;
+import com.team1.rabbitmq.model.QueryAuthIdModel;
 import com.team1.repository.entity.Company;
+import com.team1.repository.entity.Worker;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -24,6 +28,11 @@ public interface ICompanyMapper {
     RegisterSaveCompanyDto toSaveCompany(Company company);
     RegisterResponseCompanyDto toRegisterResponseDto(Company company);
 
+    Worker toSaveWorker(SaveWorkerDto dto);
+
+    CreateWorkerAuthModel toSaveWorkerAuth(Worker worker);
+    @Mapping(source = "id", target = "workerId")
+    QueryAuthIdModel toWorkerIdAuth(Worker worker);
 
 
 }

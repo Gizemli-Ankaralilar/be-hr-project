@@ -9,3 +9,8 @@ spring:
       username: root
       password: 123456789
       database: HRCompany
+
+rabbitmqKey:
+  auth-exchange: auth-exchange
+  register-binding-key: binding-key
+  register-queue: register-queue

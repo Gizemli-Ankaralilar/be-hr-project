@@ -34,13 +34,6 @@ public class Company extends BaseEntity{
     private String companyEmail;
     private String companyAddress;
     private String companyPhoneNumber;
-
-
-    // entity ekledim apooo
-    private Integer numberOfWorkers;;
-    private LocalDate yearOfEstablishment;;
-
-
     private String activationCode;//şirket için oluşturulan activate kod hem veri tabanına eklenir hemde maili gönderilir.
     @Builder.Default
     private ERole role = ERole.COMPANY_OWNER;
