@@ -13,15 +13,15 @@ public class CreateAuthProducer {
 
     @Value("${rabbitmqKey.auth-exchange}")
     private String exchange = "auth-exchange";
-    @Value("${rabbitmqKey.register-queue}")
-    private String createAuthBindingKey = "auth-company-bindingkey";
+    @Value("${rabbitmqKey.register-binding-key}")
+    private String createAuthBindingKey = "binding-key";
 
 
 
     private final RabbitTemplate rabbitTemplate;//Rabbitteki bütün işlemleri bu arkadaş yapıyor
 
     //company den direk uzur kaydı oluşturmak için
-    public void createAuth(CreateAuthModel model){
+    public void createSaveAuth(CreateAuthModel model){
         rabbitTemplate.convertAndSend(exchange,createAuthBindingKey, model);
     }
 }

@@ -4,6 +4,13 @@ networks:
   java_10_network:
     driver: bridge
 services:
+#  zipkin:
+#    image: openzipkin/zipkin:latest
+#    container_name: java_10_zipkin
+#    ports:
+#      - "9411:9411"
+#    networks:
+#      - java_10_network
 
   rabbitmq:
     image: rabbitmq:3-management
