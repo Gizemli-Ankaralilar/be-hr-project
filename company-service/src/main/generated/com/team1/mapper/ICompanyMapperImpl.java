@@ -1,10 +1,11 @@
 package com.team1.mapper;
 
 import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.request.SaveCompanyDto;
 import com.team1.dto.request.SaveWorkerDto;
 import com.team1.dto.response.RegisterResponseCompanyDto;
+import com.team1.rabbitmq.model.CreateAuthModel;
+import com.team1.rabbitmq.model.CreateCompanyAuthModel;
 import com.team1.rabbitmq.model.CreateWorkerAuthModel;
 import com.team1.rabbitmq.model.QueryAuthIdModel;
 import com.team1.repository.entity.Company;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-31T19:34:15+0300",
+    date = "2023-10-31T21:54:38+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
@@ -54,21 +55,34 @@ public class ICompanyMapperImpl implements ICompanyMapper {
     }
 
     @Override
-    public RegisterSaveCompanyDto toSaveCompany(Company company) {
+    public CreateCompanyAuthModel toSaveCompanyRabbit(Company company) {
         if ( company == null ) {
             return null;
         }
 
-        RegisterSaveCompanyDto.RegisterSaveCompanyDtoBuilder registerSaveCompanyDto = RegisterSaveCompanyDto.builder();
+        CreateCompanyAuthModel.CreateCompanyAuthModelBuilder createCompanyAuthModel = CreateCompanyAuthModel.builder();
 
-        registerSaveCompanyDto.companyId( company.getId() );
-        registerSaveCompanyDto.username( company.getUsername() );
-        registerSaveCompanyDto.email( company.getEmail() );
-        registerSaveCompanyDto.password( company.getPassword() );
-        registerSaveCompanyDto.companyName( company.getCompanyName() );
-        registerSaveCompanyDto.taxNumber( company.getTaxNumber() );
+        createCompanyAuthModel.companyId( company.getId() );
+        createCompanyAuthModel.username( company.getUsername() );
+        createCompanyAuthModel.password( company.getPassword() );
+        createCompanyAuthModel.email( company.getEmail() );
 
-        return registerSaveCompanyDto.build();
+        return createCompanyAuthModel.build();
+    }
+
+    @Override
+    public CreateAuthModel toSaveAutRabbit(Company company) {
+        if ( company == null ) {
+            return null;
+        }
+
+        CreateAuthModel.CreateAuthModelBuilder createAuthModel = CreateAuthModel.builder();
+
+        createAuthModel.username( company.getUsername() );
+        createAuthModel.password( company.getPassword() );
+        createAuthModel.email( company.getEmail() );
+
+        return createAuthModel.build();
     }
 
     @Override

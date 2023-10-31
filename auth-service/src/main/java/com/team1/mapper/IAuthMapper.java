@@ -4,8 +4,7 @@ import com.team1.dto.request.RegisterSaveCompanyDto;
 import com.team1.dto.request.RegisterRequestUserDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
-import com.team1.rabbitmq.model.MailActivateModel;
-import com.team1.rabbitmq.model.MailRegisterModel;
+import com.team1.rabbitmq.model.CreateAuthModel;
 import com.team1.repository.entity.Auth;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,9 +23,6 @@ public interface IAuthMapper {
 
     Auth toAuthCompany(RegisterSaveCompanyDto dto);
 
-
-    MailRegisterModel toMailModel(Auth auth);
-    MailActivateModel fromAuthToMailActivateModel(final Auth auth);
-
+    Auth toSaveAutRabbit(CreateAuthModel model);
 
 }

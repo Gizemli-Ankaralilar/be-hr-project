@@ -6,11 +6,18 @@ spring:
     mongodb:
       host: localhost
       port: 27010
-      username: root
-      password: 123456789
+      username: team1
+      password: root
       database: HRCompany
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 123456789
 
 rabbitmqKey:
   auth-exchange: auth-exchange
-  register-binding-key: binding-key
   register-queue: register-queue
+  register-binding-key: binding-key
+

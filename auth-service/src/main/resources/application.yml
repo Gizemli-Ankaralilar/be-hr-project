@@ -22,7 +22,5 @@ jwt:
   secretKey: ${secretKey}
   issuer: ${issuer}
 
-rabbitmq:
-  auth-exchange: auth-exchange
-  mail-queue: queue-mail
-  mail-binding-key: mail-key
+rabbitmqKey:
+  register-queue: register-queue

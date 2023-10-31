@@ -5,6 +5,8 @@ import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.request.SaveCompanyDto;
 import com.team1.dto.request.SaveWorkerDto;
 import com.team1.dto.response.RegisterResponseCompanyDto;
+import com.team1.rabbitmq.model.CreateAuthModel;
+import com.team1.rabbitmq.model.CreateCompanyAuthModel;
 import com.team1.rabbitmq.model.CreateWorkerAuthModel;
 import com.team1.rabbitmq.model.QueryAuthIdModel;
 import com.team1.repository.entity.Company;
@@ -25,10 +27,12 @@ public interface ICompanyMapper {
     Company toCompany(SaveCompanyDto dto);
 
     @Mapping(source = "id", target = "companyId")
-    RegisterSaveCompanyDto toSaveCompany(Company company);
+    CreateCompanyAuthModel toSaveCompanyRabbit(Company company);
+    CreateAuthModel toSaveAutRabbit(Company company);
     RegisterResponseCompanyDto toRegisterResponseDto(Company company);
 
     Worker toSaveWorker(SaveWorkerDto dto);
+
 
     CreateWorkerAuthModel toSaveWorkerAuth(Worker worker);
     @Mapping(source = "id", target = "workerId")
