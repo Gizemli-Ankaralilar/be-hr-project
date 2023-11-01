@@ -111,15 +111,12 @@ public class AuthService extends ServiceManager<Auth, Long> {
         if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
             throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
         }
-        if (dto.getActivationCode().equals(optionalAuth.get().getActivationCode())) {
-            optionalAuth.get().setStatus(EStatus.ACTIVE);
+        optionalAuth.get().setStatus(EStatus.ACTIVE);
             update(optionalAuth.get());
             // userManager.activateStatus(dto.getToken()); // open feign ile haberleşme
             //activationProducer.activateStatus(dto.getToken()); // rabbitmq ile haberleşme
             return "Hesabınız aktive edilmiştir";
-        } else {
-            throw new AuthManagerException(ErrorType.INVALID_CODE);
-        }
+
     }
 
 

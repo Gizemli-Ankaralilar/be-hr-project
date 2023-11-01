@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 public class RegisterResponseVisitorDto {
     private String token;
     private Long id;
-    private String activationCode;
     private String username;
 }

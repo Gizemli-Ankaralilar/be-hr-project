@@ -3,8 +3,8 @@ server:
 
 spring:
   datasource:
-    username: postgres
-    password: root
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://localhost:5432/HRAuth
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -24,3 +24,7 @@ jwt:
 
 rabbitmqKey:
   register-queue: register-queue
+  auth-exchange: auth-exchange
+  mail-queue: queue-mail
+  mail-binding-key: mail-key
+  register-binding: binding-register
