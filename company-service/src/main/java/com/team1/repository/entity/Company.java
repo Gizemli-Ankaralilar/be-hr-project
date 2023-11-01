@@ -40,7 +40,7 @@ public class Company extends BaseEntity{
     @Builder.Default
     private EStatus status = EStatus.INACTIVE;
     //@DBRef//Bir referans verir.Worker tablosunda bir referans tutar
-    private List<String> workers;//Şirket de çalışan olduğu için çalışanın userId'sinin tutulduğu liste
+    private List<String> workers;//Şirket de çalışan olduğu için workerId'sinin tutulduğu liste
     private List<String> finances;
     private List<String> permissions;
     private List<String> comments;

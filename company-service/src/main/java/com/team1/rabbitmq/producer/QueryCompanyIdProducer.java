@@ -1,6 +1,5 @@
 package com.team1.rabbitmq.producer;
 
-import com.team1.rabbitmq.model.CreateAuthModel;
 import com.team1.rabbitmq.model.QueryAuthIdModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class QueryAuthIdProducer {
+public class QueryCompanyIdProducer {
     @Value("${rabbitmqKey.auth-exchange}")
     private String exchange = "auth-exchange";
     @Value("${rabbitmqKey.register-queue}")
@@ -19,7 +18,7 @@ public class QueryAuthIdProducer {
 
     private final RabbitTemplate rabbitTemplate;//Rabbitteki bütün işlemleri bu arkadaş yapıyor
 
-    //authıd'yi almak için kullandık
+    //companyId'yi almak için kullandık
     public Object queryAuthId(QueryAuthIdModel model){
         return rabbitTemplate.convertSendAndReceive(exchange,createAuthBindingKey, model);
     }

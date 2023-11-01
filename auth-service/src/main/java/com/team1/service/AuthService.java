@@ -1,6 +1,7 @@
 package com.team1.service;
 
 import com.team1.dto.request.*;
+import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
 import com.team1.manager.IUserProfileManager;
@@ -33,7 +34,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
     @Transactional
-    public Boolean register(RegisterRequestVisitorDto dto) {
+    public RegisterResponseVisitorDto register(RegisterRequestVisitorDto dto) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
         auth.setActivationCode(CodeGenerator.generateCode());
 
@@ -50,13 +51,13 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
         iUserProfileManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
 
-        //RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+        RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token = jwtTokenManager.createToken(auth.getId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
-        //responseVisitorDto.setToken(token);
+        responseVisitorDto.setToken(token);
 
 
-        return true;
+        return responseVisitorDto;
     }
 
     public Boolean companySave(RegisterSaveCompanyDto dto) {
@@ -78,8 +79,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
             throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
         }
-
-        return jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
+        return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getCompanyId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
     }
 

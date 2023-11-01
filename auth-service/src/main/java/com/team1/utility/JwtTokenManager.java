@@ -52,6 +52,25 @@ public class JwtTokenManager {
         }
         return  Optional.ofNullable(token);
     }
+
+    public Optional<String> createTokenCompany(Long id, String companyId){
+        String token=null;
+        Date date=new Date(System.currentTimeMillis()+(1000*60*5));
+        try {
+            token= JWT.create()
+                    .withIssuer(issuer)
+                    .withClaim("myId",id)
+                    .withClaim("companyId",companyId)
+                    .withIssuedAt(new Date())
+                    .withExpiresAt(date)
+                    .sign(Algorithm.HMAC512(secretKey));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return  Optional.ofNullable(token);
+    }
+
+
     public Optional<Long> getIdFromToken(String token){
         try {
             Algorithm algorithm=Algorithm.HMAC512(secretKey);

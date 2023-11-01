@@ -83,4 +83,20 @@ public class JwtTokenManager {
             throw  new CompanyException(ErrorType.INVALID_TOKEN);
         }
     }
+
+    public Optional<String> getCompanyIdFromToken(String token){
+        try {
+            Algorithm algorithm=Algorithm.HMAC512(secretKey);
+            JWTVerifier verifier=JWT.require(algorithm).withIssuer(issuer).build();
+            DecodedJWT decodedJWT=verifier.verify(token);
+            if (decodedJWT==null){
+                throw new CompanyException(ErrorType.INVALID_TOKEN);
+            }
+            String companyId=decodedJWT.getClaim("companyId").asString();
+            return Optional.of(companyId);
+        }catch (Exception e){
+            System.out.println(e.toString());
+            throw  new CompanyException(ErrorType.INVALID_TOKEN);
+        }
+    }
 }

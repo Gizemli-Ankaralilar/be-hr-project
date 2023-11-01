@@ -29,7 +29,7 @@ public class CompanyService  extends ServiceManager<Company, String> {
     private final CreateAuthProducer createAuthProducer;
     private final CreateCompanyAuthProduces createCompanyAuthProduces;
 
-    public CompanyService(ICompanyRepository companyRepository, JwtTokenManager jwtTokenManager, ICompanyAuthManager companyAuthManager, ISetCompanyMapper iSetCompanyMapper, ICommentRepository commentRepository, IFinanceRepository financeRepository, IPermissionRepository permissionRepository, IWorkerRepository workerRepository, CreateAuthProducer createAuthProducer, CreateCompanyAuthProduces createCompanyAuthProduces) {
+    public CompanyService(ICompanyRepository companyRepository, JwtTokenManager jwtTokenManager, ICompanyAuthManager companyAuthManager, ISetCompanyMapper iSetCompanyMapper, ICommentRepository commentRepository, IFinanceRepository financeRepository, IWorkerRepository workerRepository, CreateAuthProducer createAuthProducer, CreateCompanyAuthProduces createCompanyAuthProduces) {
         super(companyRepository);
         this.companyRepository = companyRepository;
         this.jwtTokenManager = jwtTokenManager;
