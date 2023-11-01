@@ -33,4 +33,5 @@ public class Auth extends BaseEntity{
     private EStatus status = EStatus.PENDING;
     private String companyId;
     private String workerId;
+    private Boolean activated = false;
 }

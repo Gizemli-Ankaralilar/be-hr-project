@@ -9,6 +9,7 @@ import com.team1.mapper.IAuthMapper;
 import com.team1.rabbitmq.model.CreateAuthModel;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
+import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
@@ -78,6 +79,20 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
         if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
             throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
+        }
+        if(!optionalAuth.get().getActivated()==true){
+            optionalAuth.get().setActivated(true);
+        } else {
+            throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
+        }
+        if(optionalAuth.get().getStatus().equals(ERole.ADMIN)) {
+            //admin sayfası openfeign
+        } else if (optionalAuth.get().getStatus().equals(ERole.COMPANY_OWNER)) {
+            //company sayfasına yönlendirme yapılacak
+        } else if (optionalAuth.get().getStatus().equals(ERole.WORKER)) {
+            //worker sayfasına yönlendirilecek
+        } else {
+            //Anasayfaya yönlendirilecek
         }
         return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getCompanyId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
