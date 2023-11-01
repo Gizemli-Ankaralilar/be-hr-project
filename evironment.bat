@@ -1,3 +1,3 @@
 @echo off
 setx POSTGRES_USERNAME "postgres"
-setx POSTGRES_PASSWORD "123456789"
+setx POSTGRES_PASSWORD "root"
