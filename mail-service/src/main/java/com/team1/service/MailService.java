@@ -1,6 +1,5 @@
 package com.team1.service;
 
-import com.team1.rabbitmq.model.MailActivateModel;
 import com.team1.rabbitmq.model.MailRegisterModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,26 +19,13 @@ public class MailService{
         mailMessage.setTo(mailRegisterModel.getEmail()); //kullanıcının girmiş olduğu mail
         mailMessage.setSubject("AKTIVASYON KODU");
         mailMessage.setText(
-                mailRegisterModel.getName() + " " + mailRegisterModel.getSurname() + " başarıyla kayıt oldunuz.\n" +
+                mailRegisterModel.getUsername()  + "\nBaşarıyla kayıt oldunuz.\n" +
                         "Aktivasyon Link: " + "http://localhost:9090/api/v1/auth/activate_status?token="+mailRegisterModel.getToken()
 
         );
         javaMailSender.send(mailMessage);
     }
 
-    public void sendActivateUserInfo(MailActivateModel mailModel) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("${spring.mail.username}");
-        mailMessage.setTo(mailModel.getEmail());
-        mailMessage.setSubject("Hesap Aktivasyonu");
-        mailMessage.setText(
-                mailModel.getName() + " " + mailModel.getSurname() + " hesabınız aktif edilmiştir. Giriş bilgileriniz aşağıdaki gibidir:\n"
-                        + "E-posta: " + mailModel.getEmail()
-                        + "\nŞifre: " + mailModel.getPassword()
-        );
-        javaMailSender.send(mailMessage);
+
     }
 
-
-
-}

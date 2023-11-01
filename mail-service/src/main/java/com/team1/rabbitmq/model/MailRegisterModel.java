@@ -12,8 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class MailRegisterModel implements Serializable {
-    private String name;
-    private String surname;
+    private String username;
     private String email;
     private String token;
 }

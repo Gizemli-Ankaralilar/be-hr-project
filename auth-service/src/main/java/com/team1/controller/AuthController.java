@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping(ACTIVATE_STATUS)
-    public ResponseEntity<String> login(@RequestBody ActivateRequestDto dto){
+    public ResponseEntity<String> activate(@RequestParam ActivateRequestDto dto){
         return ResponseEntity.ok(authService.activateStatus(dto));
     }
 
