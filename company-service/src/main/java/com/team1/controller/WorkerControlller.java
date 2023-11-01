@@ -29,7 +29,7 @@ public class WorkerControlller {
 
 
     @PostMapping("/worker-create")
-    public ResponseEntity<Worker> createWorker(@RequestParam String token, @RequestBody WorkerDto dto){
+    public ResponseEntity<Boolean> createWorker(@RequestParam String token, @RequestBody WorkerDto dto){
         return ResponseEntity.ok(workerService.createWorkerUser(token, dto));
     }
 

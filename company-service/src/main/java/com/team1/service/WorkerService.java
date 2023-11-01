@@ -13,7 +13,9 @@ import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +37,7 @@ public class WorkerService extends ServiceManager<Worker, String>{
         this.queryAuthIdProducer = queryAuthIdProducer;
     }
 
-
-
-    public Worker createWorkerUser(String token, WorkerDto dto){
+    public Boolean createWorkerUser(String token, WorkerDto dto){
         String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
             throw new CompanyException(ErrorType.INVALID_TOKEN);
         });
@@ -47,15 +47,21 @@ public class WorkerService extends ServiceManager<Worker, String>{
         Worker worker = Worker.builder().authId(authId).companyId(companyId).username(dto.getUsername())
                 .password(dto.getPassword()).email(dto.getEmail()).build();
         //auth tablosuna kayıt eklenmedi!!!!
-        return save(worker);
+        save(worker);
+        List<String> id = new ArrayList<>();
+        if (company.getId().equals(companyId)) {
+            id.add(worker.getId());
+            company.setWorkers(id);
+        }
+        return true;
     }
 
-//
-//    @Transactional(readOnly = true)
-//    public List<Worker> findAllWorker() {
-//        return workerRepository.findAll();
-//    }
-//
+    @Transactional(readOnly = true)
+    public List<Worker> findAllWorker() {
+        return workerRepository.findAll();
+    }
+
+
 ////    public Worker updateWorker(String id, UpdateWorkerRequestDto dto){
 ////        Worker worker = workerRepository.findById(id)
 ////                .orElseThrow(() -> new WorkerException(ErrorType.WORKER_NOT_FOUND));

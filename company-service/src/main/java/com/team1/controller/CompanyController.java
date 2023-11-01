@@ -32,14 +32,12 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.register(dto));
     }
 
+    @GetMapping(FIND_ALL)
+    public ResponseEntity<List<Company>> findAll(){
+        return ResponseEntity.ok(companyService.findAll());
+    }
 
-    // APOOO
 
-
-//    @GetMapping(FINDALL)
-//    public ResponseEntity<List<Company>> findAll(){
-//        return ResponseEntity.ok(companyService.findAllCompanies());
-//    }
 
 //    @PutMapping(UPDATE)
 //    @CrossOrigin("*")
