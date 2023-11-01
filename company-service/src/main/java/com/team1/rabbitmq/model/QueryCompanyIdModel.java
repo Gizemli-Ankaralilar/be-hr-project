@@ -11,6 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-public class QueryAuthIdModel implements Serializable {
-    private String authId;
+public class QueryCompanyIdModel implements Serializable {
+    private String workerId;
 }

@@ -4,7 +4,7 @@ public class EndPoints {
 
     public static final String VERSION="api/v1";
     public static final String COMPANY=VERSION+"/company";
-    public static final String WORKER=VERSION+"/company";
+    public static final String WORKER=VERSION+"/company-worker";
 
     //Genel
     public  static  final String FIND_ALL="/find_all";
