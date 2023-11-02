@@ -40,9 +40,10 @@ public class MailService{
             helper.setTo(mailRegisterModel.getEmail());
             helper.setSubject("AKTIVASYON KODU");
 
-            String content = "<p>" + mailRegisterModel.getUsername() + ",</p>" +
-                    "<p>Başarıyla kayıt oldunuz.</p>" +
-                    "<p><a href='http://localhost:9090/api/v1/auth/activate_status?token=" + mailRegisterModel.getToken() + "'><button style='background-color: #4CAF50; /* Green */border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;'>Aktivasyon Linki</button></a></p>";
+            String content = "<div style='text-align: center;'><h2 style='font-size: 24px;'>" + mailRegisterModel.getUsername() + ",</h2>" +
+                    "<p style='font-size: 18px;'>Başarıyla kayıt oldunuz.</p>" +
+                    "<p><a href='http://localhost:9090/api/v1/auth/activate_status?token=" + mailRegisterModel.getToken() + "'>" +
+                    "<button style='background-color: #FFA500; border: none; color: white; padding: 12px 24px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 12px;'>Aktivasyon Linki</button></a></p></div>";
 
             helper.setText(content, true);
             javaMailSender.send(message);
@@ -50,6 +51,7 @@ public class MailService{
             // Handle the exception here
         }
     }
+
 
 
 
