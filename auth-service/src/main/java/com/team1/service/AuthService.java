@@ -104,7 +104,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         } else {
             //Anasayfaya yönlendirilecek
         }
-        return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getCompanyId())
+        return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getRole(), optionalAuth.get().getCompanyId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
     }
 
