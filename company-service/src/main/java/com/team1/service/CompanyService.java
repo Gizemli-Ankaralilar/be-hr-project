@@ -17,6 +17,7 @@ import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,7 +41,7 @@ public class CompanyService  extends ServiceManager<Company, String> {
 
 
 
-    public Boolean register(@Valid SaveCompanyDto dto) {
+        public Boolean register(@Valid SaveCompanyDto dto) {
         Company company = ICompanyMapper.INSTANCE.toCompany(dto);
         company.setActivationCode(CodeGenerator.generateCode());
         if(!dto.getTaxNumber().isEmpty()) {
@@ -78,6 +79,11 @@ public class CompanyService  extends ServiceManager<Company, String> {
             throw new CompanyException(ErrorType.INVALID_CODE);
         }
     }
+
+    public List<Company> findAllCompany() {
+        return companyRepository.findAll();
+    }
+
 
 
 

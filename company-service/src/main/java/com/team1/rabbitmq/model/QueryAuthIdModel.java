@@ -12,5 +12,5 @@ import java.io.Serializable;
 @Data
 @Builder
 public class QueryAuthIdModel implements Serializable {
-    private String authId;
+    private String workerId;
 }

@@ -62,7 +62,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
         responseVisitorDto.setToken(token);
 
-        //SILERSEN OLURSUN
+        //SILERSEN OLURSUN-->Tamam!
         MailRegisterModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
         mailModel.setToken(token);
         mailProducer.sendMail(mailModel);
@@ -95,16 +95,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         } else {
             throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
         }
-        if(optionalAuth.get().getStatus().equals(ERole.ADMIN)) {
-            //admin sayfası openfeign
-        } else if (optionalAuth.get().getStatus().equals(ERole.COMPANY_OWNER)) {
-            //company sayfasına yönlendirme yapılacak
-        } else if (optionalAuth.get().getStatus().equals(ERole.WORKER)) {
-            //worker sayfasına yönlendirilecek
-        } else {
-            //Anasayfaya yönlendirilecek
-        }
-        return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getCompanyId())
+        return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getRole(), optionalAuth.get().getCompanyId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
     }
 

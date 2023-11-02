@@ -22,10 +22,7 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @GetMapping
-    public String hello() {
-        return "Company Service";
-    }
+
 
     @PostMapping(REGISTER)
     public ResponseEntity<Boolean> register(@RequestBody @Valid SaveCompanyDto dto){
@@ -34,8 +31,10 @@ public class CompanyController {
 
     @GetMapping(FIND_ALL)
     public ResponseEntity<List<Company>> findAll(){
-        return ResponseEntity.ok(companyService.findAll());
+        return ResponseEntity.ok(companyService.findAllCompany());
     }
+
+
 
 
 

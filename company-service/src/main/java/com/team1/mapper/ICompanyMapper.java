@@ -1,6 +1,9 @@
 package com.team1.mapper;
 
-import com.team1.dto.request.*;
+import com.team1.dto.request.RegisterSaveCompanyDto;
+import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.SaveCompanyDto;
+import com.team1.dto.request.SaveWorkerDto;
 import com.team1.dto.response.RegisterResponseCompanyDto;
 import com.team1.rabbitmq.model.CreateAuthModel;
 import com.team1.rabbitmq.model.CreateCompanyAuthModel;
@@ -28,6 +31,7 @@ public interface ICompanyMapper {
     CreateAuthModel toSaveAutRabbit(Company company);
     RegisterResponseCompanyDto toRegisterResponseDto(Company company);
 
+    Worker toSaveWorker(SaveWorkerDto dto);
 
 
     CreateWorkerAuthModel toSaveWorkerAuth(Worker worker);
