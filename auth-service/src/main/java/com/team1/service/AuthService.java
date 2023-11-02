@@ -7,6 +7,8 @@ import com.team1.exception.ErrorType;
 import com.team1.manager.IUserProfileManager;
 import com.team1.mapper.IAuthMapper;
 import com.team1.rabbitmq.model.CreateAuthModel;
+import com.team1.rabbitmq.model.MailRegisterModel;
+import com.team1.rabbitmq.producer.MailRegisterProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
 import com.team1.repository.enums.ERole;
@@ -26,12 +28,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final JwtTokenManager jwtTokenManager;
     private final IUserProfileManager iUserProfileManager;
 
+    private final MailRegisterProducer mailProducer;
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserProfileManager iUserProfileManager) {
+
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserProfileManager iUserProfileManager, MailRegisterProducer mailProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.iUserProfileManager = iUserProfileManager;
+        this.mailProducer = mailProducer;
     }
 
     @Transactional
@@ -56,6 +61,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
         String token = jwtTokenManager.createToken(auth.getId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
         responseVisitorDto.setToken(token);
+
+        //SILERSEN OLURSUN
+        MailRegisterModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
+        mailModel.setToken(token);
+        mailProducer.sendMail(mailModel);
 
 
         return responseVisitorDto;
@@ -100,6 +110,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     @Transactional
     public String activateStatus(ActivateRequestDto dto) {
+
         Optional<Long> id = jwtTokenManager.getIdFromToken(dto.getToken());
         if (id.isEmpty()) {
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
