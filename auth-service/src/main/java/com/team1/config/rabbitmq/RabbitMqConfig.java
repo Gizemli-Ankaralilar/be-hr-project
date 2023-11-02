@@ -24,8 +24,8 @@ public class RabbitMqConfig {
     private String  mailQueueName;
     @Value("${rabbitmqKey.mail-binding-key}")
     private String  mailBindingKey;
-    //company işlemleri
 
+    //company işlemleri
     @Value("${rabbitmqKey.register-queue}")
     private String createPostQueue;
 
