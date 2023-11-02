@@ -1,6 +1,5 @@
 package com.team1.controller;
 
-import com.team1.dto.request.ActivateRequestDto;
 import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.request.RegisterSaveCompanyDto;
@@ -40,8 +39,8 @@ public class AuthController {
     }
 
     @GetMapping(ACTIVATE_STATUS)
-    public ResponseEntity<String> activateStatus(@RequestParam ActivateRequestDto dto){
-        return ResponseEntity.ok(authService.activateStatus(dto));
+    public ResponseEntity<String> activateStatus(@RequestParam String token){
+        return ResponseEntity.ok(authService.activateStatus(token));
     }
 
     @GetMapping("/create_token")

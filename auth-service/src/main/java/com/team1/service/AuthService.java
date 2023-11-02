@@ -109,12 +109,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
     @Transactional
-    public String activateStatus(ActivateRequestDto dto) {
+    public String activateStatus(String token) {
 
-        Optional<Long> id = jwtTokenManager.getIdFromToken(dto.getToken());
+        Optional<Long> id = jwtTokenManager.getIdFromToken(token);
         if (id.isEmpty()) {
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
         }
+
+
         Optional<Auth> optionalAuth = findById(id.get());
         if (optionalAuth.isEmpty()) {
             throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
