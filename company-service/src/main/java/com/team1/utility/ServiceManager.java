@@ -1,5 +1,6 @@
 package com.team1.utility;
 
+import com.team1.repository.IFinanceRepository;
 import com.team1.repository.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class ServiceManager<T extends BaseEntity, ID> implements IService<T, ID> {
 
     private final MongoRepository<T, ID> repository;
+
+
 
 
     @Override

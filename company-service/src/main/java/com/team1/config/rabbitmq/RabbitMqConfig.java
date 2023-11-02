@@ -26,15 +26,10 @@ public class RabbitMqConfig {
     DirectExchange exchange(){
         return new DirectExchange(exchange);//amqp.QUEUEU DEN OLUŞTURULACAK
     }
-
-
     @Bean
     Queue createAuthQueue(){
         return new Queue(createAuthQueue);//amqp.QUEUEU DEN OLUŞTURULACAK
     }
-
-
-
     ////BU İKİ DEĞER KULLANILARAK BAĞLANACAKLAR.İÇERİSİNE ALACAĞI PARAMETRELER ÜZERİNDE YAZILAN METOTLARLA AYNI İSMİ ALICAK
     //DİKKAT EDİLMESİ GEREKEN ŞEYLER AYNI DEĞİŞKEN VE İSİMERİ KULLANILMASI GEREKLİ
     @Bean

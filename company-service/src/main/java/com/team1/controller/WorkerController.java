@@ -9,15 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 import java.util.List;
 
 import static com.team1.constant.EndPoints.*;
 @RestController
 @RequestMapping(WORKER)
 @RequiredArgsConstructor
-public class WorkerControlller {
+public class WorkerController {
 
     private final WorkerService workerService;
 
@@ -32,7 +30,7 @@ public class WorkerControlller {
         return ResponseEntity.ok(workerService.findAllWorker());
     }
 
-    @DeleteMapping(DELETE_BY_ID)
+    @DeleteMapping(DELETE_BY_ID_WORKER)
     public ResponseEntity<Boolean> deletePost(String token, String workerId){
         return ResponseEntity.ok(workerService.deleteWorker(token, workerId));
     }
