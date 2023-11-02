@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @Builder
 public class CreateWorkerAuthModel implements Serializable {
-    private String workerId;
+
     private String username;
     private String password;
     private String email;

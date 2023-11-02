@@ -1,7 +1,6 @@
 package com.team1.repository.entity;
 
 import com.team1.repository.enums.EFieldOfWork;
-import com.team1.repository.enums.EPermission;
 import com.team1.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,8 +34,6 @@ public class Worker extends BaseEntity{
     private String userAvatar;
     @Builder.Default
     private EFieldOfWork fieldOfWork = EFieldOfWork.BOS;//ENUM DEĞERLERİ GİRİLECEK//izinleri olabilir
-    @Builder.Default
-    private EPermission permission = EPermission.NO_LEAVE;
-    //private List<String> breakTime;
+    private List<String> permits;
 
 }

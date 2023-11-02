@@ -22,11 +22,6 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @GetMapping
-    public String hello() {
-        return "Company Service";
-    }
-
     @PostMapping(REGISTER)
     public ResponseEntity<Boolean> register(@RequestBody @Valid SaveCompanyDto dto){
         return ResponseEntity.ok(companyService.register(dto));
@@ -34,22 +29,8 @@ public class CompanyController {
 
     @GetMapping(FIND_ALL)
     public ResponseEntity<List<Company>> findAll(){
-        return ResponseEntity.ok(companyService.findAll());
+        return ResponseEntity.ok(companyService.findAllCompany());
     }
-
-
-
-//    @PutMapping(UPDATE)
-//    @CrossOrigin("*")
-//    public ResponseEntity<Company> updateCompany(@PathVariable String taxNumber, @RequestBody UpdateCompanyRequestDto dto){
-//        Company company = companyService.updateCompany(taxNumber, dto);
-//        return new ResponseEntity<>(company, HttpStatus.OK);
-//    }
-
-//    @DeleteMapping(DELETE)
-//    public ResponseEntity<Boolean> deleteCompany(@RequestBody @PathVariable String taxNumber){
-//        return ResponseEntity.ok(companyService.deleteCompany(taxNumber));
-//    }
 
 
 }
