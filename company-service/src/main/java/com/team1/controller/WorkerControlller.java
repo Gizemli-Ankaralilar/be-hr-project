@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static com.team1.constant.EndPoints.*;
 @RestController
 @RequestMapping(WORKER)
@@ -35,11 +37,11 @@ public class WorkerControlller {
 
 
 
-//
-//    @GetMapping(FINDALL_WORKER)
-//    public ResponseEntity<List<Worker>> findAllWorker(){
-//        return ResponseEntity.ok(workerService.findAllWorker());
-//    }
+
+    @GetMapping(FINDALL_WORKER)
+    public ResponseEntity<List<Worker>> findAllWorker(){
+        return ResponseEntity.ok(workerService.findAllWorker());
+    }
 //
 ////    @PutMapping(UPDATE_WORKER)
 ////    @CrossOrigin("*")
@@ -48,8 +50,8 @@ public class WorkerControlller {
 ////        return new ResponseEntity<>(worker, HttpStatus.OK);
 ////    }
 //
-//    @DeleteMapping(DELETE_WORKER)
-//    public ResponseEntity<Boolean> deleteWorker(@RequestBody @PathVariable String id){
-//        return ResponseEntity.ok(workerService.deleteWorker(id));
-//    }
+    @DeleteMapping(DELETE_WORKER)
+    public ResponseEntity<Boolean> deleteWorker(@RequestBody @PathVariable String id){
+        return ResponseEntity.ok(workerService.deleteWorker(id));
+    }
 }

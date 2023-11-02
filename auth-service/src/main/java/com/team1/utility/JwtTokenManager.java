@@ -53,13 +53,14 @@ public class JwtTokenManager {
         return  Optional.ofNullable(token);
     }
 
-    public Optional<String> createTokenCompany(Long id, String companyId){
+    public Optional<String> createTokenCompany(Long id, ERole role, String companyId){
         String token=null;
         Date date=new Date(System.currentTimeMillis()+(1000*60*5));
         try {
             token= JWT.create()
                     .withIssuer(issuer)
-                    .withClaim("myId",id)
+                    .withClaim("myId",id).
+                    withClaim("role",id)
                     .withClaim("companyId",companyId)
                     .withIssuedAt(new Date())
                     .withExpiresAt(date)
