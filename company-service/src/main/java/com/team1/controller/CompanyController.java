@@ -27,7 +27,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.register(dto));
     }
 
-    @GetMapping(FIND_ALL)
+    @GetMapping(FIND_ALL_COMPANY)
     public ResponseEntity<List<Company>> findAll(){
         return ResponseEntity.ok(companyService.findAllCompany());
     }

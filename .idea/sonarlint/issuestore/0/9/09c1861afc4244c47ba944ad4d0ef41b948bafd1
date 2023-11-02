@@ -1,3 +1,7 @@
 
-K
-java:S1068"5Remove this unused "companyRepository" private field.(µ¿èÛ
+š
+java:S1172""xRemove these unused method parameters "iSetCompanyMapper", "commentRepository", "financeRepository", "workerRepository".(×»÷úÿÿÿÿ8­ºï‡¹1
+\
+java:S1128"?Remove this unused import 'com.team1.repository.entity.Worker'.(Ü½£Á8Áºï‡¹1
+S
+java:S1068"6Remove this unused "companyAuthManager" private field.(Ãó˜î8Âºï‡¹1
