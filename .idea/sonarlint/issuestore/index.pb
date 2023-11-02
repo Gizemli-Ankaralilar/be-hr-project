@@ -33,9 +33,5 @@ I
 mail-service/build.gradle,9\e\9e2eb0f8621545475f1199f583509e0ed5aba398
 l
 <mail-service/src/main/java/com/team1/mapper/IMailMapper.java,0\0\0019b8f2098184f7d6656f22405598de7e100656
-€
-Pmail-service/src/main/java/com/team1/rabbitmq/consumer/MailActivateConsumer.java,e\f\ef0b530643937a2b31d82065b4171ba7fb962745
-z
-Jmail-service/src/main/java/com/team1/rabbitmq/model/MailActivateModel.java,0\3\035756dfecf4964f88beca30ebdcc14cd0060a9d
 j
 :mail-service/src/main/java/com/team1/utility/IService.java,1\8\18f067ee5ffa405b6afca2757a400f1cfe1d0e58
