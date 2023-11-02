@@ -1,7 +1,6 @@
 package com.team1.repository.entity;
 
 
-import com.team1.repository.enums.EPermission;
 import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -40,7 +38,7 @@ public class Company extends BaseEntity{
     @Builder.Default
     private EStatus status = EStatus.INACTIVE;
     //@DBRef//Bir referans verir.Worker tablosunda bir referans tutar
-    private List<String> workers;//Şirket de çalışan olduğu için workerId'sinin tutulduğu liste
+    private List<String> workers;//Şirket de çalışan olduğu için çalışanın userId'sinin tutulduğu liste
     private List<String> finances;
     private List<String> permissions;
     private List<String> comments;

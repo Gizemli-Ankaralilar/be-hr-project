@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Comment extends BaseEntity {
     @Id
     private String id;
-    private String workerId;
+    private String userId;
     private String companyId;
     private String comment;
 }

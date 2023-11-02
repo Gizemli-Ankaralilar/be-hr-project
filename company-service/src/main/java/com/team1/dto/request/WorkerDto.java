@@ -1,6 +1,5 @@
 package com.team1.dto.request;
 
-import com.team1.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

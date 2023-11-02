@@ -19,7 +19,7 @@ public class QueryAuthIdProducer {
 
     private final RabbitTemplate rabbitTemplate;//Rabbitteki bütün işlemleri bu arkadaş yapıyor
 
-    //authıd'yi almak için kullandık
+    //company den direk uzur kaydı oluşturmak için
     public Object queryAuthId(QueryAuthIdModel model){
         return rabbitTemplate.convertSendAndReceive(exchange,createAuthBindingKey, model);
     }

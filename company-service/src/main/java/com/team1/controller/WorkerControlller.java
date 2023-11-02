@@ -19,16 +19,7 @@ import static com.team1.constant.EndPoints.*;
 @RequiredArgsConstructor
 public class WorkerControlller {
 
-
-
     private final WorkerService workerService;
-
-    @GetMapping
-    public String hello() {
-        return "Company Service";
-    }
-
-
 
     @PostMapping("/worker-create")
     public ResponseEntity<Boolean> createWorker(@RequestParam String token, @RequestBody WorkerDto dto){
@@ -36,22 +27,21 @@ public class WorkerControlller {
     }
 
 
-
-
     @GetMapping(FINDALL_WORKER)
     public ResponseEntity<List<Worker>> findAllWorker(){
         return ResponseEntity.ok(workerService.findAllWorker());
     }
-//
-////    @PutMapping(UPDATE_WORKER)
-////    @CrossOrigin("*")
-////    public ResponseEntity<Worker> updateWorker(@PathVariable String id, @RequestBody UpdateWorkerRequestDto dto){
-////        Worker worker = workerService.updateWorker(id, dto);
-////        return new ResponseEntity<>(worker, HttpStatus.OK);
-////    }
-//
-    @DeleteMapping(DELETE_WORKER)
-    public ResponseEntity<Boolean> deleteWorker(@RequestBody @PathVariable String id){
-        return ResponseEntity.ok(workerService.deleteWorker(id));
+
+    @DeleteMapping(DELETE_BY_ID)
+    public ResponseEntity<Boolean> deletePost(String token, String workerId){
+        return ResponseEntity.ok(workerService.deleteWorker(token, workerId));
     }
+
+//    @PutMapping(UPDATE_WORKER)
+//    @CrossOrigin("*")
+//    public ResponseEntity<Worker> updateWorker(@PathVariable String id, @RequestBody UpdateWorkerRequestDto dto){
+//        Worker worker = workerService.updateWorker(id, dto);
+//        return new ResponseEntity<>(worker, HttpStatus.OK);
+//    }
+
 }

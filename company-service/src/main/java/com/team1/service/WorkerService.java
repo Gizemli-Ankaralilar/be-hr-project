@@ -37,6 +37,7 @@ public class WorkerService extends ServiceManager<Worker, String>{
         this.queryAuthIdProducer = queryAuthIdProducer;
     }
 
+    //yeni serviste burada düzenlemeler olabilir
     public Boolean createWorkerUser(String token, WorkerDto dto){
         String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
             throw new CompanyException(ErrorType.INVALID_TOKEN);
@@ -60,7 +61,21 @@ public class WorkerService extends ServiceManager<Worker, String>{
         return workerRepository.findAll();
     }
 
+    public Boolean deleteWorker(String token, String workerId){//workerId frontand tarafından alınacak
+        String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
+            throw new CompanyException(ErrorType.INVALID_TOKEN);
+        });
+        Optional<Worker> worker = workerRepository.findById(workerId);
+        if (worker.get().getCompanyId().equals(companyId)) {
+            workerRepository.delete(worker.get());
+            return true;
+        }
+        return false;
+    }
 
+//-----------------Update İşlemleri Fazla olduğu için beklemeye alındı
+//
+//
 //    public Worker updateWorker(String id, UpdateWorkerRequestDto dto){
 //        Worker worker = workerRepository.findById(id)
 //                .orElseThrow(() -> new WorkerException(ErrorType.WORKER_NOT_FOUND));
@@ -89,16 +104,6 @@ public class WorkerService extends ServiceManager<Worker, String>{
 //    }
 
 
-    public Boolean deleteWorker(String token, String workerId){//workerId frontand tarafından alınacak
-        String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
-            throw new CompanyException(ErrorType.INVALID_TOKEN);
-        });
-        Optional<Worker> worker = workerRepository.findById(workerId);
-        if (worker.get().getCompanyId().equals(companyId)) {
-            workerRepository.delete(worker.get());
-            return true;
-        }
-        return false;
-    }
+
 
 }
