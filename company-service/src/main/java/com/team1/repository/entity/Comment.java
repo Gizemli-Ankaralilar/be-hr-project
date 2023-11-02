@@ -16,6 +16,6 @@ public class Comment extends BaseEntity {
     @Id
     private String id;
     private String workerId;
-    private String companyId;//düşünülebilirrrr
+    private String companyId;
     private String comment;
 }
