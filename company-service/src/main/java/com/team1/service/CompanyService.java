@@ -10,6 +10,7 @@ import com.team1.rabbitmq.producer.CreateAuthProducer;
 import com.team1.rabbitmq.producer.CreateCompanyAuthProduces;
 import com.team1.repository.*;
 import com.team1.repository.entity.Company;
+import com.team1.repository.entity.Worker;
 import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
@@ -17,6 +18,7 @@ import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,38 +81,8 @@ public class CompanyService  extends ServiceManager<Company, String> {
         }
     }
 
+    public List<Company> findAllCompany() {
+        return companyRepository.findAll();
+    }
 
-
-
-
-    // APOOOO EKLEDİİİ
-
-
-
-
-
-//    @Transactional(readOnly = true)
-//    public List<Company> findAllCompanies() {
-//        return companyRepository.findAll();
-//    }
-//
-////    public Company updateCompany(String taxNumber, UpdateCompanyRequestDto dto){
-////        Company company = companyRepository.findByTaxNumber(taxNumber)
-////                .orElseThrow(() -> new CompanyException(ErrorType.COMPANY_NOT_FOUND));
-////        company.setCompanyName(dto.getCompanyName());
-////        company.setTaxNumber(dto.getTaxNumber());
-////        company.setEmail(dto.getEmail());
-////        company.setUpdateDate(company.getUpdateDate());
-////        return companyRepository.save(company);
-////    }
-//
-//    @Transactional
-//    public Boolean deleteCompany(String taxNumber){
-//        Optional<Company> company = companyRepository.findByTaxNumber(taxNumber);
-//        if (company.isEmpty()){
-//            throw new CompanyException(ErrorType.COMPANY_NOT_FOUND);
-//        }
-//        companyRepository.delete(company.get());
-//        return true;
-//    }
 }

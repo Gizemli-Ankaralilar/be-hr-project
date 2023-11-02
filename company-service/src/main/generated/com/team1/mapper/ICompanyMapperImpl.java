@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-31T21:54:38+0300",
+    date = "2023-11-02T19:31:50+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
@@ -104,6 +104,8 @@ public class ICompanyMapperImpl implements ICompanyMapper {
 
         Worker.WorkerBuilder<?, ?> worker = Worker.builder();
 
+        worker.username( dto.getUsername() );
+        worker.email( dto.getEmail() );
         worker.password( dto.getPassword() );
         if ( dto.getRole() != null ) {
             worker.role( Enum.valueOf( ERole.class, dto.getRole() ) );
@@ -120,7 +122,9 @@ public class ICompanyMapperImpl implements ICompanyMapper {
 
         CreateWorkerAuthModel.CreateWorkerAuthModelBuilder createWorkerAuthModel = CreateWorkerAuthModel.builder();
 
+        createWorkerAuthModel.username( worker.getUsername() );
         createWorkerAuthModel.password( worker.getPassword() );
+        createWorkerAuthModel.email( worker.getEmail() );
 
         return createWorkerAuthModel.build();
     }
