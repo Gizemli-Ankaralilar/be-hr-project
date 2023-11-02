@@ -31,8 +31,6 @@ w
 Guser-service/src/main/java/com/team1/repository/entity/UserProfile.java,2\c\2cf6528419a16559729dc26f3546d8783e91dd6b
 I
 mail-service/build.gradle,9\e\9e2eb0f8621545475f1199f583509e0ed5aba398
-s
-Cmail-service/src/main/java/com/team1/controller/MailController.java,b\1\b1881d12ae4729abbe5039e7db5f3b2650468802
 l
 <mail-service/src/main/java/com/team1/mapper/IMailMapper.java,0\0\0019b8f2098184f7d6656f22405598de7e100656
 €
