@@ -1,6 +1,6 @@
 package com.team1.manager;
 
-import com.team1.dto.request.RegisterRequestUserDto;
+import com.team1.request.RegisterRequestUserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

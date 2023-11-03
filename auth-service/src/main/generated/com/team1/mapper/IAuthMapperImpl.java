@@ -1,9 +1,9 @@
 package com.team1.mapper;
 
-import com.team1.dto.request.RegisterRequestUserDto;
-import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.RegisterSaveCompanyDto;
-import com.team1.dto.response.RegisterResponseVisitorDto;
+import com.team1.request.RegisterRequestUserDto;
+import com.team1.request.RegisterRequestVisitorDto;
+import com.team1.request.RegisterSaveCompanyDto;
+import com.team1.response.RegisterResponseVisitorDto;
 import com.team1.rabbitmq.model.CreateAuthModel;
 import com.team1.rabbitmq.model.MailRegisterModel;
 import com.team1.repository.entity.Auth;

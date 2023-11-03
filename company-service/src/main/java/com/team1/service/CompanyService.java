@@ -1,6 +1,5 @@
 package com.team1.service;
 
-import com.team1.dto.request.*;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.manager.ICompanyAuthManager;
@@ -10,8 +9,9 @@ import com.team1.rabbitmq.producer.CreateAuthProducer;
 import com.team1.rabbitmq.producer.CreateCompanyAuthProduces;
 import com.team1.repository.*;
 import com.team1.repository.entity.Company;
-import com.team1.repository.entity.Worker;
 import com.team1.repository.enums.EStatus;
+import com.team1.request.ActivateRequestDto;
+import com.team1.request.SaveCompanyDto;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;

@@ -1,14 +1,16 @@
-package com.team1.dto.request;
+package com.team1.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class LoginRequestDto {
-    private String username;
-    private String password;
+public class ActivateRequestDto {
+
+    private String token;
+    private String activationCode;
 }

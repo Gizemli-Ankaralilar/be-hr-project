@@ -1,13 +1,11 @@
 package com.team1.service;
 
-import com.team1.dto.request.PermitDto;
-import com.team1.dto.request.WorkerDto;
+import com.team1.request.PermitDto;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.repository.IPermitRepository;
 import com.team1.repository.entity.Company;
 import com.team1.repository.entity.Permit;
-import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;

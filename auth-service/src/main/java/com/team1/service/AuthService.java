@@ -1,7 +1,9 @@
 package com.team1.service;
 
-import com.team1.dto.request.*;
-import com.team1.dto.response.RegisterResponseVisitorDto;
+import com.team1.request.LoginRequestDto;
+import com.team1.request.RegisterRequestVisitorDto;
+import com.team1.request.RegisterSaveCompanyDto;
+import com.team1.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
 import com.team1.manager.IUserProfileManager;
@@ -11,7 +13,6 @@ import com.team1.rabbitmq.model.MailRegisterModel;
 import com.team1.rabbitmq.producer.MailRegisterProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
-import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;

@@ -2,15 +2,12 @@ package com.team1.controller;
 
 //import com.team1.dto.request.UpdateCompanyRequestDto;
 //import com.team1.dto.request.UpdateWorkerRequestDto;
-import com.team1.dto.request.PermitDto;
-import com.team1.dto.request.WorkerDto;
+import com.team1.request.PermitDto;
 import com.team1.repository.entity.Permit;
 import com.team1.service.PermitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 import java.util.List;
 

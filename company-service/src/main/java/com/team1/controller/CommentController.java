@@ -1,11 +1,8 @@
 package com.team1.controller;
 
-import com.team1.dto.request.CommentDto;
-import com.team1.dto.request.WorkerDto;
+import com.team1.request.CommentDto;
 import com.team1.repository.entity.Comment;
-import com.team1.repository.entity.Worker;
 import com.team1.service.CommentService;
-import com.team1.service.WorkerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

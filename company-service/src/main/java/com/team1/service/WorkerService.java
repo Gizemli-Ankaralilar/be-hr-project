@@ -2,7 +2,7 @@ package com.team1.service;
 
 //import com.team1.dto.request.UpdateCompanyRequestDto;
 //import com.team1.dto.request.UpdateWorkerRequestDto;
-import com.team1.dto.request.WorkerDto;
+import com.team1.request.WorkerDto;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.rabbitmq.producer.CreateWorkerAuthProduces;
@@ -13,7 +13,6 @@ import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
