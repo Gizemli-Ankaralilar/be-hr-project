@@ -15,7 +15,6 @@ public interface IAuthMapper {
     IAuthMapper INSTANCE = Mappers.getMapper(IAuthMapper.class);
     Auth toRegisterAuth(RegisterRequestVisitorDto dto);
     Auth toRegisterCompany(RegisterRequestCompanyDto dto);
-
     RegisterResponseVisitorDto toRegisterResponseDto(Auth auth);
     MailRegisterModel toMailModel(Auth auth);
 
