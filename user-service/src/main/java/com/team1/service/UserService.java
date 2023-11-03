@@ -11,6 +11,8 @@ import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 /*
     update metodu yazalım
     update metodu userporfile bilgilerimi guncelleyecek aynı zamanda
@@ -39,4 +41,10 @@ public class UserService extends ServiceManager<UserProfile, Long> {
             throw new UserManagerException(ErrorType.BAD_REQUEST);
         }
     }
+
+    public UserProfile getUserInformation(Long userId) {
+        Optional<UserProfile> userProfileInformation = userRepository.findById(userId);
+        return userProfileInformation.orElse(null);
+    }
+
 }
