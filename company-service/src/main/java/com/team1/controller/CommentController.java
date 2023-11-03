@@ -1,6 +1,6 @@
 package com.team1.controller;
 
-import com.team1.request.CommentDto;
+import com.team1.dto.request.CommentDto;
 import com.team1.repository.entity.Comment;
 import com.team1.service.CommentService;
 import lombok.RequiredArgsConstructor;

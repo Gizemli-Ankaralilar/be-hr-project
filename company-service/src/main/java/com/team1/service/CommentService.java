@@ -1,6 +1,6 @@
 package com.team1.service;
 
-import com.team1.request.CommentDto;
+import com.team1.dto.request.CommentDto;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.repository.ICommentRepository;

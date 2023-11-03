@@ -11,29 +11,24 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfig {
 
 
-    //create auth
-    //kuyruk oluşturabilmek için bize gerekli olan 3 sabit değişken üretildi
-    @Value("${rabbitmqKey.auth-exchange}")
-    private String exchange = "auth-exchange";
-    @Value("${rabbitmqKey.register-binding-key}")
-    private String createAuthQueue = "auth-company-queue";
-    @Value("${rabbitmqKey.register-queue}")
-    private String createAuthBindingKey = "auth-company-bindingkey";
+    String directExchangeCompany = "direct-exchange-auth";
 
-    //Bundan sonrası ezber
+    String queueCompany = "queue-company";
+
+    String saveBindingKeyCompany = "save-binding-key-company";
 
     @Bean
-    DirectExchange exchange(){
-        return new DirectExchange(exchange);//amqp.QUEUEU DEN OLUŞTURULACAK
+    DirectExchange directExchangeCompany(){
+        return new DirectExchange(directExchangeCompany);
     }
+
     @Bean
-    Queue createAuthQueue(){
-        return new Queue(createAuthQueue);//amqp.QUEUEU DEN OLUŞTURULACAK
+    Queue queueCompany(){
+        return new Queue(queueCompany);
     }
-    ////BU İKİ DEĞER KULLANILARAK BAĞLANACAKLAR.İÇERİSİNE ALACAĞI PARAMETRELER ÜZERİNDE YAZILAN METOTLARLA AYNI İSMİ ALICAK
-    //DİKKAT EDİLMESİ GEREKEN ŞEYLER AYNI DEĞİŞKEN VE İSİMERİ KULLANILMASI GEREKLİ
+
     @Bean
-    public Binding createPostBindingKey(final Queue createAuthQueue, final DirectExchange exchange){
-        return BindingBuilder.bind(createAuthQueue).to(exchange).with(createAuthBindingKey);
+    public Binding saveBindingDirectExchangeCompany(final Queue queueCompany,  final DirectExchange directExchangeCompany){
+        return BindingBuilder.bind(queueCompany).to(directExchangeCompany).with(saveBindingKeyCompany);
     }
 }

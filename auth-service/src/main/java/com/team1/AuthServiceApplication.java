@@ -16,39 +16,39 @@ import org.springframework.stereotype.Component;
 @EnableFeignClients
 public class AuthServiceApplication {
 
-    private final AuthService authService;
-
-    public AuthServiceApplication(AuthService authService) {
-        this.authService = authService;
-    }
+//    private final AuthService authService;
+//
+//    public AuthServiceApplication(AuthService authService) {
+//        this.authService = authService;
+//    }
     public static void main(String[] args) {
         SpringApplication.run(AuthServiceApplication.class);
 
 
     }
 
-    public void bizeBirAdminCekDemliOlsun() {
-        String adminUsername = "admin";
-        String adminPassword = "pass";
-
-
-        if (authService.getAuthByUsername(adminUsername) == null) {
-            Auth adminUser = new Auth();
-            adminUser.setUsername(adminUsername);
-            adminUser.setPassword(adminPassword);
-            adminUser.setRole(ERole.ADMIN);
-            adminUser.setStatus(EStatus.ACTIVE);
-
-            authService.save(adminUser);
-        }
-    }
-
-    @Component
-    public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
-        @Override
-        public void onApplicationEvent(ContextRefreshedEvent event) {
-            bizeBirAdminCekDemliOlsun();
-        }
-    }
+//    public void bizeBirAdminCekDemliOlsun() {
+//        String adminUsername = "admin";
+//        String adminPassword = "pass";
+//
+//
+//        if (authService.getAuthByUsername(adminUsername) == null) {
+//            Auth adminUser = new Auth();
+//            adminUser.setUsername(adminUsername);
+//            adminUser.setPassword(adminPassword);
+//            adminUser.setRole(ERole.ADMIN);
+//            adminUser.setStatus(EStatus.ACTIVE);
+//
+//            authService.save(adminUser);
+//        }
+//    }
+//
+//    @Component
+//    public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
+//        @Override
+//        public void onApplicationEvent(ContextRefreshedEvent event) {
+//            bizeBirAdminCekDemliOlsun();
+//        }
+//    }
 
 }

@@ -1,6 +1,5 @@
 package com.team1.manager;
 
-import com.team1.request.RegisterRequestUserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +11,6 @@ import static com.team1.constant.EndPoints.*;
 decode404 = true)
 public interface IUserProfileManager {
 
-    @PostMapping(SAVE)
-    ResponseEntity<Boolean> save(@RequestBody RegisterRequestUserDto dto);
+//    @PostMapping(SAVE)
+//    ResponseEntity<Boolean> save(@RequestBody RegisterRequestUserDto dto);
 }

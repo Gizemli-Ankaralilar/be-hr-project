@@ -1,9 +1,8 @@
 package com.team1.controller;
 
-import com.team1.request.LoginRequestDto;
-import com.team1.request.RegisterRequestVisitorDto;
-import com.team1.request.RegisterSaveCompanyDto;
-import com.team1.response.RegisterResponseVisitorDto;
+import com.team1.dto.request.RegisterRequestCompanyDto;
+import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.service.AuthService;
 import com.team1.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
@@ -23,20 +22,20 @@ public class AuthController {
 
     private final JwtTokenManager jwtTokenManager;
 
-    @PostMapping(REGISTER)
+    @PostMapping(VISITOR_REGISTER)
     public ResponseEntity<RegisterResponseVisitorDto> register(@RequestBody @Valid RegisterRequestVisitorDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
 
-    @PostMapping(SAVE_COMPANY)
-    public ResponseEntity<Boolean> companyRegister(@RequestBody @Valid RegisterSaveCompanyDto dto){
-        return ResponseEntity.ok(authService.companySave(dto));
+    @PostMapping(REGISTER_COMPANY)
+    public ResponseEntity<RegisterResponseVisitorDto> companyRegister(@RequestBody @Valid RegisterRequestCompanyDto dto){
+        return ResponseEntity.ok(authService.companyRegister(dto));
     }
-
-    @PostMapping(LOGIN)
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto dto){
-        return ResponseEntity.ok(authService.login(dto));
-    }
+//
+//    @PostMapping(LOGIN)
+//    public ResponseEntity<String> login(@RequestBody LoginRequestDto dto){
+//        return ResponseEntity.ok(authService.login(dto));
+//    }
 
     @GetMapping(ACTIVATE_STATUS)
     public ResponseEntity<String> activateStatus(@RequestParam String token){

@@ -2,6 +2,7 @@ package com.team1.repository.entity;
 
 
 
+import com.team1.rabbitmq.model.SaveAuthModel;
 import com.team1.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,4 +36,7 @@ public class UserProfile extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status = EStatus.PENDING;
+
+    public void saveRabbit(SaveAuthModel model) {
+    }
 }
