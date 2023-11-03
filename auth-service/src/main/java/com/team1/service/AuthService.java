@@ -15,6 +15,7 @@ import com.team1.rabbitmq.producer.SaveAuthProducer;
 import com.team1.rabbitmq.producer.SaveCompanyProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
+import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
@@ -78,12 +79,12 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
         Auth auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
         auth.setActivationCode(CodeGenerator.generateCode());
-        save(auth);
-        saveAuthProducer.convertAndSendUser(SaveAuthModel.builder().authId(auth.getId()).
-                username(dto.getUsername()).lastName(dto.getLastName()).surName(dto.getSurName()).
-                email(dto.getEmail()).phone(dto.getPhone()).password(dto.getPassword()).address(dto.getAddress()).build());
+        if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {//Buradaki iki alan boşsa kullanıcı kaydı oluştulacak.
+            save(auth);
+            saveAuthProducer.convertAndSendUser(SaveAuthModel.builder().authId(auth.getId()).
+                    username(dto.getUsername()).lastName(dto.getLastName()).surName(dto.getSurName()).
+                    email(dto.getEmail()).phone(dto.getPhone()).password(dto.getPassword()).address(dto.getAddress()).build());
 
-        if (dto.getTaxNumber().isEmpty() && dto.getCompanyName().isEmpty()) {//Buradaki iki alan boşsa kullanıcı kaydı oluştulacak.
             RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
             String token = jwtTokenManager.createToken(auth.getId())
                     .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
@@ -95,6 +96,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
             mailProducer.sendMail(mailModel);
             return responseVisitorDto;
         } else {//Burada company kuyruğu üretildi
+            auth.setRole(ERole.COMPANY_OWNER);
+            save(auth);
+            saveAuthProducer.convertAndSendUser(SaveAuthModel.builder().authId(auth.getId()).
+                    username(dto.getUsername()).lastName(dto.getLastName()).surName(dto.getSurName()).
+                    email(dto.getEmail()).phone(dto.getPhone()).password(dto.getPassword()).address(dto.getAddress()).build());
             saveCompanyProducer.convertAndSendCompany(SaveCompanyModel.builder().authId(auth.getId()).
                     username(dto.getUsername()).lastName(dto.getLastName()).surName(dto.getSurName()).
                     email(dto.getEmail()).phone(dto.getPhone()).password(dto.getPassword()).address(dto.getAddress()).

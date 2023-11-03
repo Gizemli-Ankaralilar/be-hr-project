@@ -31,7 +31,6 @@ public class CompanyService  extends ServiceManager<Company, String> {
         return companyRepository.findAll();
     }
 
-
     public Company getCompanyInformation(String id) {
         Optional<Company> companyInformation = companyRepository.findById(id);
         return companyInformation.orElse(null);
@@ -40,5 +39,8 @@ public class CompanyService  extends ServiceManager<Company, String> {
     public void saveCompanyRabbit(SaveCompanyModel model) {
         Company company = ICompanyMapper.INSTANCE.toSaveCompanyRabbit(model);
         save(company);
+        //company bilgileri ile birlikte Admin onaya gider.
     }
+
+    //worker kayıt işlemi
 }
