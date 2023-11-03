@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/git-config-server" />
             <option value="$PROJECT_DIR$/mail-service" />
             <option value="$PROJECT_DIR$/user-service" />
+            <option value="$PROJECT_DIR$/worker-service" />
           </set>
         </option>
       </GradleProjectSettings>

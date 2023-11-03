@@ -2,7 +2,7 @@ package com.team1.controller;
 
 //import com.team1.dto.request.UpdateCompanyRequestDto;
 //import com.team1.dto.request.UpdateWorkerRequestDto;
-import com.team1.request.PermitDto;
+import com.team1.dto.request.PermitDto;
 import com.team1.repository.entity.Permit;
 import com.team1.service.PermitService;
 import lombok.RequiredArgsConstructor;

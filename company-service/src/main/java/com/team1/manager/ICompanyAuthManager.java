@@ -1,7 +1,5 @@
 package com.team1.manager;
 
-import com.team1.request.RegisterRequestVisitorDto;
-import com.team1.request.RegisterSaveCompanyDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +17,5 @@ public interface ICompanyAuthManager {
     @GetMapping("/hello")
     String hello();
 
-    @PostMapping(REGISTER)
-    ResponseEntity<Boolean> register(@RequestBody @Valid RegisterRequestVisitorDto dto);
-
-    @PostMapping(SAVE_COMPANY)
-    ResponseEntity<Boolean> companyRegister(@RequestBody @Valid RegisterSaveCompanyDto dto);
 
 }

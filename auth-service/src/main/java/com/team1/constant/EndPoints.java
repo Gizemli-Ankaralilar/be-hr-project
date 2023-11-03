@@ -14,7 +14,8 @@ public class EndPoints {
 
     ///Auth
     public  static  final String REGISTER="/register";
+    public  static  final String VISITOR_REGISTER="/visitor-register";
     public  static  final String LOGIN="/login";
     public  static  final String ACTIVATE_STATUS="/activate_status";
-    public static final String SAVE_COMPANY=VERSION+"/save_company";
+    public static final String REGISTER_COMPANY=VERSION+"/save_company";
 }

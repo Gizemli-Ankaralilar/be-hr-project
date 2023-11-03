@@ -15,6 +15,7 @@
         <module name="HR-Project.user-service.main" />
         <module name="HR-Project.employee-service.main" />
         <module name="HR-Project.mail-service.main" />
+        <module name="HR-Project.worker-service.main" />
         <module name="HR-Project.company-service.main" />
         <module name="HR-Project.main" />
       </profile>

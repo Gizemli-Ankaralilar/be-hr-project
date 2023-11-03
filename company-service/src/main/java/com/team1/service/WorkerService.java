@@ -2,11 +2,9 @@ package com.team1.service;
 
 //import com.team1.dto.request.UpdateCompanyRequestDto;
 //import com.team1.dto.request.UpdateWorkerRequestDto;
-import com.team1.request.WorkerDto;
+import com.team1.dto.request.WorkerDto;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
-import com.team1.rabbitmq.producer.CreateWorkerAuthProduces;
-import com.team1.rabbitmq.producer.QueryAuthIdProducer;
 import com.team1.repository.IWorkerRepository;
 import com.team1.repository.entity.Company;
 import com.team1.repository.entity.Worker;
@@ -23,17 +21,13 @@ public class WorkerService extends ServiceManager<Worker, String>{
 
     private final JwtTokenManager jwtTokenManager;
     private final IWorkerRepository workerRepository;
-    private final CreateWorkerAuthProduces createWorkerAuthProduces;
-    private final QueryAuthIdProducer queryAuthIdProducer;
+
     private Company company;
 
-    public WorkerService(IWorkerRepository workerRepository, JwtTokenManager jwtTokenManager,
-                         CreateWorkerAuthProduces createWorkerAuthProduces, QueryAuthIdProducer queryAuthIdProducer) {
+    public WorkerService(IWorkerRepository workerRepository, JwtTokenManager jwtTokenManager) {
         super(workerRepository);
         this.jwtTokenManager = jwtTokenManager;
         this.workerRepository = workerRepository;
-        this.createWorkerAuthProduces = createWorkerAuthProduces;
-        this.queryAuthIdProducer = queryAuthIdProducer;
     }
 
     //yeni serviste burada düzenlemeler olabilir
@@ -44,15 +38,16 @@ public class WorkerService extends ServiceManager<Worker, String>{
         Long authId = jwtTokenManager.getIdFromToken(token).orElseThrow(() -> {
             throw new CompanyException(ErrorType.INVALID_TOKEN);
         });
-        Worker worker = Worker.builder().authId(authId).companyId(companyId).username(dto.getUsername())
+        Worker worker = Worker.builder().authId(authId).username(dto.getUsername())
                 .password(dto.getPassword()).email(dto.getEmail()).build();
         //auth tablosuna kayıt eklenmedi!!!!
         save(worker);
         List<String> id = new ArrayList<>();
         if (company.getId().equals(companyId)) {//bu metot olmasa da olabilir.
-            id.add(worker.getId());
-            company.setWorkers(id);
+
         }
+        id.add(worker.getId());
+        company.setWorkers(id);
         return true;
     }
 
