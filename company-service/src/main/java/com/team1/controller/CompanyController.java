@@ -1,10 +1,8 @@
 package com.team1.controller;
-import com.team1.dto.request.*;
 import com.team1.repository.entity.Company;
+import com.team1.request.SaveCompanyDto;
 import com.team1.service.CompanyService;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.team1.manager;
 
-import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.RegisterSaveCompanyDto;
+import com.team1.request.RegisterRequestVisitorDto;
+import com.team1.request.RegisterSaveCompanyDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.team1.dto.request;
+package com.team1.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class WorkerDto {
+public class SaveCompanyDto {
+
     private String username;
     private String email;
     private String password;
+    private String companyName;
+    private String taxNumber;
 }

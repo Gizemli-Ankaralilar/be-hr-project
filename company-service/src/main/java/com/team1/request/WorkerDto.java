@@ -1,4 +1,4 @@
-package com.team1.dto.request;
+package com.team1.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class ActivateRequestDto {
-
-    private String token;
-    private String activationCode;
+public class WorkerDto {
+    private String username;
+    private String email;
+    private String password;
 }

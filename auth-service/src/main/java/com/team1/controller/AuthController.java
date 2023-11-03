@@ -1,9 +1,9 @@
 package com.team1.controller;
 
-import com.team1.dto.request.LoginRequestDto;
-import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.RegisterSaveCompanyDto;
-import com.team1.dto.response.RegisterResponseVisitorDto;
+import com.team1.request.LoginRequestDto;
+import com.team1.request.RegisterRequestVisitorDto;
+import com.team1.request.RegisterSaveCompanyDto;
+import com.team1.response.RegisterResponseVisitorDto;
 import com.team1.service.AuthService;
 import com.team1.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;

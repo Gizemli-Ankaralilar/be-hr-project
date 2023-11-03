@@ -1,4 +1,4 @@
-package com.team1.dto.response;
+package com.team1.response;
 
 public class RegisterResponseCompanyDto {
 }

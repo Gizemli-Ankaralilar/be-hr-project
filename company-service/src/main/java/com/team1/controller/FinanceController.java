@@ -1,9 +1,6 @@
 package com.team1.controller;
 
-import com.team1.dto.request.FinanceDto;
-import com.team1.dto.request.WorkerDto;
 import com.team1.repository.entity.Finance;
-import com.team1.repository.entity.Worker;
 import com.team1.service.FinanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
 package com.team1.mapper;
 
-import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.SaveCompanyDto;
-import com.team1.dto.request.SaveWorkerDto;
-import com.team1.dto.response.RegisterResponseCompanyDto;
+import com.team1.request.RegisterRequestVisitorDto;
+import com.team1.request.SaveCompanyDto;
+import com.team1.request.SaveWorkerDto;
+import com.team1.response.RegisterResponseCompanyDto;
 import com.team1.rabbitmq.model.CreateAuthModel;
 import com.team1.rabbitmq.model.CreateCompanyAuthModel;
 import com.team1.rabbitmq.model.CreateWorkerAuthModel;
