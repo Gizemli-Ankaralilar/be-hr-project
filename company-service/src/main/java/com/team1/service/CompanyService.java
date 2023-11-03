@@ -85,4 +85,10 @@ public class CompanyService  extends ServiceManager<Company, String> {
         return companyRepository.findAll();
     }
 
+
+    public Company getCompanyInformation(String id) {
+        Optional<Company> companyInformation = companyRepository.findById(id);
+        return companyInformation.orElse(null);
+    }
+
 }

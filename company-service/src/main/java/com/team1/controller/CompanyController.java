@@ -30,5 +30,14 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.findAllCompany());
     }
 
+    @GetMapping("/{companyId}/information")
+    public ResponseEntity<Company> getCompnayInformation(@PathVariable String id) {
+        Company company = companyService.getCompanyInformation(id);
+        if (company != null) {
+            return ResponseEntity.ok(company);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
