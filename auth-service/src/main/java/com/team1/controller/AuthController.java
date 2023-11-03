@@ -1,5 +1,6 @@
 package com.team1.controller;
 
+import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
@@ -31,11 +32,11 @@ public class AuthController {
     public ResponseEntity<RegisterResponseVisitorDto> companyRegister(@RequestBody @Valid RegisterRequestCompanyDto dto){
         return ResponseEntity.ok(authService.companyRegister(dto));
     }
-//
-//    @PostMapping(LOGIN)
-//    public ResponseEntity<String> login(@RequestBody LoginRequestDto dto){
-//        return ResponseEntity.ok(authService.login(dto));
-//    }
+
+    @PostMapping(LOGIN)
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto dto){
+        return ResponseEntity.ok(authService.login(dto));
+    }
 
     @GetMapping(ACTIVATE_STATUS)
     public ResponseEntity<String> activateStatus(@RequestParam String token){

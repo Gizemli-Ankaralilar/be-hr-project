@@ -1,5 +1,6 @@
 package com.team1.service;
 
+import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
@@ -65,7 +66,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
         responseVisitorDto.setToken(token);
         responseVisitorDto.setComment("Kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
-        //SILERSEN OLURSUN-->Tamam ABLAAAA
+        //SILERSEN OLURSUN-->TAMAM ABLAAAAAAAAAAAA
         MailRegisterModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
         mailModel.setToken(token);
         mailProducer.sendMail(mailModel);
@@ -115,33 +116,24 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
 
     }
-//    public Boolean companySave(RegisterSaveCompanyDto dto) {
-//        try {
-//            Auth auth = IAuthMapper.INSTANCE.toAuthCompany(dto);
-//            save(auth);
-//            iUserProfileManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
-//            return true;
-//        } catch (Exception e) {
-//            throw new AuthManagerException(ErrorType.BAD_REQUEST);
-//        }
-//    }
 
-//    public String login(LoginRequestDto dto) {
-//        Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
-//        if (optionalAuth.isEmpty()) {
-//            throw new AuthManagerException(ErrorType.LOGIN_ERROR);
-//        }
-//        if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
-//            throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
-//        }
-//        if(!optionalAuth.get().getActivated()==true){
-//            optionalAuth.get().setActivated(true);
-//        } else {
-//            throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
-//        }
-//        return jwtTokenManager.createTokenCompany(optionalAuth.get().getId(), optionalAuth.get().getRole(), optionalAuth.get().getCompanyId())
-//                .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
-//    }
+    public String login(LoginRequestDto dto) {
+        Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
+        if (optionalAuth.isEmpty()) {
+            throw new AuthManagerException(ErrorType.LOGIN_ERROR);
+        }
+        if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
+            throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
+        }
+        if(!optionalAuth.get().getActivated()==true){
+            optionalAuth.get().setActivated(true);
+        } else {
+            throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
+        }
+        return jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
+                .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
+    }
+    //bURASI SONRASINDA SİLİNECEK
 
     @Transactional
     public String activateStatus(String token) {
@@ -161,6 +153,4 @@ public class AuthService extends ServiceManager<Auth, Long> {
         update(optionalAuth.get());
         return "Hesabınız aktive edilmiştir";
     }
-
-
 }
