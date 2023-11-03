@@ -48,8 +48,6 @@ Lcompany-service/src/main/java/com/team1/rabbitmq/model/QueryAuthIdModel.java,7
 Å
 Qcompany-service/src/main/java/com/team1/rabbitmq/model/CreateWorkerAuthModel.java,8\9\89bf55a86395acf7d3e130e815b5c76bc3e21b27
 y
-Icompany-service/src/main/java/com/team1/controller/WorkerControlller.java,4\9\490cd855c9e6537f4786100f90b6aeac4cd7c10d
-y
 Icompany-service/src/main/java/com/team1/controller/CompanyController.java,2\e\2eda5c29a622b9c9583e9651924523843b295f2c
 y
 Icompany-service/src/main/java/com/team1/repository/IPermitRepository.java,b\2\b29fdd3952a8a4c3d75a794d868f5cb0535ddc96
@@ -119,3 +117,7 @@ r
 Bcompany-service/src/main/java/com/team1/dto/request/PermitDto.java,6\b\6b825d1c085b69f0b3f4a3cd61154beaf497a512
 x
 Hcompany-service/src/main/java/com/team1/controller/WorkerController.java,2\6\26724a7e050cd10426b9c25689f860c15ff11387
+m
+=auth-service/src/main/java/com/team1/service/AuthService.java,c\b\cb2888d09fa5ba02f161c3ac97d60adca8154ee3
+q
+Aauth-service/src/main/java/com/team1/utility/JwtTokenManager.java,8\f\8f62dbfaa283a6fb5fb763ae2c4b8c8d8d2e06c6
