@@ -134,4 +134,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
             throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
         }
     }
+
+
+    public Auth getAuthByUsername(String username) {
+        Optional<Auth> auth = authRepository.findAuthByUsername(username);
+        return auth.orElse(null);
+    }
 }
