@@ -59,8 +59,8 @@ public class JwtTokenManager {
         try {
             token= JWT.create()
                     .withIssuer(issuer)
-                    .withClaim("myId",id).
-                    withClaim("role",id)
+                    .withClaim("myId",id)
+                    .withClaim("role",role.toString())
                     .withClaim("companyId",companyId)
                     .withIssuedAt(new Date())
                     .withExpiresAt(date)
