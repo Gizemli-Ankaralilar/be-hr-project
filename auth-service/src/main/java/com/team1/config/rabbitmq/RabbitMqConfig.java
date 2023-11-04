@@ -12,47 +12,35 @@ import org.springframework.amqp.core.Queue;
 public class RabbitMqConfig {
 
     String directExchangeAuth = "direct-exchange-auth";
-
     String queueAuth = "queue-auth";
-
     String saveBindingKey = "save-binding-key";
-
     @Bean
     DirectExchange directExchangeAuth(){
         return new DirectExchange(directExchangeAuth);
     }
-
     @Bean
     Queue queueAuth(){
         return new Queue(queueAuth);
     }
-
     @Bean
     public Binding saveBindingDirectExchange(final Queue queueAuth,  final DirectExchange directExchangeAuth){
         return BindingBuilder.bind(queueAuth).to(directExchangeAuth).with(saveBindingKey);
     }
-
     String directExchangeCompany = "direct-exchange-auth";
-
     String queueCompany = "queue-company";
-
     String saveBindingKeyCompany = "save-binding-key-company";
-
     @Bean
     DirectExchange directExchangeCompany(){
         return new DirectExchange(directExchangeCompany);
     }
-
     @Bean
     Queue queueCompany(){
         return new Queue(queueCompany);
     }
-
     @Bean
     public Binding saveBindingDirectExchangeCompany(final Queue queueCompany,  final DirectExchange directExchangeCompany){
         return BindingBuilder.bind(queueCompany).to(directExchangeCompany).with(saveBindingKeyCompany);
     }
-
     //Aminenin yazdıkları
 
     @Value("${rabbitmqKey.auth-exchange}")

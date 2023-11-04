@@ -17,10 +17,10 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/comment-create")
-    public ResponseEntity<Boolean> createWorker(@RequestParam String token, @RequestBody CommentDto dto){
-        return ResponseEntity.ok(commentService.createCommentUser(token, dto));
-    }
+//    @PostMapping("/comment-create")
+//    public ResponseEntity<Boolean> createWorker(@RequestParam String token, @RequestBody CommentDto dto){
+//        return ResponseEntity.ok(commentService.createCommentUser(token, dto));
+//    }
 
 
     @GetMapping(FINDALL_COMMENT)

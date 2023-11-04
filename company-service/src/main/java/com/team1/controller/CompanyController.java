@@ -1,4 +1,5 @@
 package com.team1.controller;
+import com.team1.dto.request.SaveWorkerDto;
 import com.team1.repository.entity.Company;
 import com.team1.service.CompanyService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,10 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    @PostMapping(SAVE_WORKER)
+    public ResponseEntity<String> saveWorker(@RequestBody SaveWorkerDto dto) {
+        return ResponseEntity.ok(companyService.saveWorker(dto));
+    }
 
     @GetMapping(FIND_ALL_COMPANY)
     public ResponseEntity<List<Company>> findAll(){
