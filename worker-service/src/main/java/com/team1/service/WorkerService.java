@@ -1,6 +1,8 @@
 package com.team1.service;
 
 
+import com.team1.mapper.IWorkerMapper;
+import com.team1.rabbitmq.model.SaveWorkerModel;
 import com.team1.repository.IWorkerRepository;
 import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
@@ -21,6 +23,15 @@ public class WorkerService extends ServiceManager<Worker, String>{
         super(workerRepository);
         this.jwtTokenManager = jwtTokenManager;
         this.workerRepository = workerRepository;
+    }
+
+    public void saveCompanyRabbit(SaveWorkerModel model) {
+        Worker worker = IWorkerMapper.INSTANCE.toCompanyWorker(model);
+        save(worker);
+    }
+
+    public List<Worker> findAllWorker() {
+        return workerRepository.findAll();
     }
 
     //yeni serviste burada düzenlemeler olabilir

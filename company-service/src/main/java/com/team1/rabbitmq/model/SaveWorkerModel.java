@@ -1,18 +1,18 @@
-package com.team1.dto.request;
+package com.team1.rabbitmq.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class SaveWorkerDto {
+public class SaveWorkerModel implements Serializable {
+    private String companyId;
     private String username;
     private String email;
     private String lastName;

@@ -6,10 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface ICompanyRepository extends MongoRepository<Company, String> {
+    Boolean existsByUsername(String username);
 
-//    Optional<Company> findByTaxNumber(String taxNumber);
-//
-//    boolean existsByTaxNumberOrName(String taxNumber,String name);
-//
-//    Optional<Company> findByTaxNumberAndName(String taxNumber,String name);
 }

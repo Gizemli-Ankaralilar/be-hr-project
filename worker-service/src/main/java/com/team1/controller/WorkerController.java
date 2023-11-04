@@ -1,9 +1,14 @@
 package com.team1.controller;
 
 
+import com.team1.repository.entity.Worker;
 import com.team1.service.WorkerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import static com.team1.constant.EndPoints.*;
 
 @RestController
@@ -12,6 +17,12 @@ import static com.team1.constant.EndPoints.*;
 public class WorkerController {
 
     private final WorkerService workerService;
+
+    @GetMapping("/finAll")
+    public ResponseEntity<List<Worker>> findAllWorker(){
+        return ResponseEntity.ok(workerService.findAll());
+    }
+
 
 //    @PostMapping("/worker-create")
 //    public ResponseEntity<Boolean> createWorker(@RequestParam String token, @RequestBody WorkerDto dto){

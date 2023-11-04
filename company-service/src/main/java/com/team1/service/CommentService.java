@@ -1,6 +1,5 @@
 package com.team1.service;
 
-import com.team1.dto.request.CommentDto;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.repository.ICommentRepository;
@@ -27,20 +26,20 @@ public class CommentService extends ServiceManager<Comment, String> {
         this.commentRepository = commentRepository;
     }
 
-    public Boolean createCommentUser(String token, CommentDto dto){
-        String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
-            throw new CompanyException(ErrorType.INVALID_TOKEN);
-        });
-        Comment comment = Comment.builder().companyId(companyId).comment(dto.getComment()).build();
-        //auth tablosuna kayıt eklenmedi!!!!
-        save(comment);
-        List<String> id = new ArrayList<>();
-        if (company.getId().equals(companyId)) {//bu metot olmasa da olabilir.
-            id.add(comment.getId());
-            company.setComments(id);
-        }
-        return true;
-    }
+//    public Boolean createCommentUser(String token, CommentDto dto){
+//        String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
+//            throw new CompanyException(ErrorType.INVALID_TOKEN);
+//        });
+//        Comment comment = Comment.builder().companyId(companyId).comment(dto.getComment()).build();
+//        //auth tablosuna kayıt eklenmedi!!!!
+//        save(comment);
+//        List<String> id = new ArrayList<>();
+//        if (company.getId().equals(companyId)) {//bu metot olmasa da olabilir.
+//            id.add(comment.getId());
+//            company.setComments(id);
+//        }
+//        return true;
+//    }
 
     public List<Comment> findAllComment() {
         return commentRepository.findAll();

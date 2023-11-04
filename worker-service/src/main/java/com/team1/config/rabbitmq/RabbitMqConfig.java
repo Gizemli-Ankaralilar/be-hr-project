@@ -9,26 +9,19 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMqConfig {
-
-    String directExchangeAuth = "direct-exchange-auth";
-
-    String queueAuth = "queue-auth";
-
-    String saveBindingKey = "save-binding-key";
-
+    String directExchangeWorker = "direct-exchange-worker";
+    String queueWorker = "queue-worker";
+    String saveBindingKeyWorker = "save-binding-key-worker";
     @Bean
-    DirectExchange directExchangeAuth(){
-        return new DirectExchange(directExchangeAuth);
+    DirectExchange directExchangeWorker(){
+        return new DirectExchange(directExchangeWorker);
     }
-
     @Bean
-    Queue queueAuth(){
-        return new Queue(queueAuth);
+    Queue queueWorker(){
+        return new Queue(queueWorker);
     }
-
     @Bean
-    public Binding saveBindingDirectExchange(final Queue queueAuth,  final DirectExchange directExchangeAuth){
-        return BindingBuilder.bind(queueAuth).to(directExchangeAuth).with(saveBindingKey);
+    public Binding saveBindingDirectExchangeWorker(final Queue queueWorker,  final DirectExchange directExchangeWorker){
+        return BindingBuilder.bind(queueWorker).to(directExchangeWorker).with(saveBindingKeyWorker);
     }
-
 }
