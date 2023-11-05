@@ -5,20 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class SaveAuthModel implements Serializable {
-    private Long authId;
+public class UserWorkerModel {
+    private Long authId;//5
+    private Long userId;
+    private String companyId;//1
     private String username;
     private String email;
     private String password;
+    private String firstName;
     private String lastName;
-    private String surName;
     private String phone;
     private String address;
-
 }

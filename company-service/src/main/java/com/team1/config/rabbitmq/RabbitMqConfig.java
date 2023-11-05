@@ -26,6 +26,8 @@ public class RabbitMqConfig {
         return BindingBuilder.bind(queueCompany).to(directExchangeCompany).with(saveBindingKeyCompany);
     }
 
+    //COMPANYDEN WORKER A GİDİYOR
+
     String directExchangeWorker = "direct-exchange-worker";
     String queueWorker = "queue-worker";
     String saveBindingKeyWorker = "save-binding-key-worker";
@@ -41,4 +43,39 @@ public class RabbitMqConfig {
     public Binding saveBindingDirectExchangeWorker(final Queue queueWorker,  final DirectExchange directExchangeWorker){
         return BindingBuilder.bind(queueWorker).to(directExchangeWorker).with(saveBindingKeyWorker);
     }
+//COMPANYDEN USERA
+    String directExchangeUser = "direct-exchange-user";
+    String queueUser = "queue-user";
+    String saveBindingKeyUser = "save-binding-key-user";
+    @Bean
+    DirectExchange directExchangeUser(){
+        return new DirectExchange(directExchangeUser);
+    }
+    @Bean
+    Queue queueUser(){
+        return new Queue(queueUser);
+    }
+    @Bean
+    public Binding saveBindingDirectExchangeUser(final Queue queueUser,  final DirectExchange directExchangeUser){
+        return BindingBuilder.bind(queueUser).to(directExchangeUser).with(saveBindingKeyUser);
+    }
+
+    //COMPANYDEN USERA COMPANYID SORGULAMA KUYRUĞU
+
+    String directExchangeUserID = "direct-exchange-user-id";
+    String queueUserID = "queue-user-id";
+    String saveBindingKeyUserID = "save-binding-key-user-id";
+    @Bean
+    DirectExchange directExchangeUserID(){
+        return new DirectExchange(directExchangeUserID);
+    }
+    @Bean
+    Queue queueUserID(){
+        return new Queue(queueUserID);
+    }
+    @Bean
+    public Binding saveBindingDirectExchangeUserID(final Queue queueUserID,  final DirectExchange directExchangeUserID){
+        return BindingBuilder.bind(queueUserID).to(directExchangeUserID).with(saveBindingKeyUserID);
+    }
+
 }

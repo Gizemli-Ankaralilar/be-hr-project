@@ -1,6 +1,5 @@
 package com.team1.mapper;
 
-import com.team1.rabbitmq.model.SaveWorkerModel;
 import com.team1.repository.entity.Worker;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
