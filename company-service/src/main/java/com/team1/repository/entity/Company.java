@@ -23,7 +23,7 @@ public class Company extends BaseEntity{
 
     @Id
     private String id;
-    private String authId;
+    private Long authId;
     private String companyName;
     private String username;
     private String email;

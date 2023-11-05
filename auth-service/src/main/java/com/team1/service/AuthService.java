@@ -11,6 +11,7 @@ import com.team1.mapper.IAuthMapper;
 import com.team1.rabbitmq.model.MailRegisterModel;
 import com.team1.rabbitmq.model.SaveAuthModel;
 import com.team1.rabbitmq.model.SaveCompanyModel;
+import com.team1.rabbitmq.model.SaveWorkerModel;
 import com.team1.rabbitmq.producer.MailRegisterProducer;
 import com.team1.rabbitmq.producer.SaveAuthProducer;
 import com.team1.rabbitmq.producer.SaveCompanyProducer;
@@ -99,9 +100,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
         } else {//Burada company kuyruğu üretildi
             auth.setRole(ERole.COMPANY_OWNER);
             save(auth);
-            saveAuthProducer.convertAndSendUser(SaveAuthModel.builder().authId(auth.getId()).
-                    username(dto.getUsername()).lastName(dto.getLastName()).surName(dto.getSurName()).
-                    email(dto.getEmail()).phone(dto.getPhone()).password(dto.getPassword()).address(dto.getAddress()).build());
             saveCompanyProducer.convertAndSendCompany(SaveCompanyModel.builder().authId(auth.getId()).
                     username(dto.getUsername()).lastName(dto.getLastName()).surName(dto.getSurName()).
                     email(dto.getEmail()).phone(dto.getPhone()).password(dto.getPassword()).address(dto.getAddress()).
@@ -112,7 +110,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
             responseVisitorDto.setToken(token);
             responseVisitorDto.setComment("Şirket kaydınız başarı ile alınmıştır.Hesabınız aktif edilmesi için admin onayını beklemelisiniz.");
             return responseVisitorDto;
-
         }
 
     }
@@ -152,5 +149,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
         optionalAuth.get().setStatus(EStatus.ACTIVE);
         update(optionalAuth.get());
         return "Hesabınız aktive edilmiştir";
+    }
+
+    public void saveCompanyRabbit(SaveWorkerModel model) {
+        Auth auth = Auth.builder().companyId(model.getCompanyId()).email(model.getEmail()).
+        password(model.getPassword()).username(model.getUsername()).build();
+        save(auth);
+
+        //saveAuthProducer.convertAndSendUser(SaveAuthModel.builder().authId(auth.getId()).surName(model.getSurName()).
+                //lastName(model.getLastName()).address(model.getAddress()).phone(model.getPhone()).username(model.getUsername()).
+                //username(model.getUsername()).email(model.getEmail()).password(model.getPassword()).role(ERole.WORKER).build());
     }
 }

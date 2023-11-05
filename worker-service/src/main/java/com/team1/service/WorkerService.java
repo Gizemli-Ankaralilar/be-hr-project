@@ -2,16 +2,13 @@ package com.team1.service;
 
 
 import com.team1.mapper.IWorkerMapper;
-import com.team1.rabbitmq.model.SaveWorkerModel;
 import com.team1.repository.IWorkerRepository;
 import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WorkerService extends ServiceManager<Worker, String>{

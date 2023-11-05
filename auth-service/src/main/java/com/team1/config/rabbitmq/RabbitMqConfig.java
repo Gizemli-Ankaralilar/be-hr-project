@@ -93,4 +93,21 @@ public class RabbitMqConfig {
     public Binding bindingMail(final Queue mailQueue, final DirectExchange exchange) {
         return BindingBuilder.bind(mailQueue).to(exchange).with(mailBindingKey);
     }
+
+    //Companyden worker geliyor
+    String directExchangeWorker = "direct-exchange-worker";
+    String queueWorker = "queue-worker";
+    String saveBindingKeyWorker = "save-binding-key-worker";
+    @Bean
+    DirectExchange directExchangeWorker(){
+        return new DirectExchange(directExchangeWorker);
+    }
+    @Bean
+    Queue queueWorker(){
+        return new Queue(queueWorker);
+    }
+    @Bean
+    public Binding saveBindingDirectExchangeWorker(final Queue queueWorker,  final DirectExchange directExchangeWorker){
+        return BindingBuilder.bind(queueWorker).to(directExchangeWorker).with(saveBindingKeyWorker);
+    }
 }

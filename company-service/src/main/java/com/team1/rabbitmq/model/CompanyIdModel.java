@@ -11,14 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-public class SaveAuthModel implements Serializable {
+public class CompanyIdModel implements Serializable {
     private Long authId;
-    private String username;
-    private String email;
-    private String password;
-    private String lastName;
-    private String surName;
-    private String phone;
-    private String address;
-
 }

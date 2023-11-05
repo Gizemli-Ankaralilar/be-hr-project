@@ -1,20 +1,20 @@
 package com.team1.rabbitmq.consumer;
 
+
 import com.team1.rabbitmq.model.SaveWorkerModel;
-import com.team1.service.WorkerService;
+import com.team1.service.AuthService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class SaveWorkerConsumer {
-    private final WorkerService workerService;
+    private final AuthService authService;
 
     @RabbitListener(queues = "queue-worker")
     public void createFromQueue(SaveWorkerModel model){
-        workerService.saveCompanyRabbit(model);
+        authService.saveCompanyRabbit(model);
     }
 
 }

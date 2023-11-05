@@ -1,6 +1,7 @@
 package com.team1.mapper;
 
 import com.team1.rabbitmq.model.SaveAuthModel;
+import com.team1.rabbitmq.model.SaveCompanyUserModel;
 import com.team1.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,5 +12,7 @@ public interface IUserMapper {
     IUserMapper INSTANCE= Mappers.getMapper(IUserMapper.class);
 
     UserProfile toSaveUserRabbit(SaveAuthModel model);
+
+    UserProfile toSaveCompanyUserRabbit(SaveCompanyUserModel model);
 
 }

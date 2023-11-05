@@ -21,6 +21,7 @@ public class Worker extends BaseEntity{
     @Id
     private String id;//worker ıd'yi göndericem ve companyıd'yi ve authId'yi çekicem
     private Long authId;//5
+    private Long userId;
     private String companyId;//1
     private String username;
     private String email;
