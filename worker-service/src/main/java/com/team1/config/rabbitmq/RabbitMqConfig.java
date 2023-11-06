@@ -9,5 +9,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMqConfig {
+    //USERDAN WORKER
+    private String queueUserWorker = "queueUserWorker";
+    @Bean
+    Queue queueUserWorker(){
+        return new Queue(queueUserWorker);
+    }
 
 }

@@ -16,4 +16,22 @@ public class RabbitMqConfig {
     Queue queueUser(){
         return new Queue(queueUser);
     }
+
+    //USERDAN WORKER A
+    private String exchangeUserWorker = "exchangeUserWorker";
+    private String queueUserWorker = "queueUserWorker";
+    private String createUserWorkerBindingKey = "createUserWorkerBindingKey";
+
+    @Bean
+    Queue queueUserWorker(){
+        return new Queue(queueUserWorker);
+    }
+    @Bean
+    DirectExchange exchangeUserWorker(){
+        return new DirectExchange(exchangeUserWorker);
+    }
+    @Bean
+    public Binding userWorkerBindingKey(final Queue queueUserWorker, final DirectExchange exchangeUserWorker){
+        return BindingBuilder.bind(queueUserWorker).to(exchangeUserWorker).with(createUserWorkerBindingKey);
+    }
 }

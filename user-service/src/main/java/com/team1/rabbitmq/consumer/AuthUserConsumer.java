@@ -1,4 +1,4 @@
-package com.team1.rabbitmq.producer;
+package com.team1.rabbitmq.consumer;
 
 import com.team1.rabbitmq.model.AuthUserModel;
 import com.team1.service.UserService;
@@ -9,13 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthUserConsumer {
-//    private final UserProfileService userProfileService;
-//
-//    @RabbitListener(queues = ("${rabbitmq.queueRegister}"))
-//    public void createUser(RegisterModel model){
-//        log.info("User {}", model.toString());
-//        userProfileService.createUser(model);
-//    }
+
     private final UserService userService;
     @RabbitListener(queues = "queueUser")
     public void createUser(AuthUserModel model){

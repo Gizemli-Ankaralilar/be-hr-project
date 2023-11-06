@@ -3,6 +3,7 @@ package com.team1.mapper;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
+import com.team1.rabbitmq.model.CompanyWorkerAuthModel;
 import com.team1.rabbitmq.model.MailRegisterModel;
 import com.team1.repository.entity.Auth;
 import javax.annotation.processing.Generated;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-06T17:09:25+0300",
+    date = "2023-11-06T19:16:58+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
@@ -42,6 +43,22 @@ public class IAuthMapperImpl implements IAuthMapper {
         auth.username( dto.getUsername() );
         auth.password( dto.getPassword() );
         auth.email( dto.getEmail() );
+
+        return auth.build();
+    }
+
+    @Override
+    public Auth toRegisterCompany(CompanyWorkerAuthModel model) {
+        if ( model == null ) {
+            return null;
+        }
+
+        Auth.AuthBuilder<?, ?> auth = Auth.builder();
+
+        auth.username( model.getUsername() );
+        auth.password( model.getPassword() );
+        auth.email( model.getEmail() );
+        auth.companyId( model.getCompanyId() );
 
         return auth.build();
     }

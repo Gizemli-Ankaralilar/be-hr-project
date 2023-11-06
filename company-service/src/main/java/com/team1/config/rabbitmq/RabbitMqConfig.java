@@ -9,6 +9,21 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMqConfig {
+//COMPANY DEN AUTHA
+    private String exchangeAuth = "exchangeAuth";
+    private String queueAuth = "queueAuth";
+    private String createAuthBindingKey = "createAuthBindingKey";
 
-
+    @Bean
+    Queue queueAuth(){
+        return new Queue(queueAuth);
+    }
+    @Bean
+    DirectExchange exchangeAuth(){
+        return new DirectExchange(exchangeAuth);
+    }
+    @Bean
+    public Binding postBindingKey(final Queue queueAuth, final DirectExchange exchangeAuth){
+        return BindingBuilder.bind(queueAuth).to(exchangeAuth).with(createAuthBindingKey);
+    }
 }
