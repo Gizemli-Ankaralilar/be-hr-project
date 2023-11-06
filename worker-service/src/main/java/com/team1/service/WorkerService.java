@@ -22,10 +22,7 @@ public class WorkerService extends ServiceManager<Worker, String>{
         this.workerRepository = workerRepository;
     }
 
-    public void saveCompanyRabbit(SaveWorkerModel model) {
-        Worker worker = IWorkerMapper.INSTANCE.toCompanyWorker(model);
-        save(worker);
-    }
+
 
     public List<Worker> findAllWorker() {
         return workerRepository.findAll();

@@ -24,46 +24,7 @@ public class PermitService extends ServiceManager<Permit, String> {
         this.permitRepository = permitRepository1;
     }
 
-//    public Boolean createPermitUser(String token, PermitDto dto){
-//        String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
-//            throw new CompanyException(ErrorType.INVALID_TOKEN);
-//        });
-//        Permit permit = Permit.builder().companyId(companyId)
-//                .annualLeave(dto.getAnnualLeave())
-//                .paternityLeave(dto.getPaternityLeave())
-//                .motherhoodLeave(dto.getMotherhoodLeave())
-//                .pregnancyLeave(dto.getPregnancyLeave())
-//                .noLeave(dto.getNoLeave())
-//                .unpaidLeave(dto.getUnpaidLeave())
-//                .sickLeave(dto.getSickLeave())
-//                .breakfastBreak(dto.getBreakfastBreak())
-//                .lunchBreak(dto.getLunchBreak())
-//                .afternoonBreak(dto.getAfternoonBreak())
-//                .build();
-//        save(permit);
-//        List<String> id = new ArrayList<>();
-//        if (company.getId().equals(companyId)) {//bu metot olmasa da olabilir.
-//            id.add(permit.getId());
-//            company.setPermissions(id);
-//        }
-//        return true;
-//    }
-//
-//    public List<Permit> findAllPermit() {
-//        return permitRepository.findAll();
-//    }
-//
-//    public Boolean deletePermit(String token, String workerId){//workerId frontand tarafından alınacak
-//        String companyId = jwtTokenManager.getCompanyIdFromToken(token).orElseThrow(() -> {
-//            throw new CompanyException(ErrorType.INVALID_TOKEN);
-//        });
-//        Optional<Permit> permit = permitRepository.findById(workerId);
-//        if (permit.get().getCompanyId().equals(companyId)) {
-//            permitRepository.delete(permit.get());
-//            return true;
-//        }
-//        return false;
-//    }
+
 
 }
 

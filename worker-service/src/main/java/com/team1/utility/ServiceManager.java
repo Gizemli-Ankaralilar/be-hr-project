@@ -4,7 +4,7 @@ package com.team1.utility;
 import com.team1.repository.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ServiceManager<T extends BaseEntity, ID> implements IService<T, ID>{
 
-    private final MongoRepository<T, ID> repository;
+    private final JpaRepository<T, ID> repository;
 
     @Override
     public T save(T t) {

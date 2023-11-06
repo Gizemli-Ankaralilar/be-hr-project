@@ -31,8 +31,8 @@ public class Auth extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status = EStatus.PENDING;
-    private String companyId;
-    private String workerId;
+    private Long companyId;
+    private Long workerId;
     @Builder.Default
     private Boolean activated = false;
 }
