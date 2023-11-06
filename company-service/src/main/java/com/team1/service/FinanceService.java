@@ -5,10 +5,8 @@ import com.team1.exception.ErrorType;
 import com.team1.repository.IFinanceRepository;
 import com.team1.repository.entity.Company;
 import com.team1.repository.entity.Finance;
-import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
