@@ -9,11 +9,13 @@ import com.team1.exception.ErrorType;
 import com.team1.manager.IUserProfileManager;
 import com.team1.mapper.IAuthMapper;
 import com.team1.rabbitmq.model.AuthUserModel;
+import com.team1.rabbitmq.model.CompanyWorkerAuthModel;
 import com.team1.rabbitmq.model.MailRegisterModel;
 import com.team1.rabbitmq.producer.AuthUserProducer;
 import com.team1.rabbitmq.producer.MailRegisterProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
+import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
@@ -55,7 +57,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
         authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
                 address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
                 lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
-
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token = jwtTokenManager.createToken(auth.getId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
@@ -73,9 +74,34 @@ public class AuthService extends ServiceManager<Auth, Long> {
         if (authRepository.existsByUsername(dto.getUsername())) {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
-        Auth auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
-        auth.setActivationCode(CodeGenerator.generateCode());
-        return null;
+        Auth auth;
+        if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {
+            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+            auth.setActivationCode(CodeGenerator.generateCode());
+            save(auth);
+            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                    address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+                    lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
+            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+            String token = jwtTokenManager.createToken(auth.getId())
+                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+            responseVisitorDto.setToken(token);
+            responseVisitorDto.setComment("Tax number ve company name girmediğiniz için kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
+            return responseVisitorDto;
+        }else {//Company e gönderilecek yer
+            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+            save(auth);
+            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                    address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+                    lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
+            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+            String token = jwtTokenManager.createToken(auth.getId())
+                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+            responseVisitorDto.setToken(token);
+            responseVisitorDto.setComment("Company kaydınız ile gerçekleşti.Company onayınızı admin yapacaktık.");
+            return responseVisitorDto;
+
+        }
     }
 
     public String login(LoginRequestDto dto) {
@@ -94,7 +120,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));
     }
-    //bURASI SONRASINDA SİLİNECEK
+    //BURASI SONRASINDA SİLİNECEK
 
     @Transactional
     public String activateStatus(String token) {
@@ -116,4 +142,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
 
+    public void createWorkerAuth(CompanyWorkerAuthModel model) {
+        Auth auth = IAuthMapper.INSTANCE.toRegisterCompany(model);
+        auth.setRole(ERole.WORKER);
+        save(auth);
+        //authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).build());
+        authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).role(auth.getRole()).
+                companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
+                lastName(model.getLastName()).firstName(model.getFirstName()).address(model.getAddress()).
+                phone(model.getPhone()).build());
+    }
 }

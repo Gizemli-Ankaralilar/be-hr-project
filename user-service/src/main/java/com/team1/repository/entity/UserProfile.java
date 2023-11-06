@@ -1,9 +1,10 @@
 package com.team1.repository.entity;
 
-
-
 import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
+import javax.persistence.*;
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,7 +36,7 @@ public class UserProfile extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status = EStatus.PENDING;
-    @Builder.Default
+    @Enumerated(EnumType.STRING)
     private ERole role;
 
 }

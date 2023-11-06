@@ -1,8 +1,11 @@
 package com.team1.service;
 
 import com.team1.dto.request.SaveWorkerDto;
-import com.team1.dto.response.CompanyIdResponseDto;
+import com.team1.exception.CompanyException;
+import com.team1.exception.ErrorType;
 import com.team1.mapper.ICompanyMapper;
+import com.team1.rabbitmq.model.CompanyWorkerAuthModel;
+import com.team1.rabbitmq.producer.CompanyWorkerAuthProducer;
 import com.team1.repository.*;
 import com.team1.repository.entity.Company;
 import com.team1.utility.GeneratePassword;
@@ -20,26 +23,26 @@ public class CompanyService  extends ServiceManager<Company, String> {
     private final JwtTokenManager jwtTokenManager;
     private final ICompanyRepository companyRepository;
     private final ICompanyMapper companyMapper;
+    private final CompanyWorkerAuthProducer companyWorkerAuthProducer;
 
 
-    public CompanyService(ICompanyRepository companyRepository, JwtTokenManager jwtTokenManager, ICompanyMapper companyMapper) {
+    public CompanyService(ICompanyRepository companyRepository, JwtTokenManager jwtTokenManager, ICompanyMapper companyMapper, CompanyWorkerAuthProducer companyWorkerAuthProducer) {
         super(companyRepository);
         this.companyRepository = companyRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.companyMapper = companyMapper;
+        this.companyWorkerAuthProducer = companyWorkerAuthProducer;
     }
-// {isim.soyisim@şirketismi.com} mail adresi ve şifre sistem tarafından oluşturulacaktır.
-    //Login olunan token ile authId bilgi alınacak.Oradan company tablosuna sorgu çekilecek.
-    //NoSql o sorguda o authId'ye sahip tüm kayıtları getireceği için orada companyId'ye de ulaşılabilcek.
     public String saveWorker(SaveWorkerDto dto) {
-//        //Bu metot sallantıda..Olmayabilir!!!!
-//        if (companyRepository.existsByUsername(dto.getUsername())) {
-//            throw new CompanyException(ErrorType.USERNAME_ALREADY_EXIST);
-//        }
+        if (companyRepository.existsByUsername(dto.getUsername())) {
+            throw new CompanyException(ErrorType.USERNAME_ALREADY_EXIST);
+        }
 
-        String email = dto.getLastName() + dto.getSurName() + "@" + "şirketismi" + ".com";
+        String email = dto.getLastName() + dto.getFirstName() + "@" + "şirketismi" + ".com";
         String password = GeneratePassword.generatePassword();
-
+        companyWorkerAuthProducer.createWorkerAuth(CompanyWorkerAuthModel.builder().companyId(1L).
+                email(email).password(password).phone(dto.getPhone()).lastName(dto.getLastName()).
+                firstName(dto.getFirstName()).address(dto.getAddress()).username(dto.getUsername()).build());
         return "Çalışan kaydetme işleminiz başarı ile gerçekleşmiştir.Kullanıcı aı ve şifresi";
     }
     public List<Company> findAllCompany() {
