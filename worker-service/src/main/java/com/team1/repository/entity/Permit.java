@@ -4,17 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @SuperBuilder
-@Document
+@Entity
 public class Permit extends BaseEntity{
-    private String id;
-    private String workerId;
-    private String companyId;//izni ekleyenin Id'si
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long workerId;
+    private Long companyId;//izni ekleyenin Id'si
     private Long annualLeave;
     private Long paternityLeave;
     private Long motherhoodLeave;

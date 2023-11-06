@@ -8,4 +8,5 @@ include 'config-server'
 include 'git-config-server'
 include 'mail-service'
 include 'worker-service'
+include 'company-service'
 

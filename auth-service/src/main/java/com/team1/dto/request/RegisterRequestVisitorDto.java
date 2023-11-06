@@ -1,5 +1,6 @@
 package com.team1.dto.request;
 
+import com.team1.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegisterRequestVisitorDto {
     private String username;
-    private String email;
     private String password;
+    private String email;
     private String lastName;
-    private String surName;
+    private String firstName;
     private String phone;
     private String address;
 }

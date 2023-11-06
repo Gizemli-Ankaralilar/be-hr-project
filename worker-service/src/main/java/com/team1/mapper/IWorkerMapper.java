@@ -11,5 +11,4 @@ public interface IWorkerMapper {
 
     IWorkerMapper INSTANCE = Mappers.getMapper(IWorkerMapper.class);
 
-    Worker toCompanyWorker(SaveWorkerModel model);
 }

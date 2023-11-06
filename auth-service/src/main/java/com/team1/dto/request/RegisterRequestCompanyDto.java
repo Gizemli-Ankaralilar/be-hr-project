@@ -14,7 +14,7 @@ public class RegisterRequestCompanyDto {
     private String email;
     private String password;
     private String lastName;
-    private String surName;
+    private String firstName;
     private String phone;
     private String address;
     private String companyName;
