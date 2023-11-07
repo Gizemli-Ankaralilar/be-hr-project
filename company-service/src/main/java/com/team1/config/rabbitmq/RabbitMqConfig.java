@@ -32,4 +32,20 @@ public class RabbitMqConfig {
     Queue queueCompany(){
         return new Queue(queueCompany);
     }
+    //COMPANYDEN  MAİLE
+    private String exchangeCompanyMail = "exchangeCompanyMail";
+    private String queueCompanyMail = "queueCompanyMail";
+    private String createCompanyMailBindingKey = "createCompanyMailBindingKey";
+    @Bean
+    Queue queueCompanyMail(){
+        return new Queue(queueCompanyMail);
+    }
+    @Bean
+    DirectExchange exchangeCompanyMail(){
+        return new DirectExchange(exchangeCompanyMail);
+    }
+    @Bean
+    public Binding mailBindingKey(final Queue queueCompanyMail, final DirectExchange exchangeCompanyMail){
+        return BindingBuilder.bind(queueCompanyMail).to(exchangeCompanyMail).with(createCompanyMailBindingKey);
+    }
 }

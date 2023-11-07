@@ -12,4 +12,10 @@ public class RabbitMqConfig {
     Queue queueMail(){
         return new Queue(queueMail);
     }
+    //COMPANYDEN MAİLE KUYRUK
+    private String queueCompanyMail = "queueCompanyMail";
+    @Bean
+    Queue queueCompanyMail(){
+        return new Queue(queueCompanyMail);
+    }
 }
