@@ -2,8 +2,8 @@ server:
   port: 7075
 spring:
   datasource:
-    username: postgres
-    password: yigitcanA96.
+    username: ${POSGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://localhost:5432/HRProjectMailService
     driver-class-name: org.postgresql.Driver
   jpa:
