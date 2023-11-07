@@ -3,37 +3,36 @@ package com.team1.config.rabbitmq;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.amqp.core.Queue;
 
 @Configuration
 public class RabbitMqConfig {
-    //Aminenin yazdıkları
-    @Value("${rabbitmqKey.auth-exchange}")
-    private String exchange;
-
-    //mail icin
-    @Value("${rabbitmqKey.register-binding}")
-    private String registerBindingKey;
-    @Value("${rabbitmqKey.register-queue}")
-    private String registerQueueName;
-
-    @Value("${rabbitmqKey.mail-queue}")
-    private String  mailQueueName;
-    @Value("${rabbitmqKey.mail-binding-key}")
-    private String  mailBindingKey;
-    // mail işlemleri
-    @Bean
-    public Queue mailQueue(){
-        return new Queue(mailQueueName);
-    }
-
+//    //Aminenin yazdıkları
+//    @Value("${rabbitmqKey.auth-exchange}")
+//    private String exchange;
+//
+//    //mail icin
+//    @Value("${rabbitmqKey.register-binding}")
+//    private String registerBindingKey;
+//    @Value("${rabbitmqKey.register-queue}")
+//    private String registerQueueName;
+//
+//    @Value("${rabbitmqKey.mail-queue}")
+//    private String  mailQueueName;
+//    @Value("${rabbitmqKey.mail-binding-key}")
+//    private String  mailBindingKey;
+//    // mail işlemleri
 //    @Bean
-//    public Binding bindingMail(final Queue mailQueue, final DirectExchange exchange) {
-//        return BindingBuilder.bind(mailQueue).to(exchange).with(mailBindingKey);
+//    public Queue mailQueue(){
+//        return new Queue(mailQueueName);
 //    }
+//
+////    @Bean
+////    public Binding bindingMail(final Queue mailQueue, final DirectExchange exchange) {
+////        return BindingBuilder.bind(mailQueue).to(exchange).with(mailBindingKey);
+////    }
 
     //AUTHDAN USER A
     private String exchangeUser = "exchangeUser";
@@ -93,6 +92,24 @@ public class RabbitMqConfig {
     @Bean
     public Binding workerBindingKey(final Queue queueWorker, final DirectExchange exchangeWorker){
         return BindingBuilder.bind(queueWorker).to(exchangeWorker).with(createWorkerBindingKey);
+    }
+
+    //AUTHDAN MAİLE
+    private String exchangeMail = "exchangeMail";
+    private String queueMail = "queueMail";
+    private String createMailBindingKey = "createMailBindingKey";
+
+    @Bean
+    Queue queueMail(){
+        return new Queue(queueMail);
+    }
+    @Bean
+    DirectExchange exchangeMail(){
+        return new DirectExchange(exchangeMail);
+    }
+    @Bean
+    public Binding authMailBindingKey(final Queue queueMail, final DirectExchange exchangeMail){
+        return BindingBuilder.bind(queueMail).to(exchangeMail).with(createMailBindingKey);
     }
 }
 
