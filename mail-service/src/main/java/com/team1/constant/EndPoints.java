@@ -1,9 +1,8 @@
 package com.team1.constant;
 
 public class EndPoints {
-
     public static final String VERSION="api/v1";
-    public static final String AUTH=VERSION+"/auth";
+    public static final String MAIL="/mail";
 
     //Genel
     public  static  final String FIND_ALL="/find_all";
@@ -12,11 +11,13 @@ public class EndPoints {
     public  static  final String DELETE_BY_ID="/delete_by_id";
     public  static  final String SAVE="/save";
 
-    public  static  final String SEND_MAIL="/send_mail";
+    ///MAIL
 
-    ///Auth
-    public  static  final String VISITOR_REGISTER="/visitor-register";
-    public  static  final String LOGIN="/login";
+    public  static  final String SEND_MAIL="/send_mail";
     public  static  final String ACTIVATE_STATUS="/activate_status";
-    public static final String REGISTER_COMPANY=VERSION+"/save_company";
+
+
+
+
+
 }
