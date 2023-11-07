@@ -3,6 +3,7 @@ package com.team1.service;
 
 import com.team1.dto.request.SendMailRequestDto;
 import com.team1.rabbitmq.model.AuthMailModel;
+import com.team1.rabbitmq.model.CompanyMailModel;
 import com.team1.repository.IMailRepository;
 import com.team1.repository.entity.MailProfile;
 import com.team1.utility.ServiceManager;
@@ -39,14 +40,25 @@ public class MailService extends ServiceManager<MailProfile, Long> {
 
     public void createAuthMail(AuthMailModel model) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("${spring.mail.username}");
-        mailMessage.setTo(model.getEmail());
-        mailMessage.setSubject("AKTIVASYON KODU");
+        mailMessage.setFrom("${spring.mail.username}");//gönderdiğimiz mail adresi
+        mailMessage.setTo(model.getEmail());//gidecek mail adresi
+        mailMessage.setSubject("AKTIVASYON KODU");//KONU
         mailMessage.setText(
                 model.getUsername()  + "\nBaşarıyla kayıt oldunuz.\n" +
                         "Aktivasyon Link: \n" + "http://localhost:9090/api/v1/auth/activate_status?token="+model.getToken()
 
         );
+        javaMailSender.send(mailMessage);
+    }
+
+    public void createCompanyMail(CompanyMailModel model) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("${spring.mail.username}");
+        mailMessage.setTo(model.getMail());
+        mailMessage.setSubject("KULLANICI BİLGİLERİ");
+        mailMessage.setText((model.getNewMail() + "\nŞirket mail adresiniz ve passwordunuz.\n" + model.getPassword()
+
+                ));
         javaMailSender.send(mailMessage);
     }
 }
