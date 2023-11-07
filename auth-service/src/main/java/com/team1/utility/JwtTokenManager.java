@@ -42,7 +42,7 @@ public class JwtTokenManager {
         try {
             token= JWT.create()
                     .withIssuer(issuer)
-                    .withClaim("myId",id)
+                    .withClaim("userId",id)
                     .withClaim("role",role.toString())
                     .withIssuedAt(new Date())
                     .withExpiresAt(date)

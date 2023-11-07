@@ -119,6 +119,8 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     public String login(LoginRequestDto dto) {
         Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
+        System.out.println(optionalAuth.get().getUsername().toString());
+        System.out.println(optionalAuth.get().getPassword().toString());
         if (optionalAuth.isEmpty()) {
             throw new AuthManagerException(ErrorType.LOGIN_ERROR);
         }
