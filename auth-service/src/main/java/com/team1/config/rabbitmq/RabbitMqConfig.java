@@ -30,10 +30,10 @@ public class RabbitMqConfig {
         return new Queue(mailQueueName);
     }
 
-    @Bean
-    public Binding bindingMail(final Queue mailQueue, final DirectExchange exchange) {
-        return BindingBuilder.bind(mailQueue).to(exchange).with(mailBindingKey);
-    }
+//    @Bean
+//    public Binding bindingMail(final Queue mailQueue, final DirectExchange exchange) {
+//        return BindingBuilder.bind(mailQueue).to(exchange).with(mailBindingKey);
+//    }
 
     //AUTHDAN USER A
     private String exchangeUser = "exchangeUser";
@@ -58,6 +58,41 @@ public class RabbitMqConfig {
     @Bean
     Queue queueAuth(){
         return new Queue(queueAuth);
+    }
+
+    //AUTHDAN COMPANY E
+    private String exchangeCompany = "exchangeCompany";
+    private String queueCompany = "queueCompany";
+    private String createCompanyBindingKey = "createCompanyBindingKey";
+
+    @Bean
+    Queue queueCompany(){
+        return new Queue(queueCompany);
+    }
+    @Bean
+    DirectExchange exchangeCompany(){
+        return new DirectExchange(exchangeCompany);
+    }
+    @Bean
+    public Binding companyBindingKey(final Queue queueCompany, final DirectExchange exchangeCompany){
+        return BindingBuilder.bind(queueCompany).to(exchangeCompany).with(createCompanyBindingKey);
+    }
+
+    //AUTHDAN WORKERA
+    private String exchangeWorker = "exchangeWorker";
+    private String queueWorker = "queueWorker";
+    private String createWorkerBindingKey = "createWorkerBindingKey";
+    @Bean
+    Queue queueWorker(){
+        return new Queue(queueWorker);
+    }
+    @Bean
+    DirectExchange exchangeWorker(){
+        return new DirectExchange(exchangeWorker);
+    }
+    @Bean
+    public Binding workerBindingKey(final Queue queueWorker, final DirectExchange exchangeWorker){
+        return BindingBuilder.bind(queueWorker).to(exchangeWorker).with(createWorkerBindingKey);
     }
 }
 

@@ -62,8 +62,6 @@ public class UserService extends ServiceManager<UserProfile, Long> {
         UserProfile userProfile = IUserMapper.INSTANCE.authtouser(model);
         System.out.println(userProfile.getRole());
         save(userProfile);
-//        if (userProfile.getRole().equals(ERole.WORKER)) {
-//            //producer yazılacak ve buradan worker a gidecek.
-//        }
+
     }
 }

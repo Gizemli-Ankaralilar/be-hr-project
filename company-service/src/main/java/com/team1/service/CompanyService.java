@@ -4,6 +4,7 @@ import com.team1.dto.request.SaveWorkerDto;
 import com.team1.exception.CompanyException;
 import com.team1.exception.ErrorType;
 import com.team1.mapper.ICompanyMapper;
+import com.team1.rabbitmq.model.AuthCompanyModel;
 import com.team1.rabbitmq.model.CompanyWorkerAuthModel;
 import com.team1.rabbitmq.producer.CompanyWorkerAuthProducer;
 import com.team1.repository.*;
@@ -54,4 +55,8 @@ public class CompanyService  extends ServiceManager<Company, String> {
         return companyInformation.orElse(null);
     }
 
+    public void createAuthCompany(AuthCompanyModel model) {
+        Company company = Company.builder().authId(model.getAuthId()).build();
+        save(company);
+    }
 }

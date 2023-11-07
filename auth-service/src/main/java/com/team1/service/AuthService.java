@@ -8,10 +8,10 @@ import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
 import com.team1.manager.IUserProfileManager;
 import com.team1.mapper.IAuthMapper;
-import com.team1.rabbitmq.model.AuthUserModel;
-import com.team1.rabbitmq.model.CompanyWorkerAuthModel;
-import com.team1.rabbitmq.model.MailRegisterModel;
+import com.team1.rabbitmq.model.*;
+import com.team1.rabbitmq.producer.AuthCompanyProducer;
 import com.team1.rabbitmq.producer.AuthUserProducer;
+import com.team1.rabbitmq.producer.AuthWorkerProducer;
 import com.team1.rabbitmq.producer.MailRegisterProducer;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
@@ -33,15 +33,19 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final IUserProfileManager userProfileManager;
     private final MailRegisterProducer mailProducer;
     private final AuthUserProducer authUserProducer;
+    private final AuthCompanyProducer authCompanyProducer;
+    private final AuthWorkerProducer authWorkerProducer;
 
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserProfileManager userProfileManager, MailRegisterProducer mailProducer, AuthUserProducer authUserProducer) {
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserProfileManager userProfileManager, MailRegisterProducer mailProducer, AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.userProfileManager = userProfileManager;
         this.mailProducer = mailProducer;
         this.authUserProducer = authUserProducer;
+        this.authCompanyProducer = authCompanyProducer;
+        this.authWorkerProducer = authWorkerProducer;
     }
 
     @Transactional
@@ -90,10 +94,12 @@ public class AuthService extends ServiceManager<Auth, Long> {
             return responseVisitorDto;
         }else {//Company e gönderilecek yer
             auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+            auth.setRole(ERole.COMPANY_OWNER);
             save(auth);
             authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
                     address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
-                    lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
+                    lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
+            authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).build());
             RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
             String token = jwtTokenManager.createToken(auth.getId())
                     .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
@@ -141,7 +147,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return "Hesabınız aktive edilmiştir";
     }
 
-
+    //WORKER IN AUTH A KAYIT EKLENDİĞİ YER
     public void createWorkerAuth(CompanyWorkerAuthModel model) {
         Auth auth = IAuthMapper.INSTANCE.toRegisterCompany(model);
         auth.setRole(ERole.WORKER);
@@ -151,5 +157,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
                 lastName(model.getLastName()).firstName(model.getFirstName()).address(model.getAddress()).
                 phone(model.getPhone()).build());
+        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).build());
     }
 }
