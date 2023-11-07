@@ -2,17 +2,17 @@ package com.team1.mapper;
 
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
+import com.team1.dto.request.SendMailRequestDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.rabbitmq.model.CompanyWorkerAuthModel;
-import com.team1.rabbitmq.model.MailRegisterModel;
 import com.team1.repository.entity.Auth;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-07T09:53:51+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
+    date = "2023-11-07T12:34:22+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8.1 (Amazon.com Inc.)"
 )
 @Component
 public class IAuthMapperImpl implements IAuthMapper {
@@ -80,16 +80,17 @@ public class IAuthMapperImpl implements IAuthMapper {
     }
 
     @Override
-    public MailRegisterModel toMailModel(Auth auth) {
+    public SendMailRequestDto toSendMailRequestDto(Auth auth) {
         if ( auth == null ) {
             return null;
         }
 
-        MailRegisterModel.MailRegisterModelBuilder mailRegisterModel = MailRegisterModel.builder();
+        SendMailRequestDto.SendMailRequestDtoBuilder sendMailRequestDto = SendMailRequestDto.builder();
 
-        mailRegisterModel.username( auth.getUsername() );
-        mailRegisterModel.email( auth.getEmail() );
+        sendMailRequestDto.authId( auth.getId() );
+        sendMailRequestDto.username( auth.getUsername() );
+        sendMailRequestDto.email( auth.getEmail() );
 
-        return mailRegisterModel.build();
+        return sendMailRequestDto.build();
     }
 }
