@@ -63,6 +63,7 @@ class ApplicationStartup {
     private void bizeBirAdminCekDemliOlsun() {
         String adminUsername = "admin";
         String adminPassword = "pass";
+        String adminEmail = "gizemliankaralilar@gmail.com";
 
         if (authService.getAuthByUsername(adminUsername) == null) {
             Auth adminUser = new Auth();
@@ -70,6 +71,7 @@ class ApplicationStartup {
             adminUser.setPassword(adminPassword);
             adminUser.setRole(ERole.ADMIN);
             adminUser.setStatus(EStatus.ACTIVE);
+            adminUser.setEmail(adminEmail);
 
             authService.save(adminUser);
         }
