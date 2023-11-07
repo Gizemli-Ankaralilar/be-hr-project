@@ -11,7 +11,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-public class AuthCompanyModel implements Serializable {
-    private Long authId;
-    //Şirket bilgileri
+public class AuthMailModel implements Serializable {
+    private String username;
+    private String email;
+    private String token;
+
 }
