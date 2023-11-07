@@ -12,6 +12,7 @@ import com.team1.manager.IUserProfileManager;
 import com.team1.mapper.IAuthMapper;
 import com.team1.rabbitmq.model.*;
 import com.team1.rabbitmq.producer.AuthCompanyProducer;
+import com.team1.rabbitmq.producer.AuthMailProducer;
 import com.team1.rabbitmq.producer.AuthUserProducer;
 import com.team1.rabbitmq.producer.AuthWorkerProducer;
 import com.team1.repository.IAuthRepository;
@@ -35,6 +36,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final AuthUserProducer authUserProducer;
     private final AuthCompanyProducer authCompanyProducer;
     private final AuthWorkerProducer authWorkerProducer;
+    private final AuthMailProducer authMailProducer;
 
     private final IMailManager iMailManager;
 
@@ -42,7 +44,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     public AuthService(IAuthRepository authRepository,
                        IMailManager iMailManager,
                        JwtTokenManager jwtTokenManager, IUserProfileManager userProfileManager,
-                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer) {
+                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
@@ -51,6 +53,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         this.authCompanyProducer = authCompanyProducer;
         this.authWorkerProducer = authWorkerProducer;
         this.iMailManager = iMailManager;
+        this.authMailProducer = authMailProducer;
     }
 
     @Transactional
@@ -66,22 +69,22 @@ public class AuthService extends ServiceManager<Auth, Long> {
         authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
                 address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
                 lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
+
         RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token = jwtTokenManager.createToken(auth.getId())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
         responseVisitorDto.setToken(token);
         responseVisitorDto.setComment("Kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
 
-
-        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
-        sendMailRequestDto.setToken(token);
-        iMailManager.sendMail(sendMailRequestDto);
+        authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
+//        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
+//        sendMailRequestDto.setToken(token);
+//        iMailManager.sendMail(sendMailRequestDto);
 
         return responseVisitorDto;
     }
 
     public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
-
         if (authRepository.existsByUsername(dto.getUsername())) {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }

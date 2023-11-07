@@ -98,7 +98,6 @@ public class RabbitMqConfig {
     private String exchangeMail = "exchangeMail";
     private String queueMail = "queueMail";
     private String createMailBindingKey = "createMailBindingKey";
-
     @Bean
     Queue queueMail(){
         return new Queue(queueMail);
@@ -108,9 +107,10 @@ public class RabbitMqConfig {
         return new DirectExchange(exchangeMail);
     }
     @Bean
-    public Binding authMailBindingKey(final Queue queueMail, final DirectExchange exchangeMail){
+    public Binding mailBindingKey(final Queue queueMail, final DirectExchange exchangeMail){
         return BindingBuilder.bind(queueMail).to(exchangeMail).with(createMailBindingKey);
     }
+
 }
 
 

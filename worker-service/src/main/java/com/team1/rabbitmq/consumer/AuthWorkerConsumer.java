@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthWorkerConsumer {
-    WorkerService workerService;
-    @RabbitListener(queues = "queueAuth")
+    private final WorkerService workerService;
+    @RabbitListener(queues = "queueWorker")
     public void createUser(AuthWorkerModel model){
         workerService.createAuthWorker(model);
     }
