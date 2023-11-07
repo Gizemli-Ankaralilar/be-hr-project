@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     username: postgres
-    password: 123456789
+    password: yigitcanA96.
     url: jdbc:postgresql://localhost:5432/HRProjectMailService
     driver-class-name: org.postgresql.Driver
   jpa:
