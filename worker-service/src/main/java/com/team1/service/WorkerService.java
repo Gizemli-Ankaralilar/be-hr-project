@@ -2,6 +2,7 @@ package com.team1.service;
 
 
 import com.team1.mapper.IWorkerMapper;
+import com.team1.rabbitmq.model.AuthWorkerModel;
 import com.team1.repository.IWorkerRepository;
 import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
@@ -26,6 +27,11 @@ public class WorkerService extends ServiceManager<Worker, String>{
 
     public List<Worker> findAllWorker() {
         return workerRepository.findAll();
+    }
+
+    public void createAuthWorker(AuthWorkerModel model) {
+        Worker worker = IWorkerMapper.INSTANCE.toAuthWorker(model);
+        save(worker);
     }
 
     //yeni serviste burada düzenlemeler olabilir
