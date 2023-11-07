@@ -119,8 +119,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     public String login(LoginRequestDto dto) {
         Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
-        System.out.println(optionalAuth.get().getUsername().toString());
-        System.out.println(optionalAuth.get().getPassword().toString());
         if (optionalAuth.isEmpty()) {
             throw new AuthManagerException(ErrorType.LOGIN_ERROR);
         }
@@ -167,5 +165,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 lastName(model.getLastName()).firstName(model.getFirstName()).address(model.getAddress()).
                 phone(model.getPhone()).build());
         authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).build());
+    }
+
+    public Auth getAuthByUsername(String username) {
+        Optional<Auth> auth = authRepository.findAuthByUsername(username);
+        return auth.orElse(null);
     }
 }
