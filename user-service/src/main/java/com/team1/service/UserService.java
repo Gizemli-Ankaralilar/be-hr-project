@@ -5,7 +5,6 @@ import com.team1.dto.request.SaveUserRequestDto;
 import com.team1.exception.ErrorType;
 import com.team1.exception.UserManagerException;
 import com.team1.mapper.IUserMapper;
-import com.team1.rabbitmq.model.AuthUserModel;
 import com.team1.repository.IUserRepository;
 import com.team1.repository.entity.UserProfile;
 import com.team1.repository.enums.ERole;
@@ -58,10 +57,9 @@ public class UserService extends ServiceManager<UserProfile, Long> {
         }
         return userProfile;
     }
-    public void createUser(AuthUserModel model) {
-        UserProfile userProfile = IUserMapper.INSTANCE.authtouser(model);
-        System.out.println(userProfile.getRole());
-        save(userProfile);
-
-    }
+//    public void createUser(AuthUserModel model) {
+//        UserProfile userProfile = IUserMapper.INSTANCE.authtouser(model);
+//        save(userProfile);
+//
+//    }
 }

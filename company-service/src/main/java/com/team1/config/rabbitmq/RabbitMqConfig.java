@@ -48,4 +48,20 @@ public class RabbitMqConfig {
     public Binding mailBindingKey(final Queue queueCompanyMail, final DirectExchange exchangeCompanyMail){
         return BindingBuilder.bind(queueCompanyMail).to(exchangeCompanyMail).with(createCompanyMailBindingKey);
     }
+    //COMPANYDEN WORKERA TOKEN
+    private String exchangeCompanyToken = "exchangeCompanyToken";
+    private String queueCompanyToken = "queueCompanyToken";
+    private String createCompanyTokenBindingKey = "createCompanyTokenBindingKey";
+    @Bean
+    Queue queueCompanyToken(){
+        return new Queue(queueCompanyToken);
+    }
+    @Bean
+    DirectExchange exchangeCompanyToken(){
+        return new DirectExchange(exchangeCompanyToken);
+    }
+    @Bean
+    public Binding tokenBindingKey(final Queue queueCompanyToken, final DirectExchange exchangeCompanyToken){
+        return BindingBuilder.bind(queueCompanyToken).to(exchangeCompanyToken).with(createCompanyTokenBindingKey);
+    }
 }

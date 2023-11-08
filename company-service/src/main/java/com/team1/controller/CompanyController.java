@@ -22,20 +22,11 @@ public class CompanyController {
     public ResponseEntity<String> saveWorker(@RequestParam String token, @RequestBody SaveWorkerDto dto) {
         return ResponseEntity.ok(companyService.saveWorker(token, dto));
     }
-
-    @GetMapping(FIND_ALL_COMPANY)
-    public ResponseEntity<List<Company>> findAll(){
-        return ResponseEntity.ok(companyService.findAllCompany());
+//FIND_ALL_WORKER
+    @GetMapping(FIND_ALL_WORKER)
+    public ResponseEntity<String/*List<Company>*/> findAllWorker(@RequestParam String token){
+        return ResponseEntity.ok(companyService.findAllCompanyWorker(token));
     }
 
-    @GetMapping("/{companyId}/information")
-    public ResponseEntity<Company> getCompnayInformation(@PathVariable String id) {
-        Company company = companyService.getCompanyInformation(id);
-        if (company != null) {
-            return ResponseEntity.ok(company);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
 }

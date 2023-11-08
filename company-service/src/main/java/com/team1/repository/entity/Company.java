@@ -28,16 +28,9 @@ public class Company extends BaseEntity{
     private Long id;
     private Long authId;
     private String companyName;
-    private String username;
-    private String email;
-    private String password;
     private String taxNumber;
-    private String companyEmail;
     private String companyAddress;
     private String companyPhoneNumber;
-    private String activationCode;//şirket için oluşturulan activate kod hem veri tabanına eklenir hemde maili gönderilir.
-    @Builder.Default
-    private ERole role = ERole.COMPANY_OWNER;
     @Builder.Default
     private EStatus status = EStatus.INACTIVE;
 
