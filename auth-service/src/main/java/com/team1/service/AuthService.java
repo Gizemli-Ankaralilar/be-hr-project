@@ -39,11 +39,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final AuthMailProducer authMailProducer;
     private final IMailManager iMailManager;
 
+    //Admin icin degisiklikler basliyor burada
+    private final AdminService adminService;
+
 
     public AuthService(IAuthRepository authRepository,
                        IMailManager iMailManager,
                        JwtTokenManager jwtTokenManager, IUserProfileManager userProfileManager,
-                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer) {
+                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer, AdminService adminService) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
@@ -53,6 +56,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         this.authWorkerProducer = authWorkerProducer;
         this.iMailManager = iMailManager;
         this.authMailProducer = authMailProducer;
+        this.adminService = adminService;
     }
 
     @Transactional
@@ -83,12 +87,16 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return responseVisitorDto;
     }
 
+
     public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
+
         if (authRepository.existsByUsername(dto.getUsername())) {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
         }
         Auth auth;
+        RegisterRequestVisitorDto registerRequestVisitorDto;
         if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {
+
             auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
             auth.setActivationCode(CodeGenerator.generateCode());
             save(auth);
@@ -117,6 +125,31 @@ public class AuthService extends ServiceManager<Auth, Long> {
             responseVisitorDto.setComment("Company kaydınız ile gerçekleşti.Company onayınızı admin yapacaktık.");
             return responseVisitorDto;
 
+
+            registerRequestVisitorDto = IAuthMapper.INSTANCE.fromRequestCompanyDtoToRequestVisitorDto(dto);
+            return register(registerRequestVisitorDto);
+
+        }else {//Company e gönderilecek yer
+            if(adminService.approvedCompanyOwner(dto)){
+                //Admin onayladi
+                auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+                auth.setRole(ERole.COMPANY_OWNER);
+                save(auth);
+                authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                        address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+                        lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
+                authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).build());
+                RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+                String token = jwtTokenManager.createToken(auth.getId())
+                        .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+                responseVisitorDto.setToken(token);
+                responseVisitorDto.setComment("Approved by Admin");
+                return responseVisitorDto;
+            }else{//Admin onaylamadigi durumda yine kullanici olarak kayit olacak
+                //Admin den onay almadiniz uzgunuz
+                registerRequestVisitorDto = IAuthMapper.INSTANCE.fromRequestCompanyDtoToRequestVisitorDto(dto);
+                return register(registerRequestVisitorDto);
+            }
         }
     }
 

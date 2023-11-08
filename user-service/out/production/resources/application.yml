@@ -1,25 +1,18 @@
 server:
-  port: 9091
+  port: 9094
 
 spring:
   datasource:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
-    url: jdbc:postgresql://localhost:5432/HRCompany
+    url: jdbc:postgresql://localhost:5432/HRUser
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create
-
   rabbitmq:
     host: localhost
     port: 5672
     username: user
     password: 123456789
-
-rabbitmqKey:
-  auth-exchange: auth-exchange
-  register-queue: register-queue
-  register-binding-key: binding-key
-

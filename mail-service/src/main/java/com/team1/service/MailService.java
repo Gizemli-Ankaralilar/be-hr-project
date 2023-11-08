@@ -2,6 +2,8 @@ package com.team1.service;
 
 
 import com.team1.dto.request.SendMailRequestDto;
+import com.team1.exception.ErrorType;
+import com.team1.exception.MailManagerException;
 import com.team1.rabbitmq.model.AuthMailModel;
 import com.team1.rabbitmq.model.CompanyMailModel;
 import com.team1.repository.IMailRepository;
@@ -9,7 +11,11 @@ import com.team1.repository.entity.MailProfile;
 import com.team1.utility.ServiceManager;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 
 @Service
@@ -39,16 +45,27 @@ public class MailService extends ServiceManager<MailProfile, Long> {
     }
 
     public void createAuthMail(AuthMailModel model) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("${spring.mail.username}");//gönderdiğimiz mail adresi
-        mailMessage.setTo(model.getEmail());//gidecek mail adresi
-        mailMessage.setSubject("AKTIVASYON KODU");//KONU
-        mailMessage.setText(
-                model.getUsername()  + "\nBaşarıyla kayıt oldunuz.\n" +
-                        "Aktivasyon Link: \n" + "http://localhost:9090/api/v1/auth/activate_status?token="+model.getToken()
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
 
-        );
-        javaMailSender.send(mailMessage);
+        try {
+            helper.setFrom("${spring.mail.username}");
+            helper.setTo(model.getEmail());
+            helper.setSubject("AKTIVASYON KODU");
+
+            String content = "<div style='text-align: center;'><h2 style='font-size: 24px;'>"
+                    + model.getUsername() + "</h2>" +
+                    "<p style='font-size: 18px;'>Başarıyla kayıt oldunuz.</p>" +
+                    "<p><a href='http://localhost:9090/api/v1/auth/activate_status?token="
+                    + model.getToken() + "'>" +
+                    "<button style='background-color: #FFA500; border: none; color: white; padding: 12px 24px; text-align: center; text-decoration: "
+                    + "none; display: inline-block; font-size: 16px; border-radius: 12px;'>Üyeliğini Aktive Et</button></a></p></div>";
+
+            helper.setText(content, true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new MailManagerException(ErrorType.BAD_REQUEST);
+        }
     }
 
     public void createCompanyMail(CompanyMailModel model) {
