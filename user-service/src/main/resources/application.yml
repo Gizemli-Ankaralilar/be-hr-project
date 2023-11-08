@@ -12,7 +12,7 @@ spring:
     hibernate:
       ddl-auto: create
   rabbitmq:
-    host: ${RABBITMQ_HOST}
-    port: ${RABBITMQ_PORT}
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
+    host: localhost
+    port: 5672
+    username: user
+    password: 123456789

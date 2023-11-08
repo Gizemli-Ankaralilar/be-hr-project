@@ -3,8 +3,6 @@ m
 =auth-service/src/main/java/com/team1/exception/ErrorType.java,b\7\b7cab225a8343cc6d1fff1b7ba3d5fcbc201f2c6
 u
 Eauth-service/src/main/java/com/team1/dto/request/LoginRequestDto.java,7\9\795e2ae2ed0f3aa221a0b4360cbcc81d5dd4a1bd
-
-Oauth-service/src/main/java/com/team1/dto/request/RegisterRequestVisitorDto.java,7\9\79cdb0f336bad3a9fc09ca17174b5dd068c28c4f
 o
 ?auth-service/src/main/java/com/team1/utility/CodeGenerator.java,f\1\f170abba9f98e17ab967c45a309d47d40964b12d
 j
@@ -13,8 +11,6 @@ p
 @auth-service/src/main/java/com/team1/utility/ServiceManager.java,0\6\06918c29a59548f7acf9ba45158af856baed385f
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-p
-@auth-service/src/main/java/com/team1/repository/entity/Auth.java,4\0\40e735629a4097c4d05026812c98eecabdb2f708
 C
 dependencies.gradle,9\2\9282de42fdd92f96bfdaa8eed76823d133cf1624
 
@@ -25,8 +21,6 @@ w
 Guser-service/src/main/java/com/team1/repository/entity/UserProfile.java,2\c\2cf6528419a16559729dc26f3546d8783e91dd6b
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-B
-docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 o
 ?company-service/src/main/java/com/team1/CompanyApplication.java,e\5\e5840846fc2864d5e0c333d40e5400a52178a6d5
 s
@@ -69,3 +63,13 @@ m
 =user-service/src/main/java/com/team1/service/UserService.java,f\2\f2529a72544281a23085b67382c7fc08f52c8b81
 u
 Eauth-service/src/main/java/com/team1/manager/IUserProfileManager.java,b\e\be84019dc1ef38f386ebc02fd04542b7cd7108e8
+|
+Lmail-service/src/main/java/com/team1/rabbitmq/consumer/AuthMailConsumer.java,1\f\1fb66bd86d47139611fa2697e7fffee9af4b3ea2
+x
+Hauth-service/src/main/java/com/team1/dto/request/SendMailRequestDto.java,f\4\f432ef60f987419bab8aed6462370b6c7ed7ba79
+
+Qauth-service/src/main/java/com/team1/dto/response/RegisterResponseVisitorDto.java,7\d\7d9cea9646d008741f438ce6a1933b3f83e6eb82
+B
+docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
+p
+@auth-service/src/main/java/com/team1/repository/enums/ERole.java,0\2\0210faa22f175b7871be9e15f7b88f38950dbccb
