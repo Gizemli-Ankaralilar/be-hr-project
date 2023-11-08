@@ -130,7 +130,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
         if(!optionalAuth.get().getLogged()==true){
             optionalAuth.get().setLogged(true);
-            update(optionalAuth.get());//BURADA UPDATE İŞLEMİ GERÇEKLEŞİCEK AMA NASIL TAM BİLMİYORUM.TEST EDEMEDİM
+            save(optionalAuth.get());//BURADA UPDATE İŞLEMİ GERÇEKLEŞİCEK AMA NASIL TAM BİLMİYORUM.TEST EDEMEDİM şimdilik save kalsın
         } else {
             throw new AuthManagerException(ErrorType.ALREADY_LOGGED);
         }

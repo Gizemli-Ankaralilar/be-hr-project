@@ -18,6 +18,7 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+
     @PostMapping(SAVE_WORKER)
     public ResponseEntity<String> saveWorker(@RequestParam String token, @RequestBody SaveWorkerDto dto) {
         return ResponseEntity.ok(companyService.saveWorker(token, dto));
@@ -27,6 +28,4 @@ public class CompanyController {
     public ResponseEntity<String/*List<Company>*/> findAllWorker(@RequestParam String token){
         return ResponseEntity.ok(companyService.findAllCompanyWorker(token));
     }
-
-
 }

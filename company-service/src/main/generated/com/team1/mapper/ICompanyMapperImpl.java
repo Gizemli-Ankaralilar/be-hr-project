@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-07T13:05:34+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
+    date = "2023-11-08T21:18:15+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Amazon.com Inc.)"
 )
 @Component
 public class ICompanyMapperImpl implements ICompanyMapper {
@@ -22,6 +22,10 @@ public class ICompanyMapperImpl implements ICompanyMapper {
         Company.CompanyBuilder<?, ?> company = Company.builder();
 
         company.authId( model.getAuthId() );
+        company.companyName( model.getCompanyName() );
+        company.taxNumber( model.getTaxNumber() );
+        company.companyAddress( model.getCompanyAddress() );
+        company.companyPhoneNumber( model.getCompanyPhoneNumber() );
 
         return company.build();
     }

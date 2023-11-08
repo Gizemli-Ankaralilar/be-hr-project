@@ -28,7 +28,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(dto));
     }
 
-    @PostMapping(REGISTER_COMPANY)
+    @PostMapping(COMPANY_REGISTER)
     public ResponseEntity<RegisterResponseVisitorDto> companyRegister(@RequestBody @Valid RegisterRequestCompanyDto dto){
         return ResponseEntity.ok(authService.companyRegister(dto));
     }
