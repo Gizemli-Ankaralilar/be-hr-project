@@ -1,5 +1,20 @@
 
-š
-java:S1172""xRemove these unused method parameters "iSetCompanyMapper", "commentRepository", "financeRepository", "workerRepository".(×»÷úÿÿÿÿ8­ºï‡¹1
+x
+java:S3655C"VCall "authIdToken.isPresent()" or "!authIdToken.isEmpty()" before accessing the value.(Œ Õ¢şÿÿÿÿ8òºÅƒ»1
+t
+java:S36551"RCall "companyId.isPresent()" or "!companyId.isEmpty()" before accessing the value.(Õ¤êùÿÿÿÿ8óºÅƒ»1
+x
+java:S3655/"VCall "authIdToken.isPresent()" or "!authIdToken.isEmpty()" before accessing the value.(Œ Õ¢şÿÿÿÿ8óºÅƒ»1
+t
+java:S3655F"RCall "companyId.isPresent()" or "!companyId.isEmpty()" before accessing the value.(¸î‡‰øÿÿÿÿ8óºÅƒ»1
+L	java:S106/"+Replace this use of System.out by a logger.(Œ Õ¢şÿÿÿÿ8øºÅƒ»1
+L	java:S1061"+Replace this use of System.out by a logger.(Õ¤êùÿÿÿÿ8ùºÅƒ»1
+L	java:S106C"+Replace this use of System.out by a logger.(Œ Õ¢şÿÿÿÿ8ûºÅƒ»1
+]
+java:S1128"ARemove this unused import 'com.team1.exception.CompanyException'.(ôÀÁk8üºÅƒ»1
+\
+java:S1128":Remove this unused import 'com.team1.exception.ErrorType'.(¬°„Ôüÿÿÿÿ8üºÅƒ»1
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8üºÅƒ»1
 S
-java:S1068"6Remove this unused "companyAuthManager" private field.(Ãó˜î8Âºï‡¹1
+java:S1068"1Remove this unused "companyMapper" private field.(´Î¾Ìûÿÿÿÿ8şºÅƒ»1

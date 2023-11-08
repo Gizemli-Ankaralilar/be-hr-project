@@ -3,6 +3,7 @@ package com.team1.service;
 
 import com.team1.mapper.IWorkerMapper;
 import com.team1.rabbitmq.model.AuthWorkerModel;
+import com.team1.rabbitmq.model.CompanyWorkerTokenModel;
 import com.team1.repository.IWorkerRepository;
 import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
@@ -10,9 +11,10 @@ import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class WorkerService extends ServiceManager<Worker, String>{
+public class WorkerService extends ServiceManager<Worker, Long>{
 
     private final JwtTokenManager jwtTokenManager;
     private final IWorkerRepository workerRepository;
@@ -30,8 +32,16 @@ public class WorkerService extends ServiceManager<Worker, String>{
     }
 
     public void createAuthWorker(AuthWorkerModel model) {
-        Worker worker = IWorkerMapper.INSTANCE.toAuthWorker(model);
+        Worker worker = Worker.builder().authId(model.getAuthId()).companyId(model.getCompanyId()).
+        username(model.getUsername()).email(model.getEmail()).lastName(model.getLastName()).
+        firstName(model.getFirstName()).phone(model.getPhone()).address(model.getAddress()).build();
         save(worker);
+    }
+
+    public void workerListener(CompanyWorkerTokenModel model) {
+        Long companyId = model.getCompanyId();
+        List<String> workerList = workerRepository.workerInformation(companyId);
+        workerList.forEach(System.out::println);
     }
 
     //yeni serviste burada düzenlemeler olabilir

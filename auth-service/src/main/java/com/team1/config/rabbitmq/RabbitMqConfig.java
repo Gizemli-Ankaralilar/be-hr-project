@@ -48,11 +48,11 @@ public class RabbitMqConfig {
         return new DirectExchange(exchangeUser);
     }
     @Bean
-    public Binding postBindingKey(final Queue queueUser, final DirectExchange exchangeUser){
+    public Binding userBindingKey(final Queue queueUser, final DirectExchange exchangeUser){
         return BindingBuilder.bind(queueUser).to(exchangeUser).with(createUserBindingKey);
     }
 
-    //COMPANY DEN USERA
+    //COMPANY DEN AUTHA
     private String queueAuth = "queueAuth";
     @Bean
     Queue queueAuth(){

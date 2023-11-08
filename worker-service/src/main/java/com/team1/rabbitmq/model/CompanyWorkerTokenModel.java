@@ -11,10 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Builder
-public class AuthCompanyModel implements Serializable {
-    private Long authId;
-    private String companyAddress;
-    private String companyPhoneNumber;
-    private String taxNumber;
-    private String companyName;
+public class CompanyWorkerTokenModel implements Serializable {
+    private Long companyId;
 }

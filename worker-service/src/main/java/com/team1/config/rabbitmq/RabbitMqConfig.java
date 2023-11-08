@@ -16,5 +16,11 @@ public class RabbitMqConfig {
     Queue queueMail(){
         return new Queue(queueMail);
     }
+    //COMPANYDEN WORKERA
+    private String queueCompanyToken = "queueCompanyToken";
+    @Bean
+    Queue queueCompanyToken(){
+        return new Queue(queueCompanyToken);
+    }
 
 }

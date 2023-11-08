@@ -79,10 +79,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
         responseVisitorDto.setToken(token);
         responseVisitorDto.setComment("Kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
 
-        authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
-//        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
-//        sendMailRequestDto.setToken(token);
-//        iMailManager.sendMail(sendMailRequestDto);
+        //authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
+        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
+        sendMailRequestDto.setToken(token);
+        iMailManager.sendMail(sendMailRequestDto);
 
         return responseVisitorDto;
     }
@@ -97,10 +97,39 @@ public class AuthService extends ServiceManager<Auth, Long> {
         RegisterRequestVisitorDto registerRequestVisitorDto;
         if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {
 
+            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+            auth.setActivationCode(CodeGenerator.generateCode());
+            save(auth);
+            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                    address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+                    lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
+            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+            String token = jwtTokenManager.createToken(auth.getId())
+                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+            responseVisitorDto.setToken(token);
+            responseVisitorDto.setComment("Tax number ve company name girmediğiniz için kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
+            return responseVisitorDto;
+        }else {//Company e gönderilecek yer
+            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+            auth.setRole(ERole.COMPANY_OWNER);
+            save(auth);
+            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                    address(dto.getAddress()).email(dto.getEmail()).firstName(dto.getFirstName()).
+                    lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
+            authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).companyPhoneNumber(dto.getPhone()).
+                    companyAddress(dto.getAddress()).taxNumber(dto.getTaxNumber()).companyName(dto.getCompanyName()).build());
+            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+            String token = jwtTokenManager.createToken(auth.getId())
+                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+            responseVisitorDto.setToken(token);
+            responseVisitorDto.setComment("Company kaydınız ile gerçekleşti.Company onayınızı admin yapacaktık.");
+            return responseVisitorDto;
+
+
             registerRequestVisitorDto = IAuthMapper.INSTANCE.fromRequestCompanyDtoToRequestVisitorDto(dto);
             return register(registerRequestVisitorDto);
 
-        } else {//Company e gönderilecek yer
+        }else {//Company e gönderilecek yer
             if(adminService.approvedCompanyOwner(dto)){
                 //Admin onayladi
                 auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
@@ -134,7 +163,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
         if(!optionalAuth.get().getLogged()==true){
             optionalAuth.get().setLogged(true);
-            update(optionalAuth.get());//BURADA UPDATE İŞLEMİ GERÇEKLEŞİCEK AMA NASIL TAM BİLMİYORUM.TEST EDEMEDİM
+            save(optionalAuth.get());//BURADA UPDATE İŞLEMİ GERÇEKLEŞİCEK AMA NASIL TAM BİLMİYORUM.TEST EDEMEDİM şimdilik save kalsın
         } else {
             throw new AuthManagerException(ErrorType.ALREADY_LOGGED);
         }
@@ -172,7 +201,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
                 lastName(model.getLastName()).firstName(model.getFirstName()).address(model.getAddress()).
                 phone(model.getPhone()).build());
-        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).build());
+        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).address(model.getAddress()).
+                companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
+                lastName(model.getLastName()).firstName(model.getFirstName()).phone(model.getPhone()).
+                address(model.getAddress()).build());
     }
 
     public Auth getAuthByUsername(String username) {
