@@ -23,4 +23,6 @@ public interface IAuthMapper {
     @Mapping(source = "id",target = "authId")
     SendMailRequestDto toSendMailRequestDto(Auth auth);
 
+    RegisterRequestVisitorDto fromRequestCompanyDtoToRequestVisitorDto (RegisterRequestCompanyDto dto);
+
 }

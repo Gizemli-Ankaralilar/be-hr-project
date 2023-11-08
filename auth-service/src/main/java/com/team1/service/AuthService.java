@@ -39,11 +39,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final AuthMailProducer authMailProducer;
     private final IMailManager iMailManager;
 
+    //Admin icin degisiklikler basliyor burada
+    private final AdminService adminService;
+
 
     public AuthService(IAuthRepository authRepository,
                        IMailManager iMailManager,
                        JwtTokenManager jwtTokenManager, IUserProfileManager userProfileManager,
-                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer) {
+                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer, AdminService adminService) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
@@ -53,6 +56,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         this.authWorkerProducer = authWorkerProducer;
         this.iMailManager = iMailManager;
         this.authMailProducer = authMailProducer;
+        this.adminService = adminService;
     }
 
     @Transactional
@@ -75,13 +79,51 @@ public class AuthService extends ServiceManager<Auth, Long> {
         responseVisitorDto.setToken(token);
         responseVisitorDto.setComment("Kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
 
-        //authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
-        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
-        sendMailRequestDto.setToken(token);
-        iMailManager.sendMail(sendMailRequestDto);
+        authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
+//        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
+//        sendMailRequestDto.setToken(token);
+//        iMailManager.sendMail(sendMailRequestDto);
 
         return responseVisitorDto;
     }
+
+
+ /*   public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
+
+        if (authRepository.existsByUsername(dto.getUsername())) {
+            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
+        }
+        Auth auth;
+        RegisterRequestVisitorDto registerRequestVisitorDto;
+        if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {
+
+            registerRequestVisitorDto = IAuthMapper.INSTANCE.fromRequestCompanyDtoToRequestVisitorDto(dto);
+            return register(registerRequestVisitorDto);
+
+        } else {//Company e gönderilecek yer
+            if(adminService.approvedCompanyOwner(dto)){
+                //Admin onayladi
+                auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+                auth.setRole(ERole.COMPANY_OWNER);
+                save(auth);
+                authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                        address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+                        lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
+                authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).build());
+                RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+                String token = jwtTokenManager.createToken(auth.getId())
+                        .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+                responseVisitorDto.setToken(token);
+                responseVisitorDto.setComment("Approved by Admin");
+                return responseVisitorDto;
+            }else{//Admin onaylamadigi durumda yine kullanici olarak kayit olacak
+                //Admin den onay almadiniz uzgunuz
+                registerRequestVisitorDto = IAuthMapper.INSTANCE.fromRequestCompanyDtoToRequestVisitorDto(dto);
+                return register(registerRequestVisitorDto);
+            }
+        }
+    }
+*/
 
     public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
         if (authRepository.existsByUsername(dto.getUsername())) {
@@ -119,7 +161,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
         }
     }
-
     public String login(LoginRequestDto dto) {
         Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
         if (optionalAuth.isEmpty()) {
@@ -168,10 +209,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
                 lastName(model.getLastName()).firstName(model.getFirstName()).address(model.getAddress()).
                 phone(model.getPhone()).build());
-        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).address(model.getAddress()).
-                companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
-                lastName(model.getLastName()).firstName(model.getFirstName()).phone(model.getPhone()).
-                address(model.getAddress()).build());
+        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).build());
     }
 
     public Auth getAuthByUsername(String username) {
