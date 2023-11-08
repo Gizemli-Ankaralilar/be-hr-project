@@ -75,10 +75,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
         responseVisitorDto.setToken(token);
         responseVisitorDto.setComment("Kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
 
-        authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
-//        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
-//        sendMailRequestDto.setToken(token);
-//        iMailManager.sendMail(sendMailRequestDto);
+        //authMailProducer.sendActivationCode(AuthMailModel.builder().username(auth.getUsername()).email(auth.getEmail()).token(token).build());
+        SendMailRequestDto sendMailRequestDto = IAuthMapper.INSTANCE.toSendMailRequestDto(auth);
+        sendMailRequestDto.setToken(token);
+        iMailManager.sendMail(sendMailRequestDto);
 
         return responseVisitorDto;
     }
@@ -106,9 +106,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
             auth.setRole(ERole.COMPANY_OWNER);
             save(auth);
             authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
-                    address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+                    address(dto.getAddress()).email(dto.getEmail()).firstName(dto.getFirstName()).
                     lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
-            authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).build());
+            authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).companyPhoneNumber(dto.getPhone()).
+                    companyAddress(dto.getAddress()).taxNumber(dto.getTaxNumber()).companyName(dto.getCompanyName()).build());
             RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
             String token = jwtTokenManager.createToken(auth.getId())
                     .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
@@ -167,7 +168,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
                 lastName(model.getLastName()).firstName(model.getFirstName()).address(model.getAddress()).
                 phone(model.getPhone()).build());
-        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).build());
+        authWorkerProducer.authWorker(AuthWorkerModel.builder().authId(auth.getId()).address(model.getAddress()).
+                companyId(model.getCompanyId()).username(model.getUsername()).email(model.getEmail()).
+                lastName(model.getLastName()).firstName(model.getFirstName()).phone(model.getPhone()).
+                address(model.getAddress()).build());
     }
 
     public Auth getAuthByUsername(String username) {

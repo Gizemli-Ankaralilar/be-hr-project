@@ -7,8 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface ICompanyRepository extends JpaRepository<Company, String> {
-    Boolean existsByUsername(String username);
+public interface ICompanyRepository extends JpaRepository<Company, Long> {
+//    Boolean existsByUsername(String username);
 
     @Query("SELECT c.id FROM Company c where c.authId = :authId")
     Optional<Long> companyById(@Param("authId") Long authId);

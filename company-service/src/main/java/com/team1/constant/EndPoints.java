@@ -13,6 +13,7 @@ public class EndPoints {
     ///Company
     public static final String SAVE_COMPANY=VERSION+"/save/company";
     public  static  final String FIND_ALL_COMPANY="/find_all/company";
+    public  static  final String FIND_ALL_WORKER="/find_all/worker";
 
     //Worker
     public static final String FINDALL_WORKER = "/find_all/worker";
