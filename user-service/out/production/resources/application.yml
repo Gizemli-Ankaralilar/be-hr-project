@@ -11,16 +11,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
-<<<<<<< HEAD
-#  rabbitmq:
-#    host: ${RABBITMQ_HOST}
-#    port: ${RABBITMQ_PORT}
-#    username: ${RABBITMQ_USERNAME}
-#    password: ${RABBITMQ_PASSWORD}
-=======
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: user
-    password: 123456789
->>>>>>> 85bf08a2f0b3a47d210763eed1a748bcd9382b91
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
