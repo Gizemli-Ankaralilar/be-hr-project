@@ -26,7 +26,7 @@ public class JwtTokenManager {
         try {
             token= JWT.create()
                     .withIssuer(issuer)
-                    .withClaim("myId",id)
+                    .withClaim("userId",id)
                     .withIssuedAt(new Date())
                     .withExpiresAt(date)
                     .sign(Algorithm.HMAC512(secretKey));
@@ -61,7 +61,7 @@ public class JwtTokenManager {
             if (decodedJWT == null) {
                 throw new AuthManagerException(ErrorType.INVALID_TOKEN);
             }
-            Long id = decodedJWT.getClaim("myId").asLong();
+            Long id = decodedJWT.getClaim("userId").asLong();
             return Optional.of(id);
         } catch (Exception e) {
             System.out.println(e.toString());

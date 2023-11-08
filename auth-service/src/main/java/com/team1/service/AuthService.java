@@ -37,7 +37,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final AuthCompanyProducer authCompanyProducer;
     private final AuthWorkerProducer authWorkerProducer;
     private final AuthMailProducer authMailProducer;
-
     private final IMailManager iMailManager;
 
 
@@ -128,10 +127,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
         if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
             throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
         }
-        if(!optionalAuth.get().getActivated()==true){
-            optionalAuth.get().setActivated(true);
+        if(!optionalAuth.get().getLogged()==true){
+            optionalAuth.get().setLogged(true);
+            update(optionalAuth.get());//BURADA UPDATE İŞLEMİ GERÇEKLEŞİCEK AMA NASIL TAM BİLMİYORUM.TEST EDEMEDİM
         } else {
-            throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
+            throw new AuthManagerException(ErrorType.ALREADY_LOGGED);
         }
         return jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
                 .orElseThrow(() -> new AuthManagerException(ErrorType.TOKEN_NOT_CREATED));

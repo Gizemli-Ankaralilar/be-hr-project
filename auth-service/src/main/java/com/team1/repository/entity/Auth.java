@@ -34,5 +34,5 @@ public class Auth extends BaseEntity{
     private Long companyId;
     private Long workerId;
     @Builder.Default
-    private Boolean activated = false;
+    private Boolean logged = false;
 }

@@ -38,16 +38,19 @@ public class CompanyService  extends ServiceManager<Company, String> {
         this.companyWorkerAuthProducer = companyWorkerAuthProducer;
         this.companyMailProducer = companyMailProducer;
     }
-    public String saveWorker(SaveWorkerDto dto) {
+    public String saveWorker(String token, SaveWorkerDto dto) {
+        Optional<Long> tok = jwtTokenManager.getIdFromToken(token);
+        Optional<Long> companyId = companyRepository.companyById(tok.get());
+        System.out.println(companyId.get());
         if (companyRepository.existsByUsername(dto.getUsername())) {
             throw new CompanyException(ErrorType.USERNAME_ALREADY_EXIST);
         }
         String email = dto.getLastName() + "." + dto.getFirstName() + "@" + "şirketismi" + ".com";
         String password = GeneratePassword.generatePassword();
         companyMailProducer.createCompanyMail(CompanyMailModel.builder().newMail(email).mail(dto.getEmail()).password(password).build());
-        companyWorkerAuthProducer.createWorkerAuth(CompanyWorkerAuthModel.builder().companyId(1L).
-                email(email).password(password).phone(dto.getPhone()).lastName(dto.getLastName()).
-                firstName(dto.getFirstName()).address(dto.getAddress()).username(dto.getUsername()).build());
+//        companyWorkerAuthProducer.createWorkerAuth(CompanyWorkerAuthModel.builder().companyId(companyId).
+//                email(email).password(password).phone(dto.getPhone()).lastName(dto.getLastName()).
+//                firstName(dto.getFirstName()).address(dto.getAddress()).username(dto.getUsername()).build());
         return "Çalışan kaydetme işleminiz başarı ile gerçekleşmiştir.Kullanıcı aı ve şifresi";
     }
     public List<Company> findAllCompany() {

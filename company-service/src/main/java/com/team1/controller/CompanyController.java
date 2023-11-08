@@ -19,8 +19,8 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping(SAVE_WORKER)
-    public ResponseEntity<String> saveWorker(@RequestBody SaveWorkerDto dto) {
-        return ResponseEntity.ok(companyService.saveWorker(dto));
+    public ResponseEntity<String> saveWorker(@RequestParam String token, @RequestBody SaveWorkerDto dto) {
+        return ResponseEntity.ok(companyService.saveWorker(token, dto));
     }
 
     @GetMapping(FIND_ALL_COMPANY)
