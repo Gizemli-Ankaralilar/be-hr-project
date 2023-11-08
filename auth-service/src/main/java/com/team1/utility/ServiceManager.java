@@ -1,5 +1,6 @@
 package com.team1.utility;
 
+import com.team1.repository.entity.Auth;
 import com.team1.repository.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,6 @@ public class ServiceManager<T extends BaseEntity, ID> implements IService<T, ID>
         });
         return repository.saveAll(t);
     }
-
     @Override
     public T update(T t) {
         t.setUpdateDate(System.currentTimeMillis());
