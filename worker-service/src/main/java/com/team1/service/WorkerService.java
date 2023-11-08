@@ -37,7 +37,7 @@ public class WorkerService extends ServiceManager<Worker, Long>{
         firstName(model.getFirstName()).phone(model.getPhone()).address(model.getAddress()).build();
         save(worker);
     }
-
+    //Karşı tarafa göndermeye çalış.Şuan için çalışıyor
     public void workerListener(CompanyWorkerTokenModel model) {
         Long companyId = model.getCompanyId();
         List<String> workerList = workerRepository.workerInformation(companyId);

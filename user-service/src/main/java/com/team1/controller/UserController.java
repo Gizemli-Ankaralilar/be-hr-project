@@ -30,14 +30,14 @@ public class UserController {
         return ResponseEntity.ok(userService.saveUser(dto));
     }
 
-    @GetMapping("/{userId}/information")
-    public ResponseEntity<UserProfile> getUserInformation(@PathVariable Long userId) {
-        UserProfile userProfile = userService.getUserInformation(userId);
-        if (userProfile != null) {
-            return ResponseEntity.ok(userProfile);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/{userId}/information")
+//    public ResponseEntity<UserProfile> getUserInformation(@PathVariable Long userId) {
+//        UserProfile userProfile = userService.getUserInformation(userId);
+//        if (userProfile != null) {
+//            return ResponseEntity.ok(userProfile);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
 }

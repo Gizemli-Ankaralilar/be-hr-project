@@ -5,6 +5,7 @@ import com.team1.dto.request.SaveUserRequestDto;
 import com.team1.exception.ErrorType;
 import com.team1.exception.UserManagerException;
 import com.team1.mapper.IUserMapper;
+import com.team1.rabbitmq.model.AuthUserModel;
 import com.team1.repository.IUserRepository;
 import com.team1.repository.entity.UserProfile;
 import com.team1.repository.enums.ERole;
@@ -45,10 +46,6 @@ public class UserService extends ServiceManager<UserProfile, Long> {
         return true;
     }
 
-    public UserProfile getUserInformation(Long userId) {
-        Optional<UserProfile> userProfileInformation = userRepository.findById(userId);
-        return userProfileInformation.orElse(null);
-    }
 
     public Optional<UserProfile> findByCompanyId(Long authId) {
         Optional<UserProfile> userProfile = userRepository.findById(authId);
@@ -57,9 +54,10 @@ public class UserService extends ServiceManager<UserProfile, Long> {
         }
         return userProfile;
     }
-//    public void createUser(AuthUserModel model) {
-//        UserProfile userProfile = IUserMapper.INSTANCE.authtouser(model);
-//        save(userProfile);
-//
-//    }
+
+    public void createAuthUser(AuthUserModel model) {
+        UserProfile userProfile = IUserMapper.INSTANCE.authtouser(model);
+        save(userProfile);
+    }
+
 }
