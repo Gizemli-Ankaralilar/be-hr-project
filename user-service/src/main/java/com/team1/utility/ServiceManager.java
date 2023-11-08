@@ -5,6 +5,7 @@ import com.team1.repository.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 import java.util.Optional;
 
