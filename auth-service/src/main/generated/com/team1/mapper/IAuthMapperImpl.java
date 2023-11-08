@@ -12,12 +12,17 @@ import org.springframework.stereotype.Component;
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
 <<<<<<< HEAD
+    date = "2023-11-08T20:28:34+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
+=======
+<<<<<<< HEAD
     date = "2023-11-08T12:24:26+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8.1 (Amazon.com Inc.)"
 =======
     date = "2023-11-08T21:18:02+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Amazon.com Inc.)"
 >>>>>>> c6b5c687caefc555ff8ca77d26c5d2cae6b7d703
+>>>>>>> 85bf08a2f0b3a47d210763eed1a748bcd9382b91
 )
 @Component
 public class IAuthMapperImpl implements IAuthMapper {

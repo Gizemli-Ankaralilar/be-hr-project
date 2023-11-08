@@ -1,8 +1,6 @@
 package com.team1.service;
 
 import com.team1.dto.request.SaveWorkerDto;
-import com.team1.exception.CompanyException;
-import com.team1.exception.ErrorType;
 import com.team1.mapper.ICompanyMapper;
 import com.team1.rabbitmq.model.AuthCompanyModel;
 import com.team1.rabbitmq.model.CompanyMailModel;
@@ -18,7 +16,6 @@ import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,4 +68,7 @@ public class CompanyService  extends ServiceManager<Company, Long> {
         companyWorkerTokenProducer.workerListener(companyWorkerTokenModel);
         return "Çalışan listeniz hazırlanmıştır";
     }
+
+
+
 }
