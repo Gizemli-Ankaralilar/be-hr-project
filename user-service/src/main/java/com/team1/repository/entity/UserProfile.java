@@ -4,14 +4,13 @@ import com.team1.repository.enums.ERole;
 import com.team1.repository.enums.EStatus;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,5 +37,11 @@ public class UserProfile extends BaseEntity{
     private EStatus status = EStatus.PENDING;
     @Enumerated(EnumType.STRING)
     private ERole role;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserWish> receivedWishes;
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserWish> sentWishes;
+
 
 }
