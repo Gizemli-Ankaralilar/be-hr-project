@@ -43,6 +43,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.activateStatus(token));
     }
 
+    @GetMapping(ACTIVATE_COMPANY_STATUS)
+    public ResponseEntity<String> activateCompanyStatus(@RequestParam String token){
+        return ResponseEntity.ok(authService.activateCompanyStatus(token));
+    }
+
     @GetMapping("/create_token")
     public  ResponseEntity<String> createToken(Long id){
         return ResponseEntity.ok(jwtTokenManager.createToken(id).get());

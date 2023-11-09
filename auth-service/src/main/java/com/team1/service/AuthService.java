@@ -3,7 +3,6 @@ package com.team1.service;
 import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
-import com.team1.dto.request.SendMailRequestDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.exception.AuthManagerException;
 import com.team1.exception.ErrorType;
@@ -11,10 +10,7 @@ import com.team1.manager.IMailManager;
 import com.team1.manager.IUserProfileManager;
 import com.team1.mapper.IAuthMapper;
 import com.team1.rabbitmq.model.*;
-import com.team1.rabbitmq.producer.AuthCompanyProducer;
-import com.team1.rabbitmq.producer.AuthMailProducer;
-import com.team1.rabbitmq.producer.AuthUserProducer;
-import com.team1.rabbitmq.producer.AuthWorkerProducer;
+import com.team1.rabbitmq.producer.*;
 import com.team1.repository.IAuthRepository;
 import com.team1.repository.entity.Auth;
 import com.team1.repository.enums.ERole;
@@ -37,6 +33,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final AuthCompanyProducer authCompanyProducer;
     private final AuthWorkerProducer authWorkerProducer;
     private final AuthMailProducer authMailProducer;
+    private final AdminConfirmMailProducer adminConfirmMailProducer;
     private final IMailManager iMailManager;
 
     //Admin icin degisiklikler basliyor burada
@@ -46,7 +43,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     public AuthService(IAuthRepository authRepository,
                        IMailManager iMailManager,
                        JwtTokenManager jwtTokenManager, IUserProfileManager userProfileManager,
-                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer, AdminService adminService) {
+                       AuthUserProducer authUserProducer, AuthCompanyProducer authCompanyProducer, AuthWorkerProducer authWorkerProducer, AuthMailProducer authMailProducer, AdminConfirmMailProducer adminConfirmMailProducer, AdminService adminService) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
@@ -56,6 +53,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         this.authWorkerProducer = authWorkerProducer;
         this.iMailManager = iMailManager;
         this.authMailProducer = authMailProducer;
+        this.adminConfirmMailProducer = adminConfirmMailProducer;
         this.adminService = adminService;
     }
 
@@ -87,8 +85,40 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return responseVisitorDto;
     }
 
+// Adminin mail ile company aktivasyonu yapabildiği metot.
+    public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
+        if (authRepository.existsByUsername(dto.getUsername())) {
+            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
+        }
+        Auth auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+        auth.setRole(ERole.COMPANY_OWNER);
+        save(auth);
+        authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+                address(dto.getAddress()).email(dto.getEmail()).firstName(dto.getFirstName()).
+                lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
+        authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).companyPhoneNumber(dto.getPhone()).
+                companyAddress(dto.getAddress()).taxNumber(dto.getTaxNumber()).companyName(dto.getCompanyName()).build());
+        RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+        String token = jwtTokenManager.createToken(auth.getId())
+                .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+        responseVisitorDto.setToken(token);
+        responseVisitorDto.setComment("Company ön kaydınız gerçekleşti.Admin onayı bekleniyor.");
 
- /*   public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
+        adminConfirmMailProducer.sendActivationCode(AdminConfirmMailModel.builder()
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .address(dto.getAddress())
+                .companyName(dto.getCompanyName())
+                .taxNumber(dto.getTaxNumber())
+                .token(token)
+                .adminMail(getAuthByUsername("admin").getEmail())
+                .build());
+        return responseVisitorDto;
+    }
+
+
+     /*   public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
 
         if (authRepository.existsByUsername(dto.getUsername())) {
             throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
@@ -125,42 +155,44 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 */
 
-    public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
-        if (authRepository.existsByUsername(dto.getUsername())) {
-            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
-        }
-        Auth auth;
-        if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {
-            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
-            auth.setActivationCode(CodeGenerator.generateCode());
-            save(auth);
-            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
-                    address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
-                    lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
-            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
-            String token = jwtTokenManager.createToken(auth.getId())
-                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
-            responseVisitorDto.setToken(token);
-            responseVisitorDto.setComment("Tax number ve company name girmediğiniz için kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
-            return responseVisitorDto;
-        }else {//Company e gönderilecek yer
-            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
-            auth.setRole(ERole.COMPANY_OWNER);
-            save(auth);
-            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
-                    address(dto.getAddress()).email(dto.getEmail()).firstName(dto.getFirstName()).
-                    lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
-            authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).companyPhoneNumber(dto.getPhone()).
-                    companyAddress(dto.getAddress()).taxNumber(dto.getTaxNumber()).companyName(dto.getCompanyName()).build());
-            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
-            String token = jwtTokenManager.createToken(auth.getId())
-                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
-            responseVisitorDto.setToken(token);
-            responseVisitorDto.setComment("Company kaydınız ile gerçekleşti.Company onayınızı admin yapacaktık.");
-            return responseVisitorDto;
+//    public RegisterResponseVisitorDto companyRegister(RegisterRequestCompanyDto dto) {
+//        if (authRepository.existsByUsername(dto.getUsername())) {
+//            throw new AuthManagerException(ErrorType.USERNAME_ALREADY_EXIST);
+//        }
+//        Auth auth;
+//        if (dto.getTaxNumber().isEmpty() || dto.getCompanyName().isEmpty()) {
+//            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+//            auth.setActivationCode(CodeGenerator.generateCode());
+//            save(auth);
+//            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+//                    address(dto.getAddress()).email(dto.getEmail()).role(auth.getRole()).firstName(dto.getFirstName()).
+//                    lastName(dto.getLastName()).username(dto.getUsername()).role(auth.getRole()).build());
+//            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+//            String token = jwtTokenManager.createToken(auth.getId())
+//                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+//            responseVisitorDto.setToken(token);
+//            responseVisitorDto.setComment("Tax number ve company name girmediğiniz için kullanıcı kaydınız başarı ile gerçekleşti.Active etmek için mailinizi kontrol ediniz");
+//            return responseVisitorDto;
+//        }else {//Company e gönderilecek yer
+//            auth = IAuthMapper.INSTANCE.toRegisterCompany(dto);
+//            auth.setRole(ERole.COMPANY_OWNER);
+//            save(auth);
+//            authUserProducer.createUser(AuthUserModel.builder().authId(auth.getId()).phone(dto.getPhone()).
+//                    address(dto.getAddress()).email(dto.getEmail()).firstName(dto.getFirstName()).
+//                    lastName(dto.getLastName()).username(dto.getUsername()).role(ERole.COMPANY_OWNER).build());
+//            authCompanyProducer.authCompany(AuthCompanyModel.builder().authId(auth.getId()).companyPhoneNumber(dto.getPhone()).
+//                    companyAddress(dto.getAddress()).taxNumber(dto.getTaxNumber()).companyName(dto.getCompanyName()).build());
+//            RegisterResponseVisitorDto responseVisitorDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+//            String token = jwtTokenManager.createToken(auth.getId())
+//                    .orElseThrow(() -> new AuthManagerException(ErrorType.INVALID_TOKEN));
+//            responseVisitorDto.setToken(token);
+//            responseVisitorDto.setComment("Company kaydınız ile gerçekleşti.Company onayınızı admin yapacaktık.");
+//            return responseVisitorDto;
+//
+//        }
+//    }
 
-        }
-    }
+
     public String login(LoginRequestDto dto) {
         Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
         if (optionalAuth.isEmpty()) {
@@ -197,6 +229,25 @@ public class AuthService extends ServiceManager<Auth, Long> {
         optionalAuth.get().setStatus(EStatus.ACTIVE);
         update(optionalAuth.get());
         return "Hesabınız aktive edilmiştir";
+    }
+
+    @Transactional
+    public String activateCompanyStatus(String token) {
+
+        Optional<Long> id = jwtTokenManager.getIdFromToken(token);
+        if (id.isEmpty()) {
+            throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Auth> optionalAuth = findById(id.get());
+        if (optionalAuth.isEmpty()) {
+            throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
+        }
+        if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
+            throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
+        }
+        optionalAuth.get().setStatus(EStatus.ACTIVE);
+        update(optionalAuth.get());
+        return "Şirket Onayı Başarıyla Tamamlanmıştır.";
     }
 
     //WORKER IN AUTH A KAYIT EKLENDİĞİ YER
