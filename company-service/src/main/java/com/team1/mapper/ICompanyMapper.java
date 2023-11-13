@@ -1,6 +1,7 @@
 package com.team1.mapper;
 
 import com.team1.dto.request.SpendingDto;
+import com.team1.dto.response.CompanyListenerResponseDto;
 import com.team1.dto.response.ResponceIncomeDto;
 import com.team1.dto.response.ResponseSpendingDto;
 import com.team1.rabbitmq.model.AuthCompanyModel;
@@ -18,5 +19,7 @@ public interface ICompanyMapper {
 
     ResponseSpendingDto toSpendingFinance(Finance finance);
     ResponceIncomeDto toIncomeFinance(Finance finance);
+
+    CompanyListenerResponseDto toCompanyListener (Company company);
 
 }

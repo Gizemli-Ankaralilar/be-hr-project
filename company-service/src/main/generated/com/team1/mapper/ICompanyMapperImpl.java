@@ -1,5 +1,6 @@
 package com.team1.mapper;
 
+import com.team1.dto.response.CompanyListenerResponseDto;
 import com.team1.dto.response.ResponceIncomeDto;
 import com.team1.dto.response.ResponseSpendingDto;
 import com.team1.rabbitmq.model.AuthCompanyModel;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-11T22:52:59+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8.1 (Amazon.com Inc.)"
+    date = "2023-11-13T13:33:00+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
 public class ICompanyMapperImpl implements ICompanyMapper {
@@ -61,5 +62,20 @@ public class ICompanyMapperImpl implements ICompanyMapper {
         }
 
         return responceIncomeDto.build();
+    }
+
+    @Override
+    public CompanyListenerResponseDto toCompanyListener(Company company) {
+        if ( company == null ) {
+            return null;
+        }
+
+        CompanyListenerResponseDto.CompanyListenerResponseDtoBuilder companyListenerResponseDto = CompanyListenerResponseDto.builder();
+
+        companyListenerResponseDto.companyName( company.getCompanyName() );
+        companyListenerResponseDto.companyAddress( company.getCompanyAddress() );
+        companyListenerResponseDto.companyPhoneNumber( company.getCompanyPhoneNumber() );
+
+        return companyListenerResponseDto.build();
     }
 }

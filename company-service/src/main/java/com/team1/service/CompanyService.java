@@ -1,6 +1,8 @@
 package com.team1.service;
 
 import com.team1.dto.request.SaveWorkerDto;
+import com.team1.dto.response.CompanyListenerResponseDto;
+import com.team1.dto.response.WorkerListResponse;
 import com.team1.mapper.ICompanyMapper;
 import com.team1.rabbitmq.model.AuthCompanyModel;
 import com.team1.rabbitmq.model.CompanyMailModel;
@@ -16,7 +18,10 @@ import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService  extends ServiceManager<Company, Long> {
@@ -59,16 +64,21 @@ public class CompanyService  extends ServiceManager<Company, Long> {
     }
 
     //Dönüş tipini düşünmek lazım.Orası önemli ve sıkıntılı
-    public String findAllCompanyWorker(String token) {
+    public List<WorkerListResponse> findAllCompanyWorker(String token) {
         Optional<Long> authIdToken = jwtTokenManager.getIdFromToken(token);
         System.out.println(authIdToken.get());
         Optional<Long> companyId = companyRepository.companyById(authIdToken.get());
         //YUKARIDAKİ METOT İLE AUTHıD ARACILIĞI İLE COMPANYID YE ERİŞTİK.WORKER LİSTELEMESİ İCİN DE RABBİT E YÜKLEDİK.
         CompanyWorkerTokenModel companyWorkerTokenModel = CompanyWorkerTokenModel.builder().companyId(companyId.get()).build();
-        companyWorkerTokenProducer.workerListener(companyWorkerTokenModel);
-        return "Çalışan listeniz hazırlanmıştır";
+        List<WorkerListResponse> list = Collections.singletonList((WorkerListResponse) companyWorkerTokenProducer.workerListener(companyWorkerTokenModel));
+
+        //burada list dönmeye çalış
+        return null;
     }
 
-
-
+    public List<CompanyListenerResponseDto> findAllCompany() {
+        List<Company> companyList=findAll();
+        return  companyList.stream()
+                .map(x->ICompanyMapper.INSTANCE.toCompanyListener(x)).collect(Collectors.toList());
+    }
 }
