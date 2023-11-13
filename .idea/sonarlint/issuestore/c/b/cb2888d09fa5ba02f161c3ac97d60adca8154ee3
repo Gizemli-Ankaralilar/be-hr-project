@@ -1,0 +1,19 @@
+
+C
+java:S5411?"(Use a primitive boolean expression here.(‚Ÿ±ãüÿÿÿÿ
+C
+java:S5411Z"(Use a primitive boolean expression here.(‚Ÿ±ãüÿÿÿÿ
+D
+java:S5411Ì"(Use a primitive boolean expression here.(”ƒˆÎüÿÿÿÿ
+V	java:S125Q"<This block of commented-out lines of code should be removed.(þ•óÂþÿÿÿÿ
+V	java:S125y"<This block of commented-out lines of code should be removed.(Ì”´üÿÿÿÿ
+R	java:S125ž"<This block of commented-out lines of code should be removed.(Ó·ÍŽ
+C
+java:S1125Ì"'Remove the unnecessary boolean literal.(”ƒˆÎüÿÿÿÿ
+W	java:S125‚"<This block of commented-out lines of code should be removed.(¯Î ˆþÿÿÿÿ
+L
+java:S1068"6Remove this unused "userProfileManager" private field.(¸½„±
+K
+java:S1068%"0Remove this unused "iMailManager" private field.(™…²Ïýÿÿÿÿ
+K
+java:S1068("0Remove this unused "adminService" private field.(Ð¦ÿøüÿÿÿÿ
