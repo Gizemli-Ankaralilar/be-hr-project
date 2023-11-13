@@ -9,7 +9,9 @@ import com.team1.repository.entity.Worker;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +29,7 @@ public class WorkerService extends ServiceManager<Worker, Long>{
 
 
 
+
     public List<Worker> findAllWorker() {
         return workerRepository.findAll();
     }
@@ -37,12 +40,24 @@ public class WorkerService extends ServiceManager<Worker, Long>{
         firstName(model.getFirstName()).phone(model.getPhone()).address(model.getAddress()).build();
         save(worker);
     }
-    //Karşı tarafa göndermeye çalış.Şuan için çalışıyor
-    public void workerListener(CompanyWorkerTokenModel model) {
-        Long companyId = model.getCompanyId();
-        List<String> workerList = workerRepository.workerInformation(companyId);
-        workerList.forEach(System.out::println);
+
+    public Optional<Worker> findAllWorker12(CompanyWorkerTokenModel model) {
+        Optional<Worker> worker = workerRepository.findById(model.getCompanyId());
+        return worker;
     }
+    //Karşı tarafa göndermeye çalış.Şuan için çalışıyor
+//    public void workerListener(CompanyWorkerTokenModel model) {
+//        Long companyId = model.getCompanyId();
+//        List<String> workerList = workerRepository.workerInformation(companyId);
+//        //burası zaten listeleme yapıyordu
+//        //workerList.forEach(System.out::println);
+//    }
+
+    //    public List<CompanyListenerResponseDto> findAllCompany() {
+    //        List<Company> companyList=findAll();
+    //        return  companyList.stream()
+    //                .map(x->ICompanyMapper.INSTANCE.toCompanyListener(x)).collect(Collectors.toList());
+    //    }
 
     //yeni serviste burada düzenlemeler olabilir
 //    public Boolean createWorkerUser(String token, WorkerDto dto){
