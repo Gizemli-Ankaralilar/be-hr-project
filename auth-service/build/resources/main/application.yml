@@ -10,8 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
-
+      ddl-auto: create
   rabbitmq:
     host: localhost
     port: 5672
@@ -22,7 +21,9 @@ jwt:
   secretKey: ${secretKey}
   issuer: ${issuer}
 
-rabbitmq:
-  auth-exchange: auth-exchange
-  mail-queue: queue-mail
-  mail-binding-key: mail-key
+#rabbitmqKey:
+#  register-queue: register-queue
+#  auth-exchange: auth-exchange
+#  mail-queue: queue-mail
+#  mail-binding-key: mail-key
+#  register-binding: binding-register

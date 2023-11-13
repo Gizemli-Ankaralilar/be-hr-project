@@ -1,6 +1,5 @@
 rootProject.name = 'HR-Project'
 include 'auth-service'
-include 'company-service'
 include 'employee-service'
 include 'user-service'
 include 'config-server'
@@ -8,5 +7,4 @@ include 'git-config-server'
 include 'worker-service'
 include 'company-service'
 include 'mail-service'
-include 'user-service'
 
