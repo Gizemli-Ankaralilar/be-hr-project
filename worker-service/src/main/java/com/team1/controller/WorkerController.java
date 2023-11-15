@@ -18,7 +18,7 @@ public class WorkerController {
 
     private final WorkerService workerService;
 
-    @GetMapping("/finAll")
+    @GetMapping(FIND_ALL)
     public ResponseEntity<List<Worker>> findAllWorker(){
         return ResponseEntity.ok(workerService.findAll());
     }
