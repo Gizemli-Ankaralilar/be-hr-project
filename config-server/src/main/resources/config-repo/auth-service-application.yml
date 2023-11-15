@@ -1,31 +1,29 @@
 server:
   port: 9090
-  error:
-    whitelabel:
-      enabled: false
 
 spring:
+  datasource:
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/HRAuth
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
   rabbitmq:
     host: localhost
     port: 5672
     username: user
     password: 123456789
-  zipkin:
-    enabled: true
-    base-url: http://localhost:9400
-    service:
-      name: auth-service
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    username:  ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
-    url: jdbc:postgresql://localhost:5432/HRAuth
-  jpa:
-    hibernate:
-      ddl-auto: update
 
-auth-service:
-  secrets:
-    key: ${JAVA_SECRETKEY}
-    issuer: ${JAVA_ISSUER}
-    exDate: 300000
+jwt:
+  secretKey: ${secretKey}
+  issuer: ${issuer}
+
+#rabbitmqKey:
+#  register-queue: register-queue
+#  auth-exchange: auth-exchange
+#  mail-queue: queue-mail
+#  mail-binding-key: mail-key
+#  register-binding: binding-register

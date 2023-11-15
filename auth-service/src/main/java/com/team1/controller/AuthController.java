@@ -4,6 +4,7 @@ import com.team1.dto.request.LoginRequestDto;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
+import com.team1.repository.entity.Auth;
 import com.team1.service.AuthService;
 import com.team1.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import  static com.team1.constant.EndPoints.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -57,4 +59,13 @@ public class AuthController {
     public  ResponseEntity<Long> getIdFromToken(String token){
         return ResponseEntity.ok(jwtTokenManager.getIdFromToken(token).get());
     }
+
+
+    //asagıdaki apigateway düzgün calısıyor mu diye denemek için yazılan get metodudur. Silmeyiniz /GİZEM
+
+    @GetMapping(FIND_ALL)
+    public ResponseEntity<List<Auth>> findAll() {
+        return ResponseEntity.ok(authService.findAll());
+    }
+
 }
