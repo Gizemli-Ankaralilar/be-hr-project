@@ -1,6 +1,7 @@
 package com.team1.service;
 
 import com.team1.dto.request.LoginRequestDto;
+import com.team1.dto.request.LogoutRequestDto;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
@@ -18,6 +19,8 @@ import com.team1.repository.enums.EStatus;
 import com.team1.utility.CodeGenerator;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
+import org.springdoc.core.fn.builders.apiresponse.Builder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -191,6 +194,33 @@ public class AuthService extends ServiceManager<Auth, Long> {
 //
 //        }
 //    }
+
+    public String logout(LogoutRequestDto dto) {
+        Optional<Long> idOptional = jwtTokenManager.getIdFromToken(dto.getToken());
+
+        if (idOptional.isPresent()) {
+            Long id = idOptional.get();
+
+            Optional<Auth> optionalAuth = authRepository.findOptionalById(id);
+
+            if (optionalAuth.isPresent()) {
+                Auth auth = optionalAuth.get();
+
+                if (auth.getLogged()) {
+                    auth.setLogged(false);
+                    save(auth);
+
+                    return "Başarıyla çıkış yapıldı.";
+                } else {
+                    throw new AuthManagerException(ErrorType.ALREADY_LOGGED_OUT);
+                }
+            } else {
+                throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
+            }
+        } else {
+            throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+        }
+    }
 
 
     public String login(LoginRequestDto dto) {

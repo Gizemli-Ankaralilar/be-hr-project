@@ -1,6 +1,7 @@
 package com.team1.controller;
 
 import com.team1.dto.request.LoginRequestDto;
+import com.team1.dto.request.LogoutRequestDto;
 import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
@@ -38,6 +39,11 @@ public class AuthController {
     @PostMapping(LOGIN)
     public ResponseEntity<String> login(@RequestBody LoginRequestDto dto){
         return ResponseEntity.ok(authService.login(dto));
+    }
+
+    @PostMapping(LOGOUT)
+    public ResponseEntity<String> logout(@RequestBody LogoutRequestDto dto){
+        return ResponseEntity.ok(authService.logout(dto));
     }
 
     @GetMapping(ACTIVATE_STATUS)
