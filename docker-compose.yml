@@ -12,6 +12,7 @@ services:
 #    networks:
 #      - java_10_network
 
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: java_10_rabbitmq

@@ -1,6 +1,6 @@
 @echo off
 setx POSTGRES_USERNAME "postgres"
-setx POSTGRES_PASSWORD "123456789"
+setx POSTGRES_PASSWORD "root"
 setx RABBITMQ_HOST "localhost"
 setx RABBITMQ_PORT "5672"
 setx RABBITMQ_USERNAME "user"
