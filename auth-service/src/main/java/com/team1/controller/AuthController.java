@@ -6,6 +6,7 @@ import com.team1.dto.request.RegisterRequestCompanyDto;
 import com.team1.dto.request.RegisterRequestVisitorDto;
 import com.team1.dto.response.RegisterResponseVisitorDto;
 import com.team1.repository.entity.Auth;
+import com.team1.repository.enums.ERole;
 import com.team1.service.AuthService;
 import com.team1.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import  static com.team1.constant.EndPoints.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -52,7 +55,7 @@ public class AuthController {
     }
 
     @GetMapping(ACTIVATE_COMPANY_STATUS)
-    public ResponseEntity<String> activateCompanyStatus(@RequestParam String token){
+    public ResponseEntity<String> activateCompanyStatus(@RequestParam String token) {
         return ResponseEntity.ok(authService.activateCompanyStatus(token));
     }
 
@@ -72,6 +75,13 @@ public class AuthController {
     @GetMapping(FIND_ALL)
     public ResponseEntity<List<Auth>> findAll() {
         return ResponseEntity.ok(authService.findAll());
+    }
+
+
+
+    @GetMapping("/bana_token_ver")
+    public Optional<String> tokenLazim(@RequestParam Long id, @RequestParam ERole role) {
+        return authService.tokenLazim(id, role);
     }
 
 }

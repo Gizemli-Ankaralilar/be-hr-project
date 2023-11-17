@@ -22,6 +22,7 @@ import com.team1.utility.ServiceManager;
 import org.springdoc.core.fn.builders.apiresponse.Builder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -41,6 +42,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     //Admin icin degisiklikler basliyor burada
     private final AdminService adminService;
+
 
 
     public AuthService(IAuthRepository authRepository,
@@ -264,7 +266,13 @@ public class AuthService extends ServiceManager<Auth, Long> {
     @Transactional
     public String activateCompanyStatus(String token) {
 
+        System.out.println(token);
+        System.out.println(token.toString());
+
+
         Optional<Long> id = jwtTokenManager.getIdFromToken(token);
+
+
         if (id.isEmpty()) {
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
         }
@@ -296,5 +304,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
     public Auth getAuthByUsername(String username) {
         Optional<Auth> auth = authRepository.findAuthByUsername(username);
         return auth.orElse(null);
+    }
+
+
+    public Optional<String> tokenLazim(Long id, ERole role) {
+        return jwtTokenManager.createToken(id, role);
     }
 }
