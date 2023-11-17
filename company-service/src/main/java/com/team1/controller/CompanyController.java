@@ -6,6 +6,7 @@ import com.team1.dto.response.CompanyListenerResponseDto;
 import com.team1.dto.response.ResponceIncomeDto;
 import com.team1.dto.response.ResponseSpendingDto;
 import com.team1.dto.response.WorkerListResponse;
+import com.team1.repository.entity.Company;
 import com.team1.service.CompanyService;
 import com.team1.service.FinanceService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import  static com.team1.constant.EndPoints.*;
 
@@ -62,4 +64,10 @@ public class CompanyController {
     public ResponseEntity<List<CompanyListenerResponseDto>> findAllCompany(){
         return ResponseEntity.ok(companyService.findAllCompany());
     }
+
+    @GetMapping(GET_INFORMATION_BY_ID)
+    public Optional<Company> getCompanyInformation(@RequestParam Long id) {
+        return companyService.getCompanyInformation(id);
+    }
+
 }
