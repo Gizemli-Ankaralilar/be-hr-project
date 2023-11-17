@@ -17,11 +17,15 @@ import com.team1.utility.GeneratePassword;
 import com.team1.utility.JwtTokenManager;
 import com.team1.utility.ServiceManager;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.team1.constant.EndPoints.GET_INFORMATION_BY_ID;
 
 @Service
 public class CompanyService  extends ServiceManager<Company, Long> {
@@ -80,5 +84,11 @@ public class CompanyService  extends ServiceManager<Company, Long> {
         List<Company> companyList=findAll();
         return  companyList.stream()
                 .map(x->ICompanyMapper.INSTANCE.toCompanyListener(x)).collect(Collectors.toList());
+    }
+
+
+
+    public Optional<Company> getCompanyInformation(Long id) {
+        return companyRepository.findOptionalById(id);
     }
 }

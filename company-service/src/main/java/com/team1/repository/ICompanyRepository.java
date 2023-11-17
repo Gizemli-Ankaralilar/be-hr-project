@@ -13,4 +13,7 @@ public interface ICompanyRepository extends JpaRepository<Company, Long> {
     @Query("SELECT c.id FROM Company c where c.authId = :authId")
     Optional<Long> companyById(@Param("authId") Long authId);
 
+
+    Optional<Company> findOptionalById(Long id);
+
 }

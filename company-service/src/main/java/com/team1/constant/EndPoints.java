@@ -34,6 +34,8 @@ public class EndPoints {
     public static final String FINDALL_FINANCE = "/find_all/finance";
     public  static final String DELETE_BY_ID_FINANCE="/delete_by_id/finance";
     public static final String SAVE_FINANCE=VERSION+"/save/finance";
+    public static final String GET_INFORMATION_BY_ID="/get_company_information";
+
 
 
 }
